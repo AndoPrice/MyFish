@@ -47,7 +47,7 @@ public class Colors {
 
 
     // Dibuixa paleta de colors
-    void displayColors(PApplet p5, float x, float y, float w){
+    public void displayColors(PApplet p5, float x, float y, float w){
         p5.pushStyle();
         //Llegenda
         p5.fill(0); p5.textAlign(p5.LEFT); p5.textSize(36);
