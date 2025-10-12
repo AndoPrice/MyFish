@@ -4,6 +4,8 @@ import processing.core.PApplet;
 
 public class MyFish extends PApplet {
 
+    GUI gui;
+
     Colors appColors;
     Fonts fontsApp;
 
@@ -12,33 +14,44 @@ public class MyFish extends PApplet {
     }
 
     public void settings(){
-        size(800, 800);
+        //fullScreen();
+        size(1920, 1080);
         smooth(10);
     }
 
     public void setup(){
 
         fontsApp = new Fonts(this);
+        noStroke();                         // Sense bordes
+        textAlign(CENTER); textSize(18);   // Alineació i mida del text
+        gui = new GUI();                   // Constructor de la GUI
     }
 
     public void draw(){
         background(255);
 
-        textFont(fontsApp.getFirstFont());
-        text("Titol de l'App", 50, 200);
+        switch(gui.pantallaActual){
+            case INICIAL:   gui.dibuixaPantallaInicial(this);
+                break;
 
-        fill(50);
-        textFont(fontsApp.getSecondFont());
-        text("Subtitol de l'App", 50, 250);
+            case ABOUT:     gui.dibuixaPantallaAbout(this);
+                break;
 
-        fill(55, 0, 0);
-        textFont(fontsApp.getThirdFont());
-        text("Paràgraf de l'App", 50, 300);
+            case DETALLS:   gui.dibuixaPantallaDetalls(this);
+                break;
+        }
 
-
-        fontsApp.displayFonts(this, 100, 400, 50);
-
-
+    }
+    public void keyPressed(){
+        if(key=='0'){
+            gui.pantallaActual = GUI.PANTALLA.INICIAL;
+        }
+        else if(key=='1'){
+            gui.pantallaActual = GUI.PANTALLA.DETALLS;
+        }
+        else if(key=='2'){
+            gui.pantallaActual = GUI.PANTALLA.ABOUT;
+        }
     }
 
 
