@@ -15,7 +15,7 @@ public class MyFish extends PApplet {
 
     public void settings(){
         //fullScreen();
-        size(1920, 1080);
+        size(1366, 768);
         smooth(10);
     }
 
@@ -24,7 +24,7 @@ public class MyFish extends PApplet {
         fontsApp = new Fonts(this);
         noStroke();                         // Sense bordes
         textAlign(CENTER); textSize(18);   // Alineació i mida del text
-        gui = new GUI();                   // Constructor de la GUI
+        gui = new GUI(this);                   // Constructor de la GUI
     }
 
     public void draw(){
@@ -40,6 +40,7 @@ public class MyFish extends PApplet {
             case DETALLS:   gui.dibuixaPantallaDetalls(this);
                 break;
         }
+        updateCursor(this);
 
     }
     public void keyPressed(){
@@ -53,6 +54,23 @@ public class MyFish extends PApplet {
             gui.pantallaActual = GUI.PANTALLA.ABOUT;
         }
     }
+
+    public void mousePressed(){
+        if ( gui.b1.mouseOverButton( this ) ) {
+            println( " B1 has been pressed!!! " );
+        }
+
+    }
+
+    public void updateCursor(PApplet p5){
+        if ( gui.b1.updateHandCursor(p5)){
+            cursor(HAND);
+        }
+        else {
+            cursor(ARROW);
+        }
+    }
+
 
 
 }

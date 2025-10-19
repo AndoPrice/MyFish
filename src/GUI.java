@@ -4,15 +4,22 @@ import static Graphics.Layout.*;
 
 public class GUI {
 
+    Button b1, b2;
+
     // Enumerat de les Pantalles de l'App
-    public enum PANTALLA {INICIAL, DETALLS, ABOUT};
+    public enum PANTALLA {INICIAL, DETALLS, ABOUT } //INICIO, REGISTRAR_CAPTURA, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ;
 
     // Pantalla Actual
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(){
+    public GUI(PApplet p5){
+        b1 = new Button(p5, "RED", 40, 400, 250, 100);
         pantallaActual = PANTALLA.INICIAL;
+    }
+
+    public void dibuixaBotonsMenu(PApplet p5){
+        b1.display(p5);
     }
 
 
@@ -25,6 +32,7 @@ public class GUI {
         dibuixaSideBar(p5);
         dibuixaBanner(p5);
         dibuixaColumnes123(p5);
+        dibuixaBotonsMenu(p5);
     }
 
     public void dibuixaPantallaAbout(PApplet p5){
