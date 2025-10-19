@@ -58,8 +58,8 @@ public class MyFish extends PApplet {
         }*/
     }
 
-    public void mousePressed(){
-        if ( gui.b1.mouseOverButton( this ) ) {
+    public void mousePressed(){//MILLORAR AIXÒ
+        if ( gui.b1.mouseOverButton( this )||gui.b2.mouseOverButton( this )||gui.b3.mouseOverButton( this )||gui.b4.mouseOverButton( this )) {
             println( " B1 has been pressed!!! " );
         }
 
