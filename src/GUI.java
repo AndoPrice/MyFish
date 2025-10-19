@@ -1,41 +1,50 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import static Graphics.Layout.*;
 
 public class GUI {
 
-    Button b1, b2;
+    PImage logo;
+
+    Button b1, b2, b3, b4, b5, b6;
 
     // Enumerat de les Pantalles de l'App
-    public enum PANTALLA {INICIAL, DETALLS, ABOUT } //INICIO, REGISTRAR_CAPTURA, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ;
+    public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
 
     // Pantalla Actual
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5){
-        b1 = new Button(p5, "RED", 40, 400, 250, 100);
-        pantallaActual = PANTALLA.INICIAL;
+    public GUI(PApplet p5, PImage logo){
+        b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
+        b2 = new Button(p5, "VER REGISTRO", p5.width/2-100, 500, 200, 80);
+        b3 = new Button(p5, "ESTADÍSTICAS", p5.width/2-100, 600, 200, 80);
+        b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
+
+        pantallaActual = PANTALLA.INICIO;
+        this.logo = logo;
     }
 
-    public void dibuixaBotonsMenu(PApplet p5){
+    public void dibujaBotonesInicio(PApplet p5){
         b1.display(p5);
+        b2.display(p5);
+        b3.display(p5);
+        b4.display(p5);
     }
 
 
     // PANTALLES DE LA GUI
 
-    public void dibuixaPantallaInicial(PApplet p5){
+    public void dibujaPantallaInicio(PApplet p5){
 
-        p5.background(55);
-        dibuixaLogo(p5);
-        dibuixaSideBar(p5);
-        dibuixaBanner(p5);
-        dibuixaColumnes123(p5);
-        dibuixaBotonsMenu(p5);
+        p5.background(255);
+        dibujaLogo(p5);
+        dibujaBotonesInicio(p5);
+
     }
 
-    public void dibuixaPantallaAbout(PApplet p5){
+    /*public void dibuixaPantallaAbout(PApplet p5){
         p5.background(55);
         dibuixaLogo(p5);
         dibuixaSideBar(p5);
@@ -49,19 +58,18 @@ public class GUI {
         dibuixaSideBar(p5);
         dibuixaBanner(p5);
         dibuixaColumnes12(p5);
-    }
+    }*/
 
 
     // ZONES DE LA GUI
 
-    public void dibuixaLogo(PApplet p5){
-        p5.fill(200,50,100);
-        p5.rect(marginH, marginV, logoWidth, logoHeight);
-        p5.fill(0);
-        p5.text("LOGO", marginH + logoWidth/2, marginV + logoHeight/2);
+    public void dibujaLogo(PApplet p5){
+        p5.imageMode(p5.CENTER);
+        p5.image(logo, p5.width/2, 250, 300, 300);
+
     }
 
-    public void dibuixaSideBar(PApplet p5){
+    public void dibujaTopBar(PApplet p5){
         // Zona Sidebar ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         p5.fill(50,200,100);
         p5.rect(marginH, 2*marginV + logoHeight, sidebarWidth, sidebarHeight);

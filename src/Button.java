@@ -1,6 +1,8 @@
 import processing.core.PApplet;
+import processing.core.PFont;
 
 public class Button {
+    PFont bebasNeue;
     float x, y, w, h;  // Posició (x, y) i dimensions (w, h)
     int fillColor, strokeColor; // Colors del boto (fill / stroke).
     int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
@@ -15,10 +17,11 @@ public class Button {
         this.w = w;
         this.h = h;
         this.enabled = true;
-        this.fillColor = p5.color(155, 55, 155);
-        this.fillColorOver = p5.color(255, 55, 155);
+        this.fillColor = p5.color(20, 93, 160);
+        this.fillColorOver = p5.color(40, 112, 180);
         this.fillColorDisabled = p5.color(150);
         this.strokeColor = p5.color(0);
+        this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
     }
 
     // Setters
@@ -57,7 +60,7 @@ public class Button {
         p5.rect(this.x, this.y, this.w, this.h, 10);    // Rectangle del botó
 
         // Text (color, alineació i mida)
-        p5.fill(0); p5.textAlign(p5.CENTER); p5.textSize(20);
+        p5.fill(255); p5.textAlign(p5.CENTER); p5.textSize(20); p5.textFont(bebasNeue);
         p5.text(textBoto, this.x + this.w/2, this.y + this.h/2 + 10);
         p5.popStyle();
     }

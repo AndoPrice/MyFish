@@ -1,10 +1,12 @@
 import Graphics.Colors;
 import Graphics.Fonts;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class MyFish extends PApplet {
 
     GUI gui;
+    public PImage logo;
 
     Colors appColors;
     Fonts fontsApp;
@@ -14,45 +16,46 @@ public class MyFish extends PApplet {
     }
 
     public void settings(){
-        //fullScreen();
-        size(1366, 768);
+        fullScreen();
         smooth(10);
     }
 
     public void setup(){
 
+        logo = loadImage("data/MyFish-Logo.png");
+
         fontsApp = new Fonts(this);
         noStroke();                         // Sense bordes
         textAlign(CENTER); textSize(18);   // Alineació i mida del text
-        gui = new GUI(this);                   // Constructor de la GUI
+        gui = new GUI(this, logo);                   // Constructor de la GUI
     }
 
     public void draw(){
         background(255);
 
         switch(gui.pantallaActual){
-            case INICIAL:   gui.dibuixaPantallaInicial(this);
+            case INICIO:   gui.dibujaPantallaInicio(this);
                 break;
 
-            case ABOUT:     gui.dibuixaPantallaAbout(this);
+            /*case ABOUT:     gui.dibuixaPantallaAbout(this);
                 break;
 
             case DETALLS:   gui.dibuixaPantallaDetalls(this);
-                break;
+                break;*/
         }
         updateCursor(this);
 
     }
     public void keyPressed(){
         if(key=='0'){
-            gui.pantallaActual = GUI.PANTALLA.INICIAL;
+            gui.pantallaActual = GUI.PANTALLA.INICIO;
         }
-        else if(key=='1'){
+        /*else if(key=='1'){
             gui.pantallaActual = GUI.PANTALLA.DETALLS;
         }
         else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.ABOUT;
-        }
+        }*/
     }
 
     public void mousePressed(){
@@ -63,7 +66,7 @@ public class MyFish extends PApplet {
     }
 
     public void updateCursor(PApplet p5){
-        if ( gui.b1.updateHandCursor(p5)){
+        if ( gui.b1.updateHandCursor(p5)||gui.b2.updateHandCursor(p5)||gui.b3.updateHandCursor(p5)||gui.b4.updateHandCursor(p5)){
             cursor(HAND);
         }
         else {
