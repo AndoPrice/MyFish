@@ -3,6 +3,7 @@ import Graphics.Colors;
 import Graphics.TextField;
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PShape;
 
 import static Graphics.Layout.*;
 
@@ -10,6 +11,7 @@ public class GUI {
 
     Colors colors;
     PImage logo;
+    PShape add, list, stat, info;
 
     Button b1, b2, b3, b4, b5, b6;
 
