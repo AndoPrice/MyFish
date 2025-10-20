@@ -23,16 +23,18 @@ public class MyFish extends PApplet {
 
     public void setup(){
 
+        add.setFill(color(20, 93, 160));
+        list.setFill(color(20, 93, 160));
+        stat.setFill(color(20, 93, 160));
+        info.setFill(color(20, 93, 160));
+
         logo = loadImage("data/MyFish-Logo (1).png");
         add = loadShape("data/Icons/plus-solid.svg");
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
 
-        add.setFill(color(20, 93, 160));
-        list.setFill(color(20, 93, 160));
-        stat.setFill(color(20, 93, 160));
-        info.setFill(color(20, 93, 160));
+
 
         fontsApp = new Fonts(this);
         noStroke();                         // Sense bordes

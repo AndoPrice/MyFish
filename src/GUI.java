@@ -57,6 +57,10 @@ public class GUI {
     }
 
     public void dibujaBotonesTopBar(PApplet p5){
+        ib1.display(p5);
+        ib2.display(p5);
+        ib3.display(p5);
+        ib4.display(p5);
 
     }
 
@@ -73,6 +77,8 @@ public class GUI {
         dibujaLogo(p5);
         dibujaBotonesInicio(p5);
         dibujaTextFieldInicio(p5);
+        dibujaBotonesTopBar(p5);
+
 
     }
 
@@ -104,11 +110,6 @@ public class GUI {
         p5.image(logo, p5.width/2, 250);
     }
 
-    public void dibujaTopBar(PApplet p5){
-        p5.rect(marginH, 2*marginV + logoHeight, sidebarWidth, sidebarHeight);
-        p5.fill(0);
-        p5.text("SIDEBAR", marginH + sidebarWidth/2, marginV + logoHeight + sidebarHeight/2);
-    }
 
 
 }

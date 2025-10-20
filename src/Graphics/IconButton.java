@@ -1,6 +1,7 @@
 package Graphics;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PFont;
 import processing.core.PShape;
 
@@ -60,8 +61,11 @@ public class IconButton {
         else{
             p5.fill(fillColor);          // Color actiu però ratolí fora
         }
-        p5.stroke(255); p5.strokeWeight(0);         //Color i gruixa del contorn
+        p5.stroke(50); p5.strokeWeight(2);//Color i gruixa del contorn
+        p5.rectMode(PConstants.CENTER);
         p5.rect(this.x, this.y, this.w, this.h, 10);// Rectangle del botó
+
+        p5.shape(icon, x, y, icon.width, icon.height);
 
         // Text (color, alineació i mida)
         p5.fill(255); p5.textAlign(p5.CENTER); p5.textSize(20); p5.textFont(bebasNeue);
