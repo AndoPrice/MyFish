@@ -37,7 +37,7 @@ public class MyFish extends PApplet {
         fontsApp = new Fonts(this);
         noStroke();                         // Sense bordes
         textAlign(CENTER); textSize(18);   // Alineació i mida del text
-        gui = new GUI(this, logo);                   // Constructor de la GUI
+        gui = new GUI(this, logo, add, list, stat, info);                   // Constructor de la GUI
     }
 
     public void draw(){

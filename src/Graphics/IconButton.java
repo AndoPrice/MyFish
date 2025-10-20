@@ -69,6 +69,11 @@ public class IconButton {
         p5.popStyle();
     }
 
+    public void dibujaIcons (PApplet p5){
+        p5.shape(icon, x, y);
+
+    }
+
     // Indica si el cursor està sobre el botó
     public boolean mouseOverButton(PApplet p5){
         return (p5.mouseX >= this.x) && (p5.mouseX <= this.x + this.w) &&

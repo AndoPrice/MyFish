@@ -1,5 +1,6 @@
 import Graphics.Button;
 import Graphics.Colors;
+import Graphics.IconButton;
 import Graphics.TextField;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -11,9 +12,10 @@ public class GUI {
 
     Colors colors;
     PImage logo;
-    PShape add, list, stat, info;
 
     Button b1, b2, b3, b4, b5, b6;
+
+    IconButton ib1, ib2, ib3, ib4;
 
     TextField t1, t2;
 
@@ -24,7 +26,7 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5, PImage logo){
+    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info){
         colors = new Colors(p5);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
@@ -35,6 +37,11 @@ public class GUI {
         b3.setColors(colors);
         b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
         b4.setColors(colors);
+
+        ib1 = new IconButton(p5, "REGISTRAR CAPTURA", p5.width*2/5, 50, 100, 80, add);
+        ib2 = new IconButton(p5, "VER REGISTRO", p5.width*3/5, 50, 100, 80, list);
+        ib3 = new IconButton(p5, "ESTADÍSTICAS", p5.width*4/5, 50, 100, 80, stat);
+        ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", p5.width*5/5, 50, 100, 80, info);
 
         t1 = new TextField(p5, p5.width/2+200, 400, 200, 80);
 
