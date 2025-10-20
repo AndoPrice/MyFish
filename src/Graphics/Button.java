@@ -1,3 +1,5 @@
+package Graphics;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -17,14 +19,18 @@ public class Button {
         this.w = w;
         this.h = h;
         this.enabled = true;
-        this.fillColor = p5.color(20, 93, 160);
-        this.fillColorOver = p5.color(40, 112, 180);
         this.fillColorDisabled = p5.color(150);
         this.strokeColor = p5.color(0);
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
     }
 
     // Setters
+
+    public void setColors(Colors c){
+        this.fillColor = c.getAzure();
+        this.fillColorOver = c.getLightAzure();
+    }
+
 
     public void setEnabled(boolean b){
         this.enabled = b;

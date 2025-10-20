@@ -8,7 +8,6 @@ public class MyFish extends PApplet {
     GUI gui;
     public PImage logo;
 
-    Colors appColors;
     Fonts fontsApp;
 
     public static void main(String[] args) {
@@ -22,7 +21,7 @@ public class MyFish extends PApplet {
 
     public void setup(){
 
-        logo = loadImage("data/MyFish-Logo.png");
+        logo = loadImage("data/MyFish-Logo (1).png");
 
         fontsApp = new Fonts(this);
         noStroke();                         // Sense bordes
@@ -62,6 +61,7 @@ public class MyFish extends PApplet {
         if ( gui.b1.mouseOverButton( this )||gui.b2.mouseOverButton( this )||gui.b3.mouseOverButton( this )||gui.b4.mouseOverButton( this )) {
             println( " B1 has been pressed!!! " );
         }
+
 
     }
 
