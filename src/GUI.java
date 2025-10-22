@@ -15,7 +15,7 @@ public class GUI {
 
     Button b1, b2, b3, b4, b5, b6;
 
-    IconButton ib1, ib2, ib3, ib4;
+    IconButton ib1, ib2, ib3, ib4, ib5;
 
     TextField t1, t2;
 
@@ -38,10 +38,15 @@ public class GUI {
         b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
         b4.setColors(colors);
 
-        ib1 = new IconButton(p5, "REGISTRAR CAPTURA", p5.width*2/5, 50, 100, 80, add);
-        ib2 = new IconButton(p5, "VER REGISTRO", p5.width*3/5, 50, 100, 80, list);
-        ib3 = new IconButton(p5, "ESTADÍSTICAS", p5.width*4/5, 50, 100, 80, stat);
-        ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", p5.width*5/5, 50, 100, 80, info);
+        ib1 = new IconButton(p5, "REGISTRAR CAPTURA", (p5.width*2/5)-150, 100, 200, 125, add);
+        ib1.setColors(colors);
+        ib2 = new IconButton(p5, "VER REGISTRO", (p5.width*3/5)-150, 100, 200, 125, list);
+        ib2.setColors(colors);
+        ib3 = new IconButton(p5, "ESTADÍSTICAS", (p5.width*4/5)-150, 100, 200, 125, stat);
+        ib3.setColors(colors);
+        ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", (p5.width*5/5)-150, 100, 200, 125, info);
+        ib4.setColors(colors);
+        ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logo);
 
         t1 = new TextField(p5, p5.width/2+200, 400, 200, 80);
 
@@ -61,6 +66,7 @@ public class GUI {
         ib2.display(p5);
         ib3.display(p5);
         ib4.display(p5);
+        ib5.displayL(p5);
 
     }
 
@@ -76,13 +82,13 @@ public class GUI {
         p5.background(255);
         dibujaLogo(p5);
         dibujaBotonesInicio(p5);
-        dibujaTextFieldInicio(p5);
-        dibujaBotonesTopBar(p5);
-
 
     }
 
     public void dibujaPantallaRegistrarCaptura(PApplet p5){
+        p5.background(255);
+        dibujaTextFieldInicio(p5);
+        dibujaBotonesTopBar(p5);
 
     }
 

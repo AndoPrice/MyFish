@@ -23,16 +23,28 @@ public class MyFish extends PApplet {
 
     public void setup(){
 
-        add.setFill(color(20, 93, 160));
-        list.setFill(color(20, 93, 160));
-        stat.setFill(color(20, 93, 160));
-        info.setFill(color(20, 93, 160));
+
+
 
         logo = loadImage("data/MyFish-Logo (1).png");
-        add = loadShape("data/Icons/plus-solid.svg");
+        add  = loadShape("data/Icons/plus-solid.svg");
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
+
+        float scaleFactor = 0.1f;
+        add.scale(scaleFactor);
+        list.scale(scaleFactor);
+        stat.scale(scaleFactor);
+        info.scale(scaleFactor);
+
+        setShapeColor(add, color(20, 93, 160));
+        setShapeColor(list, color(20, 93, 160));
+        setShapeColor(stat, color(20, 93, 160));
+        setShapeColor(info, color(20, 93, 160));
+
+
+
 
 
 
@@ -49,10 +61,10 @@ public class MyFish extends PApplet {
             case INICIO:   gui.dibujaPantallaInicio(this);
                 break;
 
-            /*case ABOUT:     gui.dibuixaPantallaAbout(this);
+            case REGISTRAR_CAPTURA:     gui.dibujaPantallaRegistrarCaptura(this);
                 break;
 
-            case DETALLS:   gui.dibuixaPantallaDetalls(this);
+            /*case DETALLS:   gui.dibuixaPantallaDetalls(this);
                 break;*/
         }
         updateCursor(this);
@@ -62,17 +74,26 @@ public class MyFish extends PApplet {
         if(key=='0'){
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         }
-        /*else if(key=='1'){
-            gui.pantallaActual = GUI.PANTALLA.DETALLS;
+        else if(key=='1'){
+            gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
         }
-        else if(key=='2'){
+        /*else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.ABOUT;
         }*/
     }
 
     public void mousePressed(){//MILLORAR AIXÒ
-        if ( gui.b1.mouseOverButton( this )||gui.b2.mouseOverButton( this )||gui.b3.mouseOverButton( this )||gui.b4.mouseOverButton( this )) {
-            println( " B1 has been pressed!!! " );
+        if ( gui.b1.mouseOverButton( this )) {
+            println(" B1 has been pressed!!! ");
+        }
+        if ( gui.b2.mouseOverButton( this )){
+            println( " B2 has been pressed!!! " );
+        }
+        if ( gui.b3.mouseOverButton( this )) {
+            println( " B3 has been pressed!!! " );
+        }
+        if ( gui.b4.mouseOverButton( this )) {
+            println( " B4 has been pressed!!! " );
         }
 
 
@@ -84,6 +105,21 @@ public class MyFish extends PApplet {
         }
         else {
             cursor(ARROW);
+        }
+    }
+
+    void setShapeColor(PShape shape, int c) {
+        shape.disableStyle();
+        shape.setFill(c);
+        shape.setStroke(false);
+
+        for (int i = 0; i < shape.getChildCount(); i++) {
+            PShape child = shape.getChild(i);
+            if (child != null) {
+                child.disableStyle();
+                child.setFill(c);
+                child.setStroke(false);
+            }
         }
     }
 
