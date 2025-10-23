@@ -1,14 +1,17 @@
 package Graphics;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 
 import static processing.core.PConstants.BACKSPACE;
 
 public class TextField {
     int x, y, h, w;
 
+    PFont bebasNeue;
+
     // Colors
-    int bgColor, textColor, selectedColor, borderColor;
+    int bgColor, fgColor, selectedColor, borderColor;
     int borderWeight = 1;
 
     // Text del camp
@@ -20,11 +23,12 @@ public class TextField {
     // Constructor
     public TextField(PApplet p5, int x, int y, int w, int h) {
         this.x = x; this.y = y; this.w = w; this.h = h;
-        this.bgColor = p5.color(140, 140, 140);
-        this.textColor = p5.color(0, 0, 0);
-        this.selectedColor = p5.color(190, 190, 60);
+        this.bgColor = p5.color(20, 93, 160);
+        this.fgColor = p5.color(0, 0, 0);
+        this.selectedColor = p5.color(171, 193, 213);
         this.borderColor = p5.color(30, 30, 30);
         this.borderWeight = 1;
+        this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
     }
 
     // Dibuixa el Camp de Text
@@ -40,8 +44,8 @@ public class TextField {
         p5.stroke(borderColor);
         p5.rect(x, y, w, h, 5);
 
-        p5.fill(textColor);
-        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);
+        p5.fill(fgColor);
+        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);p5.textFont(bebasNeue);
         p5.text(text, x + 5, y + h - textSize);
         p5.popStyle();
     }

@@ -8,7 +8,7 @@ public class MyFish extends PApplet {
 
     GUI gui;
     public PImage logo;
-    PShape add, list, stat, info;
+    PShape add, list, stat, info, logoI;
 
     Fonts fontsApp;
 
@@ -31,6 +31,7 @@ public class MyFish extends PApplet {
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
+        logoI = loadShape("data/Icons/MyFish-Logo (150 x 150 px) (1).svg");
 
         float scaleFactor = 0.1f;
         add.scale(scaleFactor);
@@ -48,10 +49,11 @@ public class MyFish extends PApplet {
 
 
 
+
         fontsApp = new Fonts(this);
         noStroke();                         // Sense bordes
         textAlign(CENTER); textSize(18);   // Alineació i mida del text
-        gui = new GUI(this, logo, add, list, stat, info);                   // Constructor de la GUI
+        gui = new GUI(this, logo, add, list, stat, info, logoI);                   // Constructor de la GUI
     }
 
     public void draw(){
@@ -80,6 +82,7 @@ public class MyFish extends PApplet {
         /*else if(key=='2'){
             gui.pantallaActual = GUI.PANTALLA.ABOUT;
         }*/
+        gui.t1.keyPressed(key, keyCode);
     }
 
     public void mousePressed(){//MILLORAR AIXÒ
@@ -95,6 +98,8 @@ public class MyFish extends PApplet {
         if ( gui.b4.mouseOverButton( this )) {
             println( " B4 has been pressed!!! " );
         }
+
+        GUI.t1.isPressed(this);
 
 
     }

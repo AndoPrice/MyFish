@@ -17,7 +17,8 @@ public class GUI {
 
     IconButton ib1, ib2, ib3, ib4, ib5;
 
-    TextField t1, t2;
+    static TextField t1;
+    TextField t2;
 
     // Enumerat de les Pantalles de l'App
     public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
@@ -26,7 +27,7 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info){
+    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info, PShape logoI){
         colors = new Colors(p5);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
@@ -46,7 +47,7 @@ public class GUI {
         ib3.setColors(colors);
         ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", (p5.width*5/5)-150, 100, 200, 125, info);
         ib4.setColors(colors);
-        ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logo);
+        ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logoI);
 
         t1 = new TextField(p5, p5.width/2+200, 400, 200, 80);
 

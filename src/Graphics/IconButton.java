@@ -10,7 +10,7 @@ public class IconButton {
     String textBoto;  // Text
     boolean enabled;// Estat del botó (actiu / inactiu).
     public PShape icon;
-    public PImage logo;
+    public PShape logo;
 
     // Constructor
     public IconButton(PApplet p5, String text, float x, float y, float w, float h, PShape icon){
@@ -27,25 +27,13 @@ public class IconButton {
 
     }
 
-    public IconButton(PApplet p5, String text, float x, float y, float w, float h, PImage logo){
-        this.textBoto = text;
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.enabled = true;
-        this.fillColorDisabled = p5.color(150);
-        this.strokeColor = p5.color(0);
-        this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
-        this.logo = logo;
 
-    }
 
     // Setters
 
     public void setColors(Colors c){
         this.fillColor = c.getAzure();
-        this.fillColorOver = c.getLightAzure();
+        this.fillColorOver = c.getAzureSelected();
     }
 
 
@@ -82,6 +70,7 @@ public class IconButton {
             p5.fill(fillColor);          // Color actiu però ratolí fora
         }
 
+
         p5.shape(icon, x-(icon.width/2*0.1f), y-(icon.height/2*0.1f)-10, icon.width, icon.height);
 
         // Text (color, alineació i mida)
@@ -113,9 +102,7 @@ public class IconButton {
             p5.fill(fillColor);          // Color actiu però ratolí fora
         }
 
-        p5.scale(0.6f);
-
-        p5.image(logo, x, y, logo.width, logo.height);
+        p5.shape(icon, x-(icon.width/2), y-(icon.height/2)+5, icon.width, icon.height);
 
 
         // Text (color, alineació i mida)
