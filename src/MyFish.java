@@ -8,7 +8,9 @@ public class MyFish extends PApplet {
 
     GUI gui;
     public PImage logo;
-    PShape add, list, stat, info, logoI;
+    PShape add, list, stat, info;
+            //logoI;
+
 
     Fonts fontsApp;
 
@@ -26,12 +28,13 @@ public class MyFish extends PApplet {
 
 
 
+
         logo = loadImage("data/MyFish-Logo (1).png");
         add  = loadShape("data/Icons/plus-solid.svg");
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
-        logoI = loadShape("data/Icons/MyFish-Logo (150 x 150 px) (1).svg");
+        //logoI = loadShape("data/Icons/MyFish-Logo (150 x 150 px) (1).svg");
 
         float scaleFactor = 0.1f;
         add.scale(scaleFactor);
@@ -39,21 +42,17 @@ public class MyFish extends PApplet {
         stat.scale(scaleFactor);
         info.scale(scaleFactor);
 
-        setShapeColor(add, color(20, 93, 160));
-        setShapeColor(list, color(20, 93, 160));
-        setShapeColor(stat, color(20, 93, 160));
-        setShapeColor(info, color(20, 93, 160));
-
-
-
-
-
-
-
         fontsApp = new Fonts(this);
         noStroke();
         textAlign(CENTER); textSize(18);
-        gui = new GUI(this, logo, add, list, stat, info, logoI);                   // Constructor de la GUI
+        gui = new GUI(this, logo, add, list, stat, info);
+
+        setShapeColor(add, gui.colors.getAzure());
+        setShapeColor(list, gui.colors.getAzure());
+        setShapeColor(stat, gui.colors.getAzure());
+        setShapeColor(info, gui.colors.getAzure());
+        //setShapeColor(logoI, gui.colors.getAzure());
+
     }
 
     public void draw(){
@@ -95,9 +94,9 @@ public class MyFish extends PApplet {
         if ( gui.b4.mouseOverButton( this )) {
             println( " B4 has been pressed!!! " );
         }
-        if (gui.ib5.mouseOverButton(this)) {
+        /*if (gui.ib5.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.INICIO;
-        }
+        }*/
 
         GUI.t1.isPressed(this);
 

@@ -26,7 +26,7 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info, PShape logoI){
+    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info){
         colors = new Colors(p5);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
@@ -46,7 +46,7 @@ public class GUI {
         ib3.setColors(colors);
         ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", (p5.width*5/5)-150, 100, 200, 125, info);
         ib4.setColors(colors);
-        ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logoI);
+        //ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logoI);
 
         t1 = new TextField(p5, p5.width/2+200, 300, 200, 50);
 
@@ -66,7 +66,7 @@ public class GUI {
         ib2.display(p5);
         ib3.display(p5);
         ib4.display(p5);
-        ib5.displayL(p5);
+        //ib5.displayL(p5);
 
     }
 
