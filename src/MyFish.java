@@ -51,8 +51,8 @@ public class MyFish extends PApplet {
 
 
         fontsApp = new Fonts(this);
-        noStroke();                         // Sense bordes
-        textAlign(CENTER); textSize(18);   // Alineació i mida del text
+        noStroke();
+        textAlign(CENTER); textSize(18);
         gui = new GUI(this, logo, add, list, stat, info, logoI);                   // Constructor de la GUI
     }
 
@@ -66,8 +66,6 @@ public class MyFish extends PApplet {
             case REGISTRAR_CAPTURA:     gui.dibujaPantallaRegistrarCaptura(this);
                 break;
 
-            /*case DETALLS:   gui.dibuixaPantallaDetalls(this);
-                break;*/
         }
         updateCursor(this);
 
@@ -79,15 +77,14 @@ public class MyFish extends PApplet {
         else if(key=='1'){
             gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
         }
-        /*else if(key=='2'){
-            gui.pantallaActual = GUI.PANTALLA.ABOUT;
-        }*/
+
         gui.t1.keyPressed(key, keyCode);
     }
 
-    public void mousePressed(){//MILLORAR AIXÒ
+    public void mousePressed(){
         if ( gui.b1.mouseOverButton( this )) {
             println(" B1 has been pressed!!! ");
+            gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
         }
         if ( gui.b2.mouseOverButton( this )){
             println( " B2 has been pressed!!! " );
@@ -98,6 +95,9 @@ public class MyFish extends PApplet {
         if ( gui.b4.mouseOverButton( this )) {
             println( " B4 has been pressed!!! " );
         }
+        if (gui.ib5.mouseOverButton(this)) {
+            gui.pantallaActual = GUI.PANTALLA.INICIO;
+        }
 
         GUI.t1.isPressed(this);
 
@@ -107,6 +107,10 @@ public class MyFish extends PApplet {
     public void updateCursor(PApplet p5){
         if ( gui.b1.updateHandCursor(p5)||gui.b2.updateHandCursor(p5)||gui.b3.updateHandCursor(p5)||gui.b4.updateHandCursor(p5)){
             cursor(HAND);
+        }
+        if(gui.t1.selected == true){
+            cursor(TEXT);
+
         }
         else {
             cursor(ARROW);

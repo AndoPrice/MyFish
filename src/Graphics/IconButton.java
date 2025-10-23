@@ -4,15 +4,15 @@ import processing.core.*;
 
 public class IconButton {
     PFont bebasNeue;
-    float x, y, w, h;  // Posició (x, y) i dimensions (w, h)
-    int fillColor, strokeColor; // Colors del boto (fill / stroke).
-    int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
-    String textBoto;  // Text
-    boolean enabled;// Estat del botó (actiu / inactiu).
+    float x, y, w, h;
+    int fillColor, strokeColor;
+    int fillColorOver, fillColorDisabled;
+    String textBoto;
+    boolean enabled;
     public PShape icon;
     public PShape logo;
 
-    // Constructor
+
     public IconButton(PApplet p5, String text, float x, float y, float w, float h, PShape icon){
         this.textBoto = text;
         this.x = x;
@@ -29,8 +29,6 @@ public class IconButton {
 
 
 
-    // Setters
-
     public void setColors(Colors c){
         this.fillColor = c.getAzure();
         this.fillColorOver = c.getAzureSelected();
@@ -45,35 +43,32 @@ public class IconButton {
 
 
 
-    // Getters
     public boolean isEnabled(){
         return  this.enabled;
     }
 
-    // Dibuixa el botó
     public void display(PApplet p5){
 
         p5.pushStyle();
-        p5.stroke(50); p5.strokeWeight(2); p5.fill(255);//Color i gruixa del contorn
+        p5.stroke(50); p5.strokeWeight(2); p5.fill(255);
         p5.rectMode(PConstants.CENTER);
-        p5.rect(this.x, this.y, this.w, this.h, 10);// Rectangle del botó
+        p5.rect(this.x, this.y, this.w, this.h, 10);
         p5.popStyle();
 
         p5.pushStyle();
         if(!enabled){
-            p5.fill(fillColorDisabled);  // Color desabilitat
+            p5.fill(fillColorDisabled);
         }
         else if(mouseOverButton(p5)){
-            p5.fill(fillColorOver);      // Color quan ratolí a sobre
+            p5.fill(fillColorOver);
         }
         else{
-            p5.fill(fillColor);          // Color actiu però ratolí fora
+            p5.fill(fillColor);
         }
 
 
         p5.shape(icon, x-(icon.width/2*0.1f), y-(icon.height/2*0.1f)-10, icon.width, icon.height);
 
-        // Text (color, alineació i mida)
         p5.textAlign(p5.CENTER); p5.textSize(20); p5.textFont(bebasNeue);
         p5.text(textBoto, this.x, this.y+50);
         p5.popStyle();
@@ -86,26 +81,25 @@ public class IconButton {
     public void displayL(PApplet p5){
 
         p5.pushStyle();
-        p5.stroke(50); p5.strokeWeight(2); p5.fill(255);//Color i gruixa del contorn
+        p5.stroke(50); p5.strokeWeight(2); p5.fill(255);
         p5.rectMode(PConstants.CENTER);
-        p5.rect(this.x, this.y, this.w, this.h, 10);// Rectangle del botó
+        p5.rect(this.x, this.y, this.w, this.h, 10);
         p5.popStyle();
 
         p5.pushStyle();
         if(!enabled){
-            p5.fill(fillColorDisabled);  // Color desabilitat
+            p5.fill(fillColorDisabled);
         }
         else if(mouseOverButton(p5)){
-            p5.fill(fillColorOver);      // Color quan ratolí a sobre
+            p5.fill(fillColorOver);
         }
         else{
-            p5.fill(fillColor);          // Color actiu però ratolí fora
+            p5.fill(fillColor);
         }
 
         p5.shape(icon, x-(icon.width/2), y-(icon.height/2)+5, icon.width, icon.height);
 
 
-        // Text (color, alineació i mida)
         p5.textAlign(p5.CENTER); p5.textSize(20); p5.textFont(bebasNeue);
         p5.text(textBoto, this.x, this.y+100);
         p5.popStyle();
@@ -120,13 +114,12 @@ public class IconButton {
 
     }
 
-    // Indica si el cursor està sobre el botó
     public boolean mouseOverButton(PApplet p5){
         return (p5.mouseX >= this.x-(w/2)) && (p5.mouseX <= this.x-(w/2) + this.w) &&
                 (p5.mouseY >= this.y-(y/2)) && (p5.mouseY <= this.y-(y/2) + this.h);
     }
 
-    // Indica si cal posar el cursor a HAND
+
     public boolean updateHandCursor(PApplet p5){
         return mouseOverButton(p5) && enabled;
     }

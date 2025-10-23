@@ -20,10 +20,9 @@ public class GUI {
     static TextField t1;
     TextField t2;
 
-    // Enumerat de les Pantalles de l'App
     public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
 
-    // Pantalla Actual
+
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
@@ -49,7 +48,7 @@ public class GUI {
         ib4.setColors(colors);
         ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logoI);
 
-        t1 = new TextField(p5, p5.width/2+200, 400, 200, 80);
+        t1 = new TextField(p5, p5.width/2+200, 300, 200, 50);
 
         pantallaActual = PANTALLA.INICIO;
         this.logo = logo;
@@ -76,7 +75,6 @@ public class GUI {
     }
 
 
-    // PANTALLES DE LA GUI
 
     public void dibujaPantallaInicio(PApplet p5){
 
@@ -93,24 +91,7 @@ public class GUI {
 
     }
 
-    /*public void dibuixaPantallaAbout(PApplet p5){
-        p5.background(55);
-        dibuixaLogo(p5);
-        dibuixaSideBar(p5);
-        dibuixaBanner(p5);
-        dibuixaColumna1(p5);
-    }
 
-    public void dibuixaPantallaDetalls(PApplet p5){
-        p5.background(55);
-        dibuixaLogo(p5);
-        dibuixaSideBar(p5);
-        dibuixaBanner(p5);
-        dibuixaColumnes12(p5);
-    }*/
-
-
-    // ZONES DE LA GUI
 
     public void dibujaLogo(PApplet p5){
         p5.imageMode(p5.CENTER);
