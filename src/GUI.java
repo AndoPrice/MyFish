@@ -21,6 +21,21 @@ public class GUI {
     Counter peso, tamano;
 
     PagedTable registro;
+    String[] registroHeaders = {"FECHA", "ESPECIE", "PESO", "TAMAÑO"};
+    float tableW = 1000, tableH = 600;
+    float[] colWidths = {25, 25, 25, 25};
+    String[][] capturas = {
+            {"20/10/25", "Barracuda", "2", "60"},
+            {"19/10/25", "Bacoreta", "1", "40"},
+            {"17/10/25", "Llampuga", "3", "65"},
+            {"16/10/25", "Palometón", "4", "50"},
+            {"5/10/25", "Lubina", "2", "45"},
+            {"1/10/25", "Dorada", "1", "34"},
+            {"1/10/25", "Mero", "5", "70"},
+
+
+
+    };
 
     public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
 
@@ -66,6 +81,9 @@ public class GUI {
         tamano.setStepValue(1);
 
         registro = new PagedTable(6, 4);
+        registro.setHeaders(registroHeaders);
+        registro.setData(this.capturas);
+        registro.setColumnWidths(colWidths);
 
 
 
@@ -121,6 +139,7 @@ public class GUI {
     public void dibujaPantallaVerRegistro(PApplet p5){
         p5.background(255);
         dibujaBotonesTopBar(p5);
+        registro.display(p5, 220, 200, tableW, tableH);
 
 
 

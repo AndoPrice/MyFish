@@ -60,20 +60,27 @@ public class PagedTable {
 
         p5.pushStyle();
 
-        p5.fill(200, 50); p5.stroke(0); p5.strokeWeight(3);
+        p5.fill(200, 50); p5.stroke(0); p5.strokeWeight(1);
         p5.rect(x, y, w, h);
 
         float rowHeight = h / numRows;
-        p5.fill(200, 100, 100); p5.stroke(0); p5.strokeWeight(3);
+        p5.fill(171, 193, 213); p5.stroke(0); p5.strokeWeight(1);
         p5.rect(x, y, w, rowHeight);
 
-        // Dibuixa files
         p5.stroke(0);
+
+        p5.pushStyle();
+
+        // Dibuixa files
+        p5.stroke(100);
+
         for(int r = 1; r <numRows; r++){
-            if(r==1){ p5.strokeWeight(3); }
+            if(r==1){ p5.strokeWeight(1); }
             else {    p5.strokeWeight(1); }
             p5.line(x, y + r*rowHeight, x + w, y + r*rowHeight);
         }
+
+        p5.popStyle();
 
         // Dibuixa Columnes
         float xCol = x;
@@ -83,7 +90,7 @@ public class PagedTable {
         }
 
         // Dibuixa textos
-        p5.fill(0); p5.textSize(24);
+        p5.fill(20, 93, 160); p5.textSize(24); p5.textAlign(p5.LEFT);
         for(int r = 0; r < numRows; r++){
             xCol = x;
             for(int c = 0; c< numCols; c++){

@@ -116,6 +116,14 @@ public class MyFish extends PApplet {
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         }
 
+        if (gui.ib1.mouseOverButton(this)) {
+            gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
+        }
+
+        if (gui.ib2.mouseOverButton(this)) {
+            gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
+        }
+
         gui.t1.isPressed(this);
         gui.t2.isPressed(this);
         gui.t3.isPressed(this);
