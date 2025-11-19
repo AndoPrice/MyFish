@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 
 import static processing.core.PConstants.BACKSPACE;
+import static processing.core.PConstants.CORNER;
 
 public class TextField {
     int x, y, h, w;
@@ -17,37 +18,43 @@ public class TextField {
 
     public String text = "";
     int textSize = 24;
+    String name;
 
     public boolean selected = false;
 
 
-    public TextField(PApplet p5, int x, int y, int w, int h) {
+    public TextField(PApplet p5, String name, int x, int y, int w, int h) {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.bgColor = p5.color(20, 93, 160);
-        this.fgColor = p5.color(0, 0, 0);
+        this.fgColor = p5.color(20, 93, 160);
         this.selectedColor = p5.color(171, 193, 213);
-        this.borderColor = p5.color(30, 30, 30);
+        this.borderColor = p5.color(20, 93, 160);
         this.borderWeight = 1;
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
+        System.out.println(p5.width);
+        System.out.println(p5.height);
+        this.name = name;
     }
 
 
     public void display(PApplet p5) {
         p5.pushStyle();
-        if (selected) {
-            p5.fill(selectedColor);
-        } else {
-            p5.fill(bgColor);
-        }
+
+        p5.fill(255);
+
 
         p5.strokeWeight(borderWeight);
         p5.stroke(borderColor);
+        p5.rectMode(CORNER);
         p5.rect(x, y, w, h, 5);
 
         p5.fill(fgColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);p5.textFont(bebasNeue);
         p5.text(text, x + 5, y + h - textSize);
         p5.popStyle();
+
+        p5.fill(fgColor); p5.textFont(bebasNeue); p5.textAlign(p5.LEFT, p5.BOTTOM);
+        p5.text(name, this.x, this.y+this.h/2-50);
     }
 
 

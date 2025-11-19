@@ -7,9 +7,8 @@ import processing.core.PShape;
 public class MyFish extends PApplet {
 
     GUI gui;
-    public PImage logo;
+    public PImage logo, home, mes, menys;
     PShape add, list, stat, info;
-            //logoI;
 
 
     Fonts fontsApp;
@@ -30,11 +29,13 @@ public class MyFish extends PApplet {
 
 
         logo = loadImage("data/MyFish-Logo (1).png");
+        home = loadImage("data/Icons/MyFish-Logo Home.png");
+        mes = loadImage("data/Icons/mes.png");
+        menys = loadImage("data/Icons/menys.png");
         add  = loadShape("data/Icons/plus-solid.svg");
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
-        //logoI = loadShape("data/Icons/MyFish-Logo (150 x 150 px) (1).svg");
 
         float scaleFactor = 0.1f;
         add.scale(scaleFactor);
@@ -45,13 +46,17 @@ public class MyFish extends PApplet {
         fontsApp = new Fonts(this);
         noStroke();
         textAlign(CENTER); textSize(18);
-        gui = new GUI(this, logo, add, list, stat, info);
+        gui = new GUI(this, logo, add, list, stat, info, home, mes, menys);//passar a array
 
         setShapeColor(add, gui.colors.getAzure());
         setShapeColor(list, gui.colors.getAzure());
         setShapeColor(stat, gui.colors.getAzure());
         setShapeColor(info, gui.colors.getAzure());
         //setShapeColor(logoI, gui.colors.getAzure());
+
+
+
+
 
     }
 
@@ -64,6 +69,10 @@ public class MyFish extends PApplet {
 
             case REGISTRAR_CAPTURA:     gui.dibujaPantallaRegistrarCaptura(this);
                 break;
+
+            case VER_REGISTRO:     gui.dibujaPantallaVerRegistro(this);
+                break;
+
 
         }
         updateCursor(this);
@@ -78,6 +87,14 @@ public class MyFish extends PApplet {
         }
 
         gui.t1.keyPressed(key, keyCode);
+        gui.t2.keyPressed(key, keyCode);
+        gui.t3.keyPressed(key, keyCode);
+        gui.t4.keyPressed(key, keyCode);
+
+        if(gui.tl1.getTextField().mouseOverTextField(this)){
+            gui.tl1.getTextField().keyPressed(key, (int)keyCode);
+            gui.tl1.update(this);
+        }
     }
 
     public void mousePressed(){
@@ -87,6 +104,7 @@ public class MyFish extends PApplet {
         }
         if ( gui.b2.mouseOverButton( this )){
             println( " B2 has been pressed!!! " );
+            gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
         }
         if ( gui.b3.mouseOverButton( this )) {
             println( " B3 has been pressed!!! " );
@@ -94,11 +112,30 @@ public class MyFish extends PApplet {
         if ( gui.b4.mouseOverButton( this )) {
             println( " B4 has been pressed!!! " );
         }
-        /*if (gui.ib5.mouseOverButton(this)) {
+        if (gui.ib5.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.INICIO;
-        }*/
+        }
 
-        GUI.t1.isPressed(this);
+        gui.t1.isPressed(this);
+        gui.t2.isPressed(this);
+        gui.t3.isPressed(this);
+        gui.t4.isPressed(this);
+
+        gui.tl1.getTextField().isPressed(this);
+        gui.tl1.buttonPressed(this);
+
+        if(gui.tamano.mouseOverButtonMes(this)){
+            gui.tamano.increment();
+        }
+        if(gui.tamano.mouseOverButtonMenys(this)){
+            gui.tamano.decrement();
+        }
+        if(gui.peso.mouseOverButtonMes(this)){
+            gui.peso.increment();
+        }
+        if(gui.peso.mouseOverButtonMenys(this)){
+            gui.peso.decrement();
+        }
 
 
     }
@@ -111,6 +148,7 @@ public class MyFish extends PApplet {
             cursor(TEXT);
 
         }
+
         else {
             cursor(ARROW);
         }

@@ -1,12 +1,7 @@
-import Graphics.Button;
-import Graphics.Colors;
-import Graphics.IconButton;
-import Graphics.TextField;
+import Graphics.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
-
-import static Graphics.Layout.*;
 
 public class GUI {
 
@@ -17,16 +12,23 @@ public class GUI {
 
     IconButton ib1, ib2, ib3, ib4, ib5;
 
-    static TextField t1;
-    TextField t2;
+    String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
-    public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
+    TextList tl1;
+
+    static TextField t1, t2, t3, t4;
+
+    Counter peso, tamano;
+
+    PagedTable registro;
+
+    public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
 
 
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info){
+    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys){
         colors = new Colors(p5);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
@@ -46,9 +48,27 @@ public class GUI {
         ib3.setColors(colors);
         ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", (p5.width*5/5)-150, 100, 200, 125, info);
         ib4.setColors(colors);
-        //ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, logoI);
+        ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, home);
 
-        t1 = new TextField(p5, p5.width/2+200, 300, 200, 50);
+        t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 100);
+        t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50);
+        t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50);
+        t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50);
+        tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
+
+        peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
+        peso.setInitialValue(0);
+        peso.setValues(0,10000);
+        peso.setStepValue(1);
+        tamano = new Counter(p5, "Tamaño (cm): ", mes, menys,p5.width/2+50+300, 400, 100, 50);
+        tamano.setInitialValue(0);
+        tamano.setValues(0,10000);
+        tamano.setStepValue(1);
+
+        registro = new PagedTable(6, 4);
+
+
+
 
         pantallaActual = PANTALLA.INICIO;
         this.logo = logo;
@@ -66,12 +86,15 @@ public class GUI {
         ib2.display(p5);
         ib3.display(p5);
         ib4.display(p5);
-        //ib5.displayL(p5);
+        ib5.display(p5);
 
     }
 
-    public void dibujaTextFieldInicio(PApplet p5){
+    public void dibujaTextFieldRegistrar(PApplet p5){
         t1.display(p5);
+        t2.display(p5);
+        t3.display(p5);
+        t4.display(p5);
     }
 
 
@@ -86,8 +109,20 @@ public class GUI {
 
     public void dibujaPantallaRegistrarCaptura(PApplet p5){
         p5.background(255);
-        dibujaTextFieldInicio(p5);
+        dibujaTextFieldRegistrar(p5);
         dibujaBotonesTopBar(p5);
+        peso.display(p5);
+        tamano.display(p5);
+        tl1.display(p5);
+
+
+    }
+
+    public void dibujaPantallaVerRegistro(PApplet p5){
+        p5.background(255);
+        dibujaBotonesTopBar(p5);
+
+
 
     }
 
