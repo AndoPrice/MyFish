@@ -4,9 +4,9 @@ import processing.core.*;
 
 public class Counter {
     // Valor del comptador
-    int value = 255;
-    int minValue = 0, maxValue = 255;
-    int stepValue = 10;
+    float value = 255;
+    float minValue = 0, maxValue = 255;
+    float stepValue = 10;
 
     // Propietats d'un counter:
     float x, y, w, h;  // Posició i dimensions
@@ -37,7 +37,7 @@ public class Counter {
 
     // Getters
 
-    public int getValue(){
+    public float getValue(){
         return  this.value;
     }
 
@@ -47,15 +47,15 @@ public class Counter {
         this.value = this.minValue;
     }
 
-    public void setInitialValue(int n){
+    public void setInitialValue(float n){
         this.value = n;
     }
 
-    public void setValue(int n){
+    public void setValue(float n){
         this.value = n;
     }
 
-    public void setStepValue(int n){
+    public void setStepValue(float n){
         this.stepValue = n;
     }
 

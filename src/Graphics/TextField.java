@@ -54,7 +54,7 @@ public class TextField {
         p5.popStyle();
 
         p5.fill(fgColor); p5.textFont(bebasNeue); p5.textAlign(p5.LEFT, p5.BOTTOM);
-        p5.text(name, this.x, this.y+this.h/2-50);
+        p5.text(name, this.x, this.y-10);
     }
 
 

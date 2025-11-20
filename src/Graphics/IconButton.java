@@ -92,7 +92,7 @@ public class IconButton {
                 p5.fill(fillColorDisabled);
             }
             else if(mouseOverButton(p5)){
-                p5.tint(171, 193, 213, 100);
+                selected(p5);
             }
             else{
                 p5.fill(fillColor);
@@ -106,6 +106,15 @@ public class IconButton {
         p5.text(textBoto, this.x, this.y+50);
         p5.popStyle();
 
+    }
+
+    public void selected(PApplet p5){
+        if (home != null){
+            p5.tint(171, 193, 213, 100);
+        }
+        else if (icon != null){
+            p5.fill(fillColorOver);
+        }
     }
 
 

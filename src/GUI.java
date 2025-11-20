@@ -23,7 +23,7 @@ public class GUI {
     Counter peso, tamano;
 
     PagedTable registro;
-    String[] registroHeaders = {"FECHA", "ESPECIE", "PESO", "TAMAÑO"};
+    String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)"};
     float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
     String[][] capturas = {
@@ -77,11 +77,11 @@ public class GUI {
         peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
         peso.setInitialValue(0);
         peso.setValues(0,10000);
-        peso.setStepValue(1);
+        peso.setStepValue(0.5f);
         tamano = new Counter(p5, "Tamaño (cm): ", mes, menys,p5.width/2+50+300, 400, 100, 50);
         tamano.setInitialValue(0);
         tamano.setValues(0,10000);
-        tamano.setStepValue(1);
+        tamano.setStepValue(0.5f);
 
         registro = new PagedTable(6, 4);
         registro.setHeaders(registroHeaders);
@@ -111,11 +111,20 @@ public class GUI {
     }
 
     public void dibujaBotonesTopBar(PApplet p5){
+
         ib1.display(p5);
         ib2.display(p5);
         ib3.display(p5);
         ib4.display(p5);
         ib5.display(p5);
+
+        if(pantallaActual==PANTALLA.REGISTRAR_CAPTURA){
+            ib1.selected(p5);
+        }
+        if(pantallaActual==PANTALLA.VER_REGISTRO){
+            ib2.selected(p5);
+        }
+
 
     }
 

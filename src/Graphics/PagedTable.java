@@ -90,17 +90,17 @@ public class PagedTable {
         }
 
         // Dibuixa textos
-        p5.fill(20, 93, 160); p5.textSize(24); p5.textAlign(p5.LEFT);
+        p5.fill(20, 93, 160); p5.textSize(24); p5.textAlign(p5.CENTER);
         for(int r = 0; r < numRows; r++){
             xCol = x;
             for(int c = 0; c< numCols; c++){
                 if(r==0){
-                    p5.text(tableHeaders[c], xCol + 10, y + (r+1)*rowHeight - 10);
+                    p5.text(tableHeaders[c], xCol + 125, y + (r+1)*rowHeight - 10);
                 }
                 else{
                     int k = (numRows-1)*numPage + (r-1);
                     if(k<tableData.length){
-                        p5.text(tableData[k][c], xCol + 10, y + (r+1)*rowHeight - 10);
+                        p5.text(tableData[k][c], xCol + 125, y + (r+1)*rowHeight - 10);
                     }
                 }
                 xCol += w*columnWidths[c]/100.0;
