@@ -145,6 +145,13 @@ public class MyFish extends PApplet {
             gui.peso.decrement();
         }
 
+        if(gui.nextPage.mouseOverButton(this)){
+            gui.registro.nextPage();
+        }
+        if(gui.previousPage.mouseOverButton(this)){
+            gui.registro.prevPage();
+        }
+
 
     }
 

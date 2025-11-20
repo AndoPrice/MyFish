@@ -108,7 +108,7 @@ public class PagedTable {
         }
 
         // Informació de la Pàgina
-        p5.fill(0);
+        p5.fill(20, 93, 160);
         p5.text("Pag: "+(this.numPage+1)+" / "+(this.numTotalPages+1), x, y + h + 50);
 
         p5.popStyle();

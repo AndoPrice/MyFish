@@ -1,5 +1,6 @@
 import Graphics.*;
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import processing.core.PShape;
 
@@ -7,8 +8,9 @@ public class GUI {
 
     Colors colors;
     PImage logo;
+    PFont bebasNeue;
 
-    Button b1, b2, b3, b4, b5, b6;
+    Button b1, b2, b3, b4, nextPage, previousPage;
 
     IconButton ib1, ib2, ib3, ib4, ib5;
 
@@ -22,7 +24,7 @@ public class GUI {
 
     PagedTable registro;
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO", "TAMAÑO"};
-    float tableW = 1000, tableH = 600;
+    float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
     String[][] capturas = {
             {"20/10/25", "Barracuda", "2", "60"},
@@ -33,9 +35,8 @@ public class GUI {
             {"1/10/25", "Dorada", "1", "34"},
             {"1/10/25", "Mero", "5", "70"},
 
-
-
     };
+    Card c1;
 
     public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
 
@@ -45,6 +46,8 @@ public class GUI {
     // Constructor de la GUI
     public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys){
         colors = new Colors(p5);
+
+        this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
         b1.setColors(colors);
@@ -84,6 +87,14 @@ public class GUI {
         registro.setHeaders(registroHeaders);
         registro.setData(this.capturas);
         registro.setColumnWidths(colWidths);
+
+        previousPage = new Button(p5, "<", p5.width/2-20,775, 30, 30 );
+        previousPage.setColors(colors);
+        nextPage = new Button(p5, ">", p5.width/2+20,775, 30, 30 );
+        nextPage.setColors(colors);
+
+
+        c1 = new Card(p5, "Pez más pesado", 200, 200, 300, 500);
 
 
 
@@ -132,6 +143,8 @@ public class GUI {
         peso.display(p5);
         tamano.display(p5);
         tl1.display(p5);
+        p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
+        p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
 
 
     }
@@ -139,9 +152,11 @@ public class GUI {
     public void dibujaPantallaVerRegistro(PApplet p5){
         p5.background(255);
         dibujaBotonesTopBar(p5);
-        registro.display(p5, 220, 200, tableW, tableH);
-
-
+        registro.display(p5, 220, 250, tableW, tableH);
+        nextPage.display(p5);
+        previousPage.display(p5);
+        p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
+        p5.text("MIS CAPTURAS", p5.width/2, 225);
 
     }
 
