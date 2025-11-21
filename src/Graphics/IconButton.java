@@ -63,7 +63,7 @@ public class IconButton {
         return  this.enabled;
     }
 
-    public void display(PApplet p5){
+    public void display(PApplet p5, boolean b){
 
         p5.pushStyle();
         p5.stroke(255); p5.strokeWeight(0); p5.fill(255);
@@ -79,7 +79,7 @@ public class IconButton {
             if(!enabled){
                 p5.fill(fillColorDisabled);
             }
-            else if(mouseOverButton(p5)){
+            else if(mouseOverButton(p5) ||b){
                 p5.fill(fillColorOver);
             }
             else{

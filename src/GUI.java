@@ -10,9 +10,11 @@ public class GUI {
     PImage logo;
     PFont bebasNeue;
 
-    Button b1, b2, b3, b4, nextPage, previousPage;
+    Button b1, b2, b3, b4, nextPage, previousPage, bCal;
 
-    IconButton ib1, ib2, ib3, ib4, ib5;
+    IconButton ib1, ib2, ib3, ib4, homeB;
+
+    DayButton db1;
 
     String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
@@ -37,6 +39,8 @@ public class GUI {
 
     };
     Card c1;
+    CalendariPlus cp1;
+    String dataCalendari = "";
 
     public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
 
@@ -66,13 +70,14 @@ public class GUI {
         ib3.setColors(colors);
         ib4 = new IconButton(p5, "INFORMACIÓN DE PECES", (p5.width*5/5)-150, 100, 200, 125, info);
         ib4.setColors(colors);
-        ib5 = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, home);
+        this.homeB = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, home);
 
         t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 100);
         t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50);
         t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50);
         t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50);
         tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
+
 
         peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
         peso.setInitialValue(0);
@@ -96,6 +101,9 @@ public class GUI {
 
         c1 = new Card(p5, "Pez más pesado", 200, 200, 300, 500);
 
+        cp1 = new CalendariPlus(p5,p5.width/2, 500,350,275);
+        bCal = new Button(p5, "  /  /  ", p5.width/2+350, 500, 200, 50);
+
 
 
 
@@ -112,18 +120,14 @@ public class GUI {
 
     public void dibujaBotonesTopBar(PApplet p5){
 
-        ib1.display(p5);
-        ib2.display(p5);
-        ib3.display(p5);
-        ib4.display(p5);
-        ib5.display(p5);
 
-        if(pantallaActual==PANTALLA.REGISTRAR_CAPTURA){
-            ib1.selected(p5);
-        }
-        if(pantallaActual==PANTALLA.VER_REGISTRO){
-            ib2.selected(p5);
-        }
+        ib1.display(p5, pantallaActual==PANTALLA.REGISTRAR_CAPTURA);
+        ib2.display(p5, pantallaActual==PANTALLA.VER_REGISTRO);
+        ib3.display(p5, pantallaActual==PANTALLA.ESTADISTICAS);
+        ib4.display(p5, pantallaActual==PANTALLA.INFO);
+        homeB.display(p5, pantallaActual==PANTALLA.INICIO);
+
+
 
 
     }
@@ -131,7 +135,16 @@ public class GUI {
     public void dibujaTextFieldRegistrar(PApplet p5){
         t1.display(p5);
         t2.display(p5);
-        t3.display(p5);
+
+
+        // Rectangle
+        p5.fill(255); p5.rect(p5.width/2+350, 500, 200, 50, 5);
+
+        // Text amb data seleccionada
+        p5.fill(0); p5.textAlign(p5.LEFT); p5.textSize(24);
+        p5.text(dataCalendari, p5.width/2+350, 500);
+        cp1.display(p5);
+        bCal.display(p5);
         t4.display(p5);
     }
 

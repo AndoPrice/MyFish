@@ -1,4 +1,3 @@
-import Graphics.Colors;
 import Graphics.Fonts;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -112,7 +111,7 @@ public class MyFish extends PApplet {
         if ( gui.b4.mouseOverButton( this )) {
             println( " B4 has been pressed!!! " );
         }
-        if (gui.ib5.mouseOverButton(this)) {
+        if (gui.homeB.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.INICIO;
         }
 
@@ -150,6 +149,27 @@ public class MyFish extends PApplet {
         }
         if(gui.previousPage.mouseOverButton(this)){
             gui.registro.prevPage();
+        }
+
+        // Comprovar si clicam sobre botons del Calendari
+        gui.cp1.checkButtons(this);
+
+        // Si pitja el botó, canvia la visibilitat del calendari.
+        if(gui.bCal.mouseOverButton(this)&&gui.bCal.isEnabled()){
+            gui.cp1.toggleVisibility();
+        }
+        // Si pitjam el botó de Next, canviarà al seguent mes
+        if(gui.cp1.bNext.mouseOverButton(this)){
+            gui.cp1.nextMonth();
+        }
+        // Si pitjam el botó de Prev, canviarà al mes anterior
+        if(gui.cp1.bPrev.mouseOverButton(this)){
+            gui.cp1.prevMonth();
+        }
+        // Si pitjam el botó de OK, confirmarà la data seleccionada i amagarà el calendari
+        if(gui.cp1.bOK.mouseOverButton(this) && gui.cp1.isDateSelected()){
+            gui.dataCalendari = gui.cp1.getSelectedDate();
+            gui.cp1.setVisible(false);
         }
 
 
