@@ -6,8 +6,9 @@ import processing.core.PFont;
 public class Button {
     PFont bebasNeue;
     float x, y, w, h;  // Posició (x, y) i dimensions (w, h)
-    int fillColor, strokeColor; // Colors del boto (fill / stroke).
-    int fillColorOver, fillColorDisabled;  // Colors del boto (actiu / inactiu).
+    int fillColor, strokeColor, textColor; // Colors del boto (fill / stroke).
+    int fillColorOver, fillColorDisabled;// Colors del boto (actiu / inactiu).
+    int strokeWeight;
     String textBoto;  // Text
     boolean enabled;  // Estat del botó (actiu / inactiu).
 
@@ -22,13 +23,27 @@ public class Button {
         this.fillColorDisabled = p5.color(150);
         this.strokeColor = p5.color(0);
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
+        this.textColor = p5.color(255);
+        this.strokeWeight = 2;
     }
 
 
-    public void setColors(Colors c){
+
+    public void setBlues(Colors c){
         this.fillColor = c.getAzure();
         this.fillColorOver = c.getAzureSelected();
     }
+
+    public void setDateButtonColors(PApplet p5, Colors c){
+        this.fillColor = p5.color(255);
+        this.fillColorOver = p5.color(230);
+        this.textColor= c.getAzure();
+        this.strokeColor = c.getAzure();
+        this.strokeWeight = 1;
+    }
+
+
+
 
 
     public void setEnabled(boolean b){
@@ -53,11 +68,11 @@ public class Button {
         else{
             p5.fill(fillColor);
         }
-        p5.stroke(strokeColor); p5.strokeWeight(2);
+        p5.stroke(strokeColor); p5.strokeWeight(strokeWeight);
         p5.rect(this.x, this.y, this.w, this.h, 10);
 
 
-        p5.fill(255); p5.textAlign(p5.CENTER); p5.textSize(20); p5.textFont(bebasNeue);
+        p5.fill(textColor); p5.textAlign(p5.CENTER); p5.textSize(20); p5.textFont(bebasNeue);
         p5.text(textBoto, this.x + this.w/2, this.y + this.h/2 + 10);
         p5.popStyle();
     }

@@ -10,7 +10,7 @@ public class GUI {
     PImage logo;
     PFont bebasNeue;
 
-    Button b1, b2, b3, b4, nextPage, previousPage, bCal;
+    Button b1, b2, b3, b4, nextPage, previousPage, bCal, b5;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
@@ -54,13 +54,18 @@ public class GUI {
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
-        b1.setColors(colors);
+        b1.setBlues(colors);
         b2 = new Button(p5, "VER REGISTRO", p5.width/2-100, 500, 200, 80);
-        b2.setColors(colors);
+        b2.setBlues(colors);
         b3 = new Button(p5, "ESTADÍSTICAS", p5.width/2-100, 600, 200, 80);
-        b3.setColors(colors);
+        b3.setBlues(colors);
         b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
-        b4.setColors(colors);
+        b4.setBlues(colors);
+
+        b5 = new Button(p5, "REGISTRAR", p5.width/2+50+300, 825, 100, 50);
+        b5.setBlues(colors);
+
+
 
         ib1 = new IconButton(p5, "REGISTRAR CAPTURA", (p5.width*2/5)-150, 100, 200, 125, add);
         ib1.setColors(colors);
@@ -94,15 +99,16 @@ public class GUI {
         registro.setColumnWidths(colWidths);
 
         previousPage = new Button(p5, "<", p5.width/2-20,775, 30, 30 );
-        previousPage.setColors(colors);
+        previousPage.setBlues(colors);
         nextPage = new Button(p5, ">", p5.width/2+20,775, 30, 30 );
-        nextPage.setColors(colors);
+        nextPage.setBlues(colors);
 
 
         c1 = new Card(p5, "Pez más pesado", 200, 200, 300, 500);
 
         cp1 = new CalendariPlus(p5,p5.width/2, 500,350,275);
         bCal = new Button(p5, "  /  /  ", p5.width/2+350, 500, 200, 50);
+        bCal.setDateButtonColors(p5, colors);
 
 
 
@@ -143,9 +149,10 @@ public class GUI {
         // Text amb data seleccionada
         p5.fill(0); p5.textAlign(p5.LEFT); p5.textSize(24);
         p5.text(dataCalendari, p5.width/2+350, 500);
-        cp1.display(p5);
+
         bCal.display(p5);
         t4.display(p5);
+        cp1.display(p5);
     }
 
 
@@ -160,13 +167,15 @@ public class GUI {
 
     public void dibujaPantallaRegistrarCaptura(PApplet p5){
         p5.background(255);
-        dibujaTextFieldRegistrar(p5);
+
         dibujaBotonesTopBar(p5);
         peso.display(p5);
         tamano.display(p5);
         tl1.display(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
+        b5.display(p5);
+        dibujaTextFieldRegistrar(p5);
 
 
     }

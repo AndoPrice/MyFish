@@ -13,7 +13,7 @@ public class CalendariPlus extends Calendari {
 
         super(x, y, w, h);
 
-        bNext = new Button(p5, "Seguent", x+ w/3, y -70, 100, 50);
+        bNext = new Button(p5, "Siguiente", x+ w/3, y -70, 100, 50);
         bPrev = new Button(p5, "Anterior", x+w/3+100, y - 70, 100, 50);
         bOK   = new Button(p5, "OK", x+w/3+200, y - 70, 50, 50);
     }

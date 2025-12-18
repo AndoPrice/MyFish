@@ -97,19 +97,22 @@ public class MyFish extends PApplet {
     }
 
     public void mousePressed(){
-        if ( gui.b1.mouseOverButton( this )) {
-            println(" B1 has been pressed!!! ");
-            gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
-        }
-        if ( gui.b2.mouseOverButton( this )){
-            println( " B2 has been pressed!!! " );
-            gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
-        }
-        if ( gui.b3.mouseOverButton( this )) {
-            println( " B3 has been pressed!!! " );
-        }
-        if ( gui.b4.mouseOverButton( this )) {
-            println( " B4 has been pressed!!! " );
+
+        if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
+            if (gui.b1.mouseOverButton(this)) {
+                println(" B1 has been pressed!!! ");
+                gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
+            }
+            else if (gui.b2.mouseOverButton(this)) {
+                println(" B2 has been pressed!!! ");
+                gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
+            }
+            else if (gui.b3.mouseOverButton(this)) {
+                println(" B3 has been pressed!!! ");
+            }
+            else if (gui.b4.mouseOverButton(this)) {
+                println(" B4 has been pressed!!! ");
+            }
         }
         if (gui.homeB.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.INICIO;
@@ -170,6 +173,7 @@ public class MyFish extends PApplet {
         if(gui.cp1.bOK.mouseOverButton(this) && gui.cp1.isDateSelected()){
             gui.dataCalendari = gui.cp1.getSelectedDate();
             gui.cp1.setVisible(false);
+            gui.bCal.setTextBoto(gui.dataCalendari);
         }
 
 

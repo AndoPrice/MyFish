@@ -69,7 +69,7 @@ public class TextList {
             for (int i=0; i<texts.length; i++) {
                 if (texts[i].toLowerCase().startsWith(searchFor.toLowerCase())) {
                     Button b = new Button(p5, texts[i], x + 10, y + h + 50 + (h + 50)*numMatchs, w, h);
-                    b.setColors(colors);
+                    b.setBlues(colors);
                     buttons.add(b);
                     this.numMatchs++;
                     if (this.numMatchs==5) {
