@@ -1,13 +1,20 @@
+import Graphics.Button;
 import Graphics.Fonts;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
+
+import java.io.File;
 
 public class MyFish extends PApplet {
 
     GUI gui;
     public PImage logo, home, mes, menys;
     PShape add, list, stat, info;
+
+    PImage uploadImage;
+    Graphics.Button uploadB;
+    String titol = "";
 
 
     Fonts fontsApp;
@@ -53,8 +60,7 @@ public class MyFish extends PApplet {
         setShapeColor(info, gui.colors.getAzure());
         //setShapeColor(logoI, gui.colors.getAzure());
 
-
-
+        uploadB = new Button(this, "IMAGE", 50, height-120, 200, 80);
 
 
     }
@@ -75,8 +81,39 @@ public class MyFish extends PApplet {
 
         }
         updateCursor(this);
+        if(gui.pantallaActual== GUI.PANTALLA.REGISTRAR_CAPTURA){
+            if(uploadImage!=null){
+                image(uploadImage, 150, 275, 520, 520);
+                textSize(34); textAlign(RIGHT);
+                fill(0);
+                text(titol, 750, 750);
+            }
+            else{
+                fill(200);
+                rect(150, 275, 520, 520);
+                textSize(34); textAlign(RIGHT);
+                text("Sense imatge", 750, 750);
+            }
+
+            // Dibuixa el botó
+            uploadB.display(this);
+        }
 
     }
+
+    public void fileSelected(File selection) {
+        if (selection == null) {
+            println("No s'ha seleccionat cap fitxer.");
+        } else {
+
+            // Obtenim la ruta del fitxer seleccionat
+            String rutaImatge = selection.getAbsolutePath();
+
+            uploadImage = loadImage(rutaImatge);  // Actualitzam imatge
+            titol = selection.getName();  // Actualitzam títol
+        }
+    }
+
     public void keyPressed(){
         if(key=='0'){
             gui.pantallaActual = GUI.PANTALLA.INICIO;
@@ -174,6 +211,13 @@ public class MyFish extends PApplet {
             gui.dataCalendari = gui.cp1.getSelectedDate();
             gui.cp1.setVisible(false);
             gui.bCal.setTextBoto(gui.dataCalendari);
+        }
+
+        if(gui.pantallaActual== GUI.PANTALLA.REGISTRAR_CAPTURA){
+            if(uploadB.mouseOverButton(this)){
+                // Obrim el dialeg
+                selectInput("Selecciona una imatge ...", "fileSelected");
+            }
         }
 
 
