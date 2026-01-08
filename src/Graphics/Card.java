@@ -11,13 +11,15 @@ public class Card {
     TextField txtField;
     Button boto;
     float x, y, w, h;
+    Fonts fonts;
 
     public Card(PApplet p5, String titol, float x, float y, float w, float h){
         this.titol = titol;
         this.x = x; this.y = y;
         this.w = w; this.h = h;
+        fonts = new Fonts(p5);
 
-        this.txtField = new TextField(p5, "", (int)x+5, (int)(y+h/2), (int)w-10, 25 );
+        this.txtField = new TextField(p5, "", (int)x+5, (int)(y+h/2), (int)w-10, 25, fonts.getFirstFont());
         this.boto = new Button(p5, "Ver", (int)x+5, (int)(y+h/2+30), (int)w-10, 25 );
 
     }

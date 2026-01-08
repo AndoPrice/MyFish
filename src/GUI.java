@@ -10,6 +10,8 @@ public class GUI {
     PImage logo;
     PFont bebasNeue;
 
+    Fonts fonts;
+
     Button b1, b2, b3, b4, nextPage, previousPage, bCal, b5;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
@@ -52,6 +54,7 @@ public class GUI {
         colors = new Colors(p5);
 
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
+        fonts = new Fonts(p5);
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
         b1.setBlues(colors);
@@ -62,7 +65,7 @@ public class GUI {
         b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
         b4.setBlues(colors);
 
-        b5 = new Button(p5, "REGISTRAR", p5.width/2+50+300, 825, 100, 50);
+        b5 = new Button(p5, "REGISTRAR", p5.width/2+350, 800, 100, 50);
         b5.setBlues(colors);
 
 
@@ -77,10 +80,10 @@ public class GUI {
         ib4.setColors(colors);
         this.homeB = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, home);
 
-        t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 100);
-        t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50);
-        t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50);
-        t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50);
+        t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 100, fonts.getFontAt(2));
+        t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50, fonts.getFirstFont());
+        t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50, fonts.getFirstFont());
+        t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50, fonts.getFirstFont());
         tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
 
 
@@ -148,7 +151,13 @@ public class GUI {
 
         // Text amb data seleccionada
         p5.fill(0); p5.textAlign(p5.LEFT); p5.textSize(24);
-        p5.text(dataCalendari, p5.width/2+350, 500);
+        //p5.text(dataCalendari, p5.width/2+350, 500);
+
+        p5.pushStyle();
+        p5.fill(colors.getAzure());
+        p5.textSize(24); p5.textAlign(p5.LEFT, p5.BOTTOM);p5.textFont(fonts.getFirstFont());
+        p5.text("Fecha: ", p5.width/2+355, 500-10);
+        p5.popStyle();
 
         bCal.display(p5);
         t4.display(p5);

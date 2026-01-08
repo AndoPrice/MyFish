@@ -22,9 +22,13 @@ public class TextList {
 
     Colors colors;
 
+    Fonts fonts;
+
+
     public TextList(PApplet p5, String name, String[] texts, float x, float y, float w, float h) {
 
         colors = new Colors(p5);
+        fonts = new Fonts(p5);
 
         this.texts = texts;
         this.selectedId = "";
@@ -35,7 +39,7 @@ public class TextList {
         this.h = h;
         this.enabled = true;
 
-        this.textField = new TextField(p5, name, (int)x, (int)y, (int)w, (int)h);
+        this.textField = new TextField(p5, name, (int)x, (int)y, (int)w, (int)h, fonts.getFirstFont());
         this.buttons = new ArrayList<Button>();
     }
 
@@ -68,7 +72,8 @@ public class TextList {
         if (searchFor.length() > 0) {
             for (int i=0; i<texts.length; i++) {
                 if (texts[i].toLowerCase().startsWith(searchFor.toLowerCase())) {
-                    Button b = new Button(p5, texts[i], x + 10, y + h + 50 + (h + 50)*numMatchs, w, h);
+                    float espai = 10;
+                    Button b = new Button(p5, texts[i], x, y + h + 10 + (h + espai)*numMatchs, w, h);
                     b.setBlues(colors);
                     buttons.add(b);
                     this.numMatchs++;

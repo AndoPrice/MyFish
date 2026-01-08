@@ -10,6 +10,7 @@ public class TextField {
     int x, y, h, w;
 
     PFont bebasNeue;
+    PFont font;
 
 
     int bgColor, fgColor, selectedColor, borderColor;
@@ -23,7 +24,7 @@ public class TextField {
     public boolean selected = false;
 
 
-    public TextField(PApplet p5, String name, int x, int y, int w, int h) {
+    public TextField(PApplet p5, String name, int x, int y, int w, int h, PFont font) {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.bgColor = p5.color(20, 93, 160);
         this.fgColor = p5.color(20, 93, 160);
@@ -34,6 +35,7 @@ public class TextField {
         System.out.println(p5.width);
         System.out.println(p5.height);
         this.name = name;
+        this.font = font;
     }
 
 
@@ -49,8 +51,8 @@ public class TextField {
         p5.rect(x, y, w, h, 5);
 
         p5.fill(fgColor);
-        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);p5.textFont(bebasNeue);
-        p5.text(text, x + 5, y + h - textSize);
+        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);p5.textFont(font);
+        p5.text(text, x + 5, y + textSize);
         p5.popStyle();
 
         p5.fill(fgColor); p5.textFont(bebasNeue); p5.textAlign(p5.LEFT, p5.BOTTOM);

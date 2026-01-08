@@ -60,7 +60,8 @@ public class MyFish extends PApplet {
         setShapeColor(info, gui.colors.getAzure());
         //setShapeColor(logoI, gui.colors.getAzure());
 
-        uploadB = new Button(this, "IMAGE", 50, height-120, 200, 80);
+        uploadB = new Button(this, "IMAGEN", 150, 800, 100, 50);
+        uploadB.setBlues(gui.colors);
 
 
     }
@@ -83,16 +84,15 @@ public class MyFish extends PApplet {
         updateCursor(this);
         if(gui.pantallaActual== GUI.PANTALLA.REGISTRAR_CAPTURA){
             if(uploadImage!=null){
+                imageMode(CORNER);
                 image(uploadImage, 150, 275, 520, 520);
                 textSize(34); textAlign(RIGHT);
                 fill(0);
-                text(titol, 750, 750);
             }
             else{
                 fill(200);
                 rect(150, 275, 520, 520);
                 textSize(34); textAlign(RIGHT);
-                text("Sense imatge", 750, 750);
             }
 
             // Dibuixa el botó
