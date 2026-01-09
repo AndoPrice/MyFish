@@ -65,7 +65,7 @@ public class GUI {
         b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
         b4.setBlues(colors);
 
-        b5 = new Button(p5, "REGISTRAR", p5.width/2+350, 800, 100, 50);
+        b5 = new Button(p5, "REGISTRAR", p5.width/2+450, 800, 100, 50);
         b5.setBlues(colors);
 
 
@@ -80,7 +80,7 @@ public class GUI {
         ib4.setColors(colors);
         this.homeB = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, home);
 
-        t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 100, fonts.getFontAt(2));
+        t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 90, fonts.getFontAt(2));
         t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50, fonts.getFirstFont());
         t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50, fonts.getFirstFont());
         t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50, fonts.getFirstFont());
