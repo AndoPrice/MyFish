@@ -12,7 +12,7 @@ public class GUI {
 
     Fonts fonts;
 
-    Button b1, b2, b3, b4, nextPage, previousPage, bCal, b5;
+    Button b1, b2, b3, b4, nextPage, previousPage, bCal, registrar;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
@@ -65,8 +65,8 @@ public class GUI {
         b4 = new Button(p5, "INFORMACIÓN DE PECES", p5.width/2-100, 700, 200, 80);
         b4.setBlues(colors);
 
-        b5 = new Button(p5, "REGISTRAR", p5.width/2+450, 800, 100, 50);
-        b5.setBlues(colors);
+        registrar = new Button(p5, "REGISTRAR", p5.width/2+450, 800, 100, 50);
+        registrar.setBlues(colors);
 
 
 
@@ -101,9 +101,9 @@ public class GUI {
         registro.setData(this.capturas);
         registro.setColumnWidths(colWidths);
 
-        previousPage = new Button(p5, "<", p5.width/2-20,775, 30, 30 );
+        previousPage = new Button(p5, "<", p5.width/2-40,775, 30, 30 );
         previousPage.setBlues(colors);
-        nextPage = new Button(p5, ">", p5.width/2+20,775, 30, 30 );
+        nextPage = new Button(p5, ">", p5.width/2+10,775, 30, 30 );
         nextPage.setBlues(colors);
 
 
@@ -183,7 +183,7 @@ public class GUI {
         tl1.display(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
-        b5.display(p5);
+        registrar.display(p5);
         dibujaTextFieldRegistrar(p5);
 
 

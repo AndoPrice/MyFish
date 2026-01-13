@@ -162,26 +162,33 @@ public class MyFish extends PApplet {
         if (gui.ib2.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
         }
+        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
-        gui.t1.isPressed(this);
-        gui.t2.isPressed(this);
-        gui.t3.isPressed(this);
-        gui.t4.isPressed(this);
+            gui.t1.isPressed(this);
+            gui.t2.isPressed(this);
+            gui.t3.isPressed(this);
+            gui.t4.isPressed(this);
 
-        gui.tl1.getTextField().isPressed(this);
-        gui.tl1.buttonPressed(this);
+            gui.tl1.getTextField().isPressed(this);
+            gui.tl1.buttonPressed(this);
 
-        if(gui.tamano.mouseOverButtonMes(this)){
-            gui.tamano.increment();
-        }
-        if(gui.tamano.mouseOverButtonMenys(this)){
-            gui.tamano.decrement();
-        }
-        if(gui.peso.mouseOverButtonMes(this)){
-            gui.peso.increment();
-        }
-        if(gui.peso.mouseOverButtonMenys(this)){
-            gui.peso.decrement();
+            if (gui.tamano.mouseOverButtonMes(this)) {
+                gui.tamano.increment();
+            }
+            if (gui.tamano.mouseOverButtonMenys(this)) {
+                gui.tamano.decrement();
+            }
+
+            if (gui.peso.mouseOverButtonMes(this)) {
+                gui.peso.increment();
+            }
+            if (gui.peso.mouseOverButtonMenys(this)) {
+                gui.peso.decrement();
+            }
+
+            if(gui.registrar.mouseOverButton(this)){
+                gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;
+            }
         }
 
         if(gui.nextPage.mouseOverButton(this)){
