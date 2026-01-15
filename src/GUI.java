@@ -30,7 +30,7 @@ public class GUI {
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)"};
     float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
-    String[][] capturas = {
+    String[][] capturasF = {
             {"20/10/25", "Barracuda", "2", "60"},
             {"19/10/25", "Bacoreta", "1", "40"},
             {"17/10/25", "Llampuga", "3", "65"},
@@ -39,6 +39,50 @@ public class GUI {
             {"1/10/25", "Dorada", "1", "34"},
             {"1/10/25", "Mero", "5", "70"},
 
+    };
+    Especie[] especies = {
+            new Especie(
+                    "Llampuga",
+                    "Coryphaena hippurus",
+                    "Cuerpo muy alargado, destaca por su gran cabeza y frente redondeada. Color azul y amarillento, aletas pectorales negras. Puede alcanzar alrededor de 100 cm de longitud.",
+                    "Frecuenta la superficie marina entre 5 y 10 metros de profundidad. Aunque a veces se acerca a la costa, es más común encontrarla en alta mar.",
+                    "Su alimentación es muy variada: peces, zooplancton, crustáceos y calamares.",
+                    "Forma bancos y es una especie migratoria.",
+                    "N/C"
+            ),
+            new Especie(
+                    "Lubina",
+                    "Dicentrarchus labrax",
+                    "Cuerpo alargado con morro pronunciado y elevado. Color gris plateado. En edad adulta mide entre 60 y 90 cm. Cola ligeramente dividida.",
+                    "Cerca de la costa, sobre bancos de arena, zonas portuarias o rocosas, desde la superficie hasta los 30 metros de profundidad.",
+                    "Depredador de crustáceos, gusanos marinos y peces pequeños. Se reproduce en invierno.",
+                    "Nada constantemente sin detenerse en el fondo.",
+                    "25 cm"
+            ),
+            new Especie(
+                    "Bacoreta",
+                    "Euthynnus alletteratus",
+                    "Cuerpo alargado y sin escamas en forma de proyectil, muy similar al atún rojo. Dorso azulado que tiende al plateado, aleta caudal en forma de media luna y manchas oscuras en el vientre. Puede superar el metro de longitud.",
+                    "Especie pelágica que se concentra en aguas cálidas de la costa. Durante la caza suele asociarse con gaviotas u otras aves marinas.",
+                    "Depredador de pequeños peces como anchoas o sardinas. Ocasionalmente se alimenta de crustáceos o calamares.",
+                    "Forma cardúmenes en aguas costeras y habita desde la superficie hasta los 150 metros de profundidad.",
+                    "N/C"
+            ),
+            new Especie(
+                    "Espetón",
+                    "Sphyraena sphyraena",
+                    "Cuerpo muy alargado y fino en forma de aguja, con gran boca puntiaguda. Color gris azulado con bandas verticales oscuras en el lomo. Puede alcanzar hasta 1 metro de longitud.",
+                    "Habita el litoral entre 5 y 100 metros de profundidad, sobre fondos arenosos o formaciones rocosas sumergidas.",
+                    "Depredador que se alimenta de peces, pulpos y camarones.",
+                    "Suele formar bancos y nadar cerca de la superficie para cazar, utilizando una visión aérea para sorprender a sus presas.",
+                    "N/C"
+            )
+    };
+    Catch[] capturas = {
+           new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
+            new Catch(searchSpecies(especies, "Espetón"), 1, 45, "Cala Millor","28/10/25", "Minnow", "Lucha dura"),
+            new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","2/11/25", "Paseante", "Nada"),
+            new Catch(searchSpecies(especies, "Bacoreta"), 0.5f, 34, "Alcúdia","20/10/25", "Popper", "Nada"),
     };
     Card c1;
     CalendariPlus cp1;
@@ -98,7 +142,7 @@ public class GUI {
 
         registro = new PagedTable(6, 4);
         registro.setHeaders(registroHeaders);
-        registro.setData(this.capturas);
+        registro.setData(this.capturasF);
         registro.setColumnWidths(colWidths);
 
         previousPage = new Button(p5, "<", p5.width/2-40,775, 30, 30 );
@@ -107,7 +151,7 @@ public class GUI {
         nextPage.setBlues(colors);
 
 
-        c1 = new Card(p5, "Pez más pesado", 200, 200, 300, 500);
+
 
         cp1 = new CalendariPlus(p5,p5.width/2, 500,350,275);
         bCal = new Button(p5, "  /  /  ", p5.width/2+350, 500, 200, 50);
@@ -205,6 +249,16 @@ public class GUI {
     public void dibujaLogo(PApplet p5){
         p5.imageMode(p5.CENTER);
         p5.image(logo, p5.width/2, 250);
+    }
+
+    public Especie searchSpecies(Especie[] especies, String name){
+        for (int i=0; i<especies.length; i++){
+            if(especies[i].commonName==name){
+                return especies[i];
+            }
+
+        }
+        return null;
     }
 
 

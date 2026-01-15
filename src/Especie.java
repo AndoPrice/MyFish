@@ -1,4 +1,4 @@
-public class Fish {
+public class Especie {
 
     String commonName;
     String scientificName;
@@ -8,7 +8,8 @@ public class Fish {
     String behaviour;
     String minLength;
 
-    public Fish(String commonName, String scientificName, String description, String location, String moreInfo, String behaviour, String minLength) {
+
+    public Especie(String commonName, String scientificName, String description, String location, String moreInfo, String behaviour, String minLength) {
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.description = description;

@@ -4,45 +4,104 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 
+
 public class Card {
 
+    // Propietats
     PImage img;
-    String titol;
-    TextField txtField;
-    Button boto;
-    float x, y, w, h;
-    Fonts fonts;
+    String title, place, date;
+    String section;
+    String description;
 
-    public Card(PApplet p5, String titol, float x, float y, float w, float h){
-        this.titol = titol;
-        this.x = x; this.y = y;
-        this.w = w; this.h = h;
-        fonts = new Fonts(p5);
+    // Dimensions
+    float x, y, w, h, b;
 
-        this.txtField = new TextField(p5, "", (int)x+5, (int)(y+h/2), (int)w-10, 25, fonts.getFirstFont());
-        this.boto = new Button(p5, "Ver", (int)x+5, (int)(y+h/2+30), (int)w-10, 25 );
+    // Constructors
 
+    public Card(){
     }
 
-    public void display(PApplet p5){
+    public Card(String titulo){
+        this.title = titulo;
+        this.place = place;
+        this.date = date;
+        this.section = section;
+        this.description = description;
+    }
+
+    public Card(String[] info){
+        this.title = info[0];
+        this.place = info[1];
+        this.date = info[2];
+        this.section = info[3];
+        this.description = info[4];
+    }
+
+    //Setters
+
+    public void setDimensions(float x, float y, float w, float h, float b){
+        this.x = x; this.y = y;
+        this.w = w; this.h = h;
+        this.b = b;
+    }
+
+    public void setImage(PImage img){
+        this.img = img;
+    }
+
+    // Dibuixa la Card
+
+    public void display(PApplet p5, boolean selectedCard){
+
         p5.pushStyle();
-        p5.rect(x, y, w, h, 5);
-        p5.popStyle();
 
-        if( img == null){
-            p5.rectMode(PConstants.CORNER);
-            p5.rect(x+5, y+5, w-10, h/4);
+        // Rectangle inferior
+        p5.stroke(0);
+        if(selectedCard){
+            p5.fill(200, 100, 100);
         }
-        else{
-            p5.image(img, x+5, y+5, w-10, h/4);
+        else if(this.mouseOver(p5)){
+            p5.fill(200);
         }
+        else {
+            p5.fill(220);
+        }
+        p5.rect(x, y, w, h, b/2);
 
-        p5.fill(0);
-        p5.text(titol, x+5, h/4+15);
+        // imatge descriptiva
+        float imgW = (w/3) - 2*b;
+        float imgH = h - 2*b;
+        if(img!=null){
+            p5.image(img, x + b, y + b, imgW, imgH);
+            p5.noFill(); p5.rect(x + b, y + b, imgW, imgH);
+        }
+        else {
+            p5.fill(50);
+        }
+        p5.rect(x + b, y + b, imgW, imgH);
 
-        txtField.display(p5);
-        boto.display(p5);
+        // Títol
+        p5.fill(0); p5.textSize(24); p5.textAlign(p5.CENTER);
+        p5.text(title, x + 2*w/3, y + h/5);
+
+        // Lloc i data
+        p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
+        p5.text(place+", "+date, x + w/3 + w/6, y + 2*h/5);
+
+        // Secció
+        p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
+        p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
+
+        // Descripció
+        p5.fill(0); p5.textSize(14); p5.textAlign(p5.LEFT);
+        p5.text(description, x + w/3 + b, y + 2*h/3 - b, 2*w/3 - b*2, h/4);
+
 
         p5.popStyle();
+    }
+
+    public boolean mouseOver(PApplet p5){
+        return this.x < p5.mouseX && p5.mouseX < this.x + this.w &&
+                this.y < p5.mouseY && p5.mouseY < this.y + this.h;
     }
 }
