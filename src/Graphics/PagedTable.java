@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public class PagedTable {
     String[] tableHeaders;   // Títols de les columnes
-    String[][] tableData;    // Dades de la taula
+    Catch[] tableData;    // Dades de la taula
     float[] columnWidths;    // Amplades de les columnes
 
     int numCols, numRows;  // Número de files i columnes
@@ -25,7 +25,7 @@ public class PagedTable {
         this.tableHeaders = h;
     }
 
-    public void setData(String[][] d){
+    public void setData(Catch[] d){
         this.tableData = d;
         if(d.length % (this.numRows-1)==0){
             this.numTotalPages = (d.length / (this.numRows-1)) -1;

@@ -82,7 +82,14 @@ public class GUI {
            new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
             new Catch(searchSpecies(especies, "Espetón"), 1, 45, "Cala Millor","28/10/25", "Minnow", "Lucha dura"),
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","2/11/25", "Paseante", "Nada"),
-            new Catch(searchSpecies(especies, "Bacoreta"), 0.5f, 34, "Alcúdia","20/10/25", "Popper", "Nada"),
+            new Catch(searchSpecies(especies, "Bacoreta"), 0.5f, 34, "Alcúdia","20/11/25", "Popper", ""),
+            new Catch(searchSpecies(especies, "Bacoreta"), 0.8f, 40, "Porto Cristo","23/11/25", "Spotter", "Nada"),
+            new Catch(searchSpecies(especies, "Llampuga"), 3, 55, "Sa Coma","26/11/25", "Bombeta", ""),
+            new Catch(searchSpecies(especies, "Llampuga"), 4, 62, "Sa Coma","3/11/25", "Paseante", "PR"),
+            new Catch(searchSpecies(especies, "Lubina"), 0.7f, 32, "Alcúdia","4/12/25", "Paseante", ""),
+
+
+
     };
     Card c1;
     CalendariPlus cp1;
@@ -142,7 +149,7 @@ public class GUI {
 
         registro = new PagedTable(6, 4);
         registro.setHeaders(registroHeaders);
-        registro.setData(this.capturasF);
+        registro.setData(this.capturas);
         registro.setColumnWidths(colWidths);
 
         previousPage = new Button(p5, "<", p5.width/2-40,775, 30, 30 );
