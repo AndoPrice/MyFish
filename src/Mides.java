@@ -1,5 +1,3 @@
-package Graphics;
-
 public class Mides {
     public static float midaTitol = 36;
     public static float midaSubtitol = 22;

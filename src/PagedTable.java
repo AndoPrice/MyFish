@@ -1,10 +1,8 @@
-package Graphics;
-
 import processing.core.PApplet;
 
 public class PagedTable {
     String[] tableHeaders;   // Títols de les columnes
-    Catch[] tableData;    // Dades de la taula
+    String[][] tableData;    // Dades de la taula
     float[] columnWidths;    // Amplades de les columnes
 
     int numCols, numRows;  // Número de files i columnes
@@ -25,7 +23,7 @@ public class PagedTable {
         this.tableHeaders = h;
     }
 
-    public void setData(Catch[] d){
+    public void setData(String[][] d){
         this.tableData = d;
         if(d.length % (this.numRows-1)==0){
             this.numTotalPages = (d.length / (this.numRows-1)) -1;
@@ -35,9 +33,9 @@ public class PagedTable {
         }
     }
 
-    public void setValueAt(String value, int nr, int nc){
+    /*public void setValueAt(String value, int nr, int nc){
         this.tableData[nr][nc] = value;
-    }
+    }*/
 
     public void setColumnWidths(float[] w){
         this.columnWidths = w;

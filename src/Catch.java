@@ -1,5 +1,5 @@
-public class Catch extends Especie {
-    String especie;
+public class Catch{
+    Especie especie;
     float peso;
     float tamano;
     String ubicacion;
@@ -7,8 +7,8 @@ public class Catch extends Especie {
     String senuelo;
     String notas;
 
-    public Catch(Especie f, float peso, float tamano, String ubicacion, String fecha, String senuelo, String notas) {
-        this.especie = f.commonName;
+    public Catch(Especie e, float peso, float tamano, String ubicacion, String fecha, String senuelo, String notas) {
+        this.especie = e;
         this.peso = peso;
         this.tamano = tamano;
         this.ubicacion = ubicacion;

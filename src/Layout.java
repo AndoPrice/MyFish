@@ -1,5 +1,3 @@
-package Graphics;
-
 public class Layout {
     // Marges Horitzontal i Vertical
     public static float marginH = 20, marginV = 20;

@@ -1,4 +1,3 @@
-import Graphics.*;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -149,7 +148,7 @@ public class GUI {
 
         registro = new PagedTable(6, 4);
         registro.setHeaders(registroHeaders);
-        registro.setData(this.capturas);
+        registro.setData(catchesToTableData(this.capturas));
         registro.setColumnWidths(colWidths);
 
         previousPage = new Button(p5, "<", p5.width/2-40,775, 30, 30 );
@@ -266,6 +265,21 @@ public class GUI {
 
         }
         return null;
+    }
+
+    public String[][] catchesToTableData(Catch[] capturas) {
+        String[][] data = new String[capturas.length][4];
+
+        for (int i = 0; i < capturas.length; i++) {
+            Catch c = capturas[i];
+
+            data[i][0] = c.fecha;
+            data[i][1] = c.especie.commonName;
+            data[i][2] = String.valueOf(c.peso);
+            data[i][3] = String.valueOf(c.tamano);
+        }
+
+        return data;
     }
 
 

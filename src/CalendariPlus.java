@@ -1,5 +1,3 @@
-package Graphics;
-
 import processing.core.PApplet;
 
 public class CalendariPlus extends Calendari {

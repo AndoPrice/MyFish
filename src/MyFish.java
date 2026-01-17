@@ -1,5 +1,3 @@
-import Graphics.Button;
-import Graphics.Fonts;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
@@ -13,7 +11,7 @@ public class MyFish extends PApplet {
     PShape add, list, stat, info;
 
     PImage uploadImage;
-    Graphics.Button uploadB;
+    Button uploadB;
     String titol = "";
 
 

@@ -1,5 +1,3 @@
-package Graphics;
-
 import processing.core.PApplet;
 import processing.core.PFont;
 

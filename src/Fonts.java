@@ -1,9 +1,7 @@
-package Graphics;
-
 import processing.core.PApplet;
 import processing.core.PFont;
 
-import static Graphics.Mides.*;
+
 
 public class Fonts {
 
@@ -16,7 +14,7 @@ public class Fonts {
     public void setFonts(PApplet p5){
         this.fonts = new PFont[3];
         this.fonts[0] = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
-        this.fonts[1] = p5.createFont("data/Fonts/LEMONMILK-Regular.otf", midaSubtitol);
+        this.fonts[1] = p5.createFont("data/Fonts/LEMONMILK-Regular.otf", Mides.midaSubtitol);
         this.fonts[2] = p5.createFont("data/Fonts/Coolvetica Rg.otf", 20);
     }
 
