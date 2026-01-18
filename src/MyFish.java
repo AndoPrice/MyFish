@@ -77,6 +77,11 @@ public class MyFish extends PApplet {
             case VER_REGISTRO:     gui.dibujaPantallaVerRegistro(this);
                 break;
 
+            case ESTADISTICAS:     gui.dibujaPantallaEstadisticas(this);
+                break;
+
+
+
 
         }
         updateCursor(this);
@@ -113,12 +118,6 @@ public class MyFish extends PApplet {
     }
 
     public void keyPressed(){
-        if(key=='0'){
-            gui.pantallaActual = GUI.PANTALLA.INICIO;
-        }
-        else if(key=='1'){
-            gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
-        }
 
         gui.t1.keyPressed(key, keyCode);
         gui.t2.keyPressed(key, keyCode);
@@ -144,6 +143,7 @@ public class MyFish extends PApplet {
             }
             else if (gui.b3.mouseOverButton(this)) {
                 println(" B3 has been pressed!!! ");
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
             }
             else if (gui.b4.mouseOverButton(this)) {
                 println(" B4 has been pressed!!! ");
@@ -160,6 +160,10 @@ public class MyFish extends PApplet {
         if (gui.ib2.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
         }
+        if (gui.ib3.mouseOverButton(this)) {
+            gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+        }
+
         if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
             gui.t1.isPressed(this);
@@ -187,42 +191,45 @@ public class MyFish extends PApplet {
             if(gui.registrar.mouseOverButton(this)){
                 gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;
             }
-        }
+            // Comprovar si clicam sobre botons del Calendari
+            gui.cp1.checkButtons(this);
 
-        if(gui.nextPage.mouseOverButton(this)){
-            gui.registro.nextPage();
-        }
-        if(gui.previousPage.mouseOverButton(this)){
-            gui.registro.prevPage();
-        }
-
-        // Comprovar si clicam sobre botons del Calendari
-        gui.cp1.checkButtons(this);
-
-        // Si pitja el botó, canvia la visibilitat del calendari.
-        if(gui.bCal.mouseOverButton(this)&&gui.bCal.isEnabled()){
-            gui.cp1.toggleVisibility();
-        }
-        // Si pitjam el botó de Next, canviarà al seguent mes
-        if(gui.cp1.bNext.mouseOverButton(this)){
-            gui.cp1.nextMonth();
-        }
-        // Si pitjam el botó de Prev, canviarà al mes anterior
-        if(gui.cp1.bPrev.mouseOverButton(this)){
-            gui.cp1.prevMonth();
-        }
-        // Si pitjam el botó de OK, confirmarà la data seleccionada i amagarà el calendari
-        if(gui.cp1.bOK.mouseOverButton(this) && gui.cp1.isDateSelected()){
-            gui.dataCalendari = gui.cp1.getSelectedDate();
-            gui.cp1.setVisible(false);
-            gui.bCal.setTextBoto(gui.dataCalendari);
-        }
-
-        if(gui.pantallaActual== GUI.PANTALLA.REGISTRAR_CAPTURA){
+            // Si pitja el botó, canvia la visibilitat del calendari.
+            if(gui.bCal.mouseOverButton(this)&&gui.bCal.isEnabled()){
+                gui.cp1.toggleVisibility();
+            }
+            // Si pitjam el botó de Next, canviarà al seguent mes
+            if(gui.cp1.bNext.mouseOverButton(this)){
+                gui.cp1.nextMonth();
+            }
+            // Si pitjam el botó de Prev, canviarà al mes anterior
+            if(gui.cp1.bPrev.mouseOverButton(this)){
+                gui.cp1.prevMonth();
+            }
+            // Si pitjam el botó de OK, confirmarà la data seleccionada i amagarà el calendari
+            if(gui.cp1.bOK.mouseOverButton(this) && gui.cp1.isDateSelected()){
+                gui.dataCalendari = gui.cp1.getSelectedDate();
+                gui.cp1.setVisible(false);
+                gui.bCal.setTextBoto(gui.dataCalendari);
+            }
             if(uploadB.mouseOverButton(this)){
                 // Obrim el dialeg
                 selectInput("Selecciona una imatge ...", "fileSelected");
             }
+        }
+
+        if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
+            if(gui.nextPage.mouseOverButton(this)){
+                gui.registro.nextPage();
+            }
+            if(gui.previousPage.mouseOverButton(this)) {
+                gui.registro.prevPage();
+            }
+        }
+
+
+        if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS){
+
         }
 
 

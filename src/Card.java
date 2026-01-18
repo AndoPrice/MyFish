@@ -2,12 +2,23 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 
+
+
 public class Card {
+
+
+    enum CardType {
+        CATCH,      // más pesada, más larga
+        SPECIES,    // especie más común
+        AVERAGE     // peso medio, tamaño medio
+    }
+
+    CardType type;
 
     // Propietats
     PImage img;
     String title, place, date;
-    String section;
+    String species;
     String description;
 
     // Dimensions
@@ -18,11 +29,12 @@ public class Card {
     public Card(){
     }
 
-    public Card(String titulo){
-        this.title = titulo;
+    public Card(CardType type, String title, String place, String date, String species, String description) {
+        this.type = type;
+        this.title = title;
         this.place = place;
         this.date = date;
-        this.section = section;
+        this.species = species;
         this.description = description;
     }
 
@@ -30,7 +42,6 @@ public class Card {
         this.title = info[0];
         this.place = info[1];
         this.date = info[2];
-        this.section = info[3];
         this.description = info[4];
     }
 
@@ -52,7 +63,6 @@ public class Card {
 
         p5.pushStyle();
 
-        // Rectangle inferior
         p5.stroke(0);
         if(selectedCard){
             p5.fill(200, 100, 100);
@@ -63,37 +73,30 @@ public class Card {
         else {
             p5.fill(220);
         }
-        p5.rect(x, y, w, h, b/2);
 
-        // imatge descriptiva
-        float imgW = (w/3) - 2*b;
-        float imgH = h - 2*b;
-        if(img!=null){
-            p5.image(img, x + b, y + b, imgW, imgH);
-            p5.noFill(); p5.rect(x + b, y + b, imgW, imgH);
+        p5.stroke(60, 130, 200);
+        p5.strokeWeight(2);
+        p5.fill(245);
+        p5.rect(x, y, w, h, b);
+
+
+        p5.fill(20, 93, 160);
+        p5.textFont(p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26));
+        p5.textSize(32);
+        p5.textAlign(p5.CENTER);
+        p5.text(title, x + w/2, y + b*2);
+
+
+
+        if (type == CardType.CATCH) {
+            drawCatchCard(p5);
         }
-        else {
-            p5.fill(50);
+        else if (type == CardType.SPECIES) {
+            drawSpeciesCard(p5);
         }
-        p5.rect(x + b, y + b, imgW, imgH);
-
-        // Títol
-        p5.fill(0); p5.textSize(24); p5.textAlign(p5.CENTER);
-        p5.text(title, x + 2*w/3, y + h/5);
-
-        // Lloc i data
-        p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
-        p5.text(place+", "+date, x + w/3 + w/6, y + 2*h/5);
-
-        // Secció
-        p5.fill(0); p5.textSize(18); p5.textAlign(p5.CENTER);
-        p5.text(section, x + 2*w/3 + w/6, y + 2*h/5);
-
-        // Descripció
-        p5.fill(0); p5.textSize(14); p5.textAlign(p5.LEFT);
-        p5.text(description, x + w/3 + b, y + 2*h/3 - b, 2*w/3 - b*2, h/4);
-
-
+        else if (type == CardType.AVERAGE) {
+            drawAverageCard(p5);
+        }
         p5.popStyle();
     }
 
@@ -101,4 +104,48 @@ public class Card {
         return this.x < p5.mouseX && p5.mouseX < this.x + this.w &&
                 this.y < p5.mouseY && p5.mouseY < this.y + this.h;
     }
+
+    void drawCatchCard(PApplet p5) {
+
+        float imgW = (w/3) - 2*b;
+        float imgH = h - 3*b;
+
+        if (img != null) {
+            p5.image(img, x + b, y + 2*b, imgW, imgH);
+        }
+
+        float tx = x + w/2 + b;
+
+        p5.textAlign(p5.LEFT);
+        p5.textSize(28);
+
+
+        p5.text("ESPECIE: " + species, tx, y + h/3);
+        p5.text(description, tx, y + h/2);
+
+        p5.textSize(26);
+        p5.text(place + " · " + date, tx, y + h - b*2);
+    }
+    void drawSpeciesCard(PApplet p5) {
+
+        float imgW = (w/3) - 2*b;
+        float imgH = h - 3*b;
+
+        if (img != null) {
+            p5.image(img, x + b, y + 2*b, imgW, imgH);
+        }
+
+        p5.textAlign(p5.LEFT);
+        p5.textSize(28);
+
+        p5.text("ESPECIE: " + species, x + w/2 + b, y + h/2);
+        p5.text(description, x + w/2 + b, y + h/2 + 40);
+    }
+    void drawAverageCard(PApplet p5) {
+
+        p5.textAlign(p5.CENTER);
+        p5.textSize(46);
+        p5.text(description, x + w/2, y + h/2+20);
+    }
+
 }

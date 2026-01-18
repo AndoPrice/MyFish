@@ -17,6 +17,8 @@ public class GUI {
 
     DayButton db1;
 
+    Card longCard, heavyCard, mostCommonCard, avgWeightCard, avgLengthCard;
+
     String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
     TextList tl1;
@@ -29,16 +31,6 @@ public class GUI {
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)"};
     float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
-    String[][] capturasF = {
-            {"20/10/25", "Barracuda", "2", "60"},
-            {"19/10/25", "Bacoreta", "1", "40"},
-            {"17/10/25", "Llampuga", "3", "65"},
-            {"16/10/25", "Palometón", "4", "50"},
-            {"5/10/25", "Lubina", "2", "45"},
-            {"1/10/25", "Dorada", "1", "34"},
-            {"1/10/25", "Mero", "5", "70"},
-
-    };
     Especie[] especies = {
             new Especie(
                     "Llampuga",
@@ -168,6 +160,79 @@ public class GUI {
 
         pantallaActual = PANTALLA.INICIO;
         this.logo = logo;
+
+        Catch longest = CatchStats.longestCatch(capturas);
+        longCard = new Card(
+                Card.CardType.CATCH,
+                "Captura más larga",
+                longest.ubicacion,
+                longest.fecha,
+                longest.especie.commonName,
+                "Longitud: " + longest.tamano + " cm"
+        );
+        Catch heavy = CatchStats.heaviestCatch(capturas);
+        heavyCard = new Card(
+                Card.CardType.CATCH,
+                "Captura más pesada",
+                heavy.ubicacion,
+                heavy.fecha,
+                heavy.especie.commonName,
+                "Peso: " + heavy.peso + " kg"
+        );
+        Object[] result = CatchStats.commonSpecies(capturas);
+        Especie especie = (Especie) result[0];
+        int times = (int) result[1];
+        mostCommonCard = new Card(
+                Card.CardType.SPECIES,
+                "Especie más común",
+                "",
+                "",
+                especie.commonName,
+                "Número de capturas: "+times
+        );
+        float avgW = CatchStats.averageWeight(capturas);
+        avgWeightCard = new Card(
+                Card.CardType.AVERAGE,
+                "Peso promedio",
+                "",
+                "",
+                "",
+                 p5.nf(avgW, 1, 2) + " kg"
+        );
+
+        float avgL = CatchStats.averageLength(capturas);
+        avgLengthCard = new Card(
+                Card.CardType.AVERAGE,
+                "Tamaño promedio",
+                "",
+                "",
+                "",
+                p5.nf(avgL, 1, 1) + " cm"
+        );
+        float cw = 450;
+        float ch = 200;
+        float gap = 30;
+        float marginX = 40;
+
+
+        float bigCardW = (p5.width - marginX*2 - gap) / 2;
+        float bigCardH = p5.height*0.28f;
+
+        float mediumCardW = bigCardW;
+        float smallCardW = (bigCardW - gap) / 2;
+        float bottomCardH = p5.height * 0.22f;
+
+        float topY = 275;
+
+        heavyCard.setDimensions(marginX, topY, bigCardW, bigCardH,20);
+        longCard.setDimensions(marginX + bigCardW + gap, topY, bigCardW, bigCardH, 20);
+
+        float bottomY = topY + bigCardH + gap+20;
+
+        mostCommonCard.setDimensions(marginX, bottomY, mediumCardW, bottomCardH, 20);
+        avgWeightCard.setDimensions(marginX + mediumCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+        avgLengthCard.setDimensions(marginX + mediumCardW + gap + smallCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+
     }
 
     public void dibujaBotonesInicio(PApplet p5){
@@ -247,6 +312,19 @@ public class GUI {
         previousPage.display(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("MIS CAPTURAS", p5.width/2, 225);
+
+    }
+    public void dibujaPantallaEstadisticas(PApplet p5){
+        p5.background(255);
+        dibujaBotonesTopBar(p5);
+        p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
+        p5.text("ESTADÍSTICAS", p5.width/2, 225);
+        heavyCard.display(p5, false);
+        longCard.display(p5, false);
+
+        mostCommonCard.display(p5, false);
+        avgWeightCard.display(p5, false);
+        avgLengthCard.display(p5, false);
 
     }
 
