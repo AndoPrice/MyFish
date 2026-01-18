@@ -1,7 +1,5 @@
 import processing.core.PApplet;
 
-import static java.lang.Math.ceil;
-
 public class PagedTable {
     enum TableMode {GRID, LIST}
     TableMode mode = TableMode.GRID;
@@ -17,7 +15,7 @@ public class PagedTable {
     int numPage;
     int numTotalPages;
 
-    public int selectedIndex = -1;
+    private Button[] rowButtons;
 
 
     // Constructor
@@ -149,6 +147,9 @@ public class PagedTable {
 
         float rowHeight = h / numRows;
 
+        int visibleRows = Math.min(numRows, data.length - numPage * numRows);
+        rowButtons = new Button[visibleRows];
+
         for(int r = 0; r < numRows; r++){
 
             int k = numPage * numRows + r;
@@ -156,7 +157,7 @@ public class PagedTable {
 
             float ry = y + r * rowHeight;
 
-            drawListRow(p5, x, ry, w, rowHeight, data[k], k);
+            drawListRow(p5, x, ry, w, rowHeight, data[k], r);
         }
 
         p5.fill(20, 93, 160);
@@ -217,7 +218,23 @@ public class PagedTable {
         b.setBlues(c);
         b.display(p5);
 
+        rowButtons[index] = b;
 
+
+    }
+
+    public Especie handleClick(PApplet p5) {
+        if (rowButtons == null) return null;
+
+        for (int r = 0; r < rowButtons.length; r++) {
+            Button b = rowButtons[r];
+            if (b != null && b.mouseOverButton(p5)) {
+                // Return the corresponding Especie from the current page
+                int dataIndex = numPage * numRows + r;
+                return (Especie) data[dataIndex];
+            }
+        }
+        return null;
     }
 
 }

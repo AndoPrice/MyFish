@@ -22,6 +22,7 @@ public class GUI {
     String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
     TextList tl1;
+    TextBox tb1, tb2, tb3, tb4, tb5;
 
     static TextField t1, t2, t3, t4;
 
@@ -145,6 +146,12 @@ public class GUI {
         t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50, fonts.getFirstFont());
         t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50, fonts.getFirstFont());
         tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
+
+        tb1 = new TextBox(p5, "Descripción:", p5.width/2+50, 300, 500, 100, fonts.getFontAt(2));
+        tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 450, 500, 100, fonts.getFontAt(2));
+        tb3 = new TextBox(p5, "Más Información:",p5.width/2+50, 600, 500, 50, fonts.getFontAt(2));
+        tb4 = new TextBox(p5, "Comportamiento:",p5.width/2+50, 700, 500, 50, fonts.getFontAt(2));
+        tb5 = new TextBox(p5, "Talla mínima:",p5.width/2+50, 800, 500, 50, fonts.getFontAt(2));
 
 
         peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
@@ -366,6 +373,26 @@ public class GUI {
         previousPage2.display(p5);
     }
 
+    public void dibujaPantallaEspecie(PApplet p5, Especie e) {
+        p5.background(255);
+        dibujaBotonesTopBar(p5);
+        p5.fill(colors.getAzure());
+        p5.textFont(bebasNeue);
+        p5.textSize(50);
+        p5.textAlign(p5.CENTER);
+        p5.text(e.commonName+"("+e.scientificName+")", p5.width / 2, 225);
+        tb1.setText(e.description);
+        tb2.setText(e.location);
+        tb3.setText(e.moreInfo);
+        tb4.setText(e.behaviour);
+        tb5.setText(e.minLength);
+        tb1.display(p5);
+        tb2.display(p5);
+        tb3.display(p5);
+        tb4.display(p5);
+        tb5.display(p5);
+
+    }
 
 
     public void dibujaLogo(PApplet p5){

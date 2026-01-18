@@ -13,6 +13,7 @@ public class MyFish extends PApplet {
     PImage uploadImage;
     Button uploadB;
     String titol = "";
+    Especie clicked;
 
 
     Fonts fontsApp;
@@ -82,6 +83,10 @@ public class MyFish extends PApplet {
 
             case INFO:     gui.dibujaPantallaInformacion(this);
                 break;
+
+            case ESPECIE:     gui.dibujaPantallaEspecie(this, clicked);
+                break;
+
 
         }
         updateCursor(this);
@@ -239,6 +244,10 @@ public class MyFish extends PApplet {
             }
             if(gui.previousPage2.mouseOverButton(this)) {
                 gui.infoPeces.prevPage();
+            }
+            clicked = gui.infoPeces.handleClick(this);
+            if (clicked != null) {
+                gui.pantallaActual= GUI.PANTALLA.ESPECIE;
             }
 
         }
