@@ -11,7 +11,7 @@ public class GUI {
 
     Fonts fonts;
 
-    Button b1, b2, b3, b4, nextPage, previousPage, bCal, registrar;
+    Button b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
@@ -27,7 +27,7 @@ public class GUI {
 
     Counter peso, tamano;
 
-    PagedTable registro;
+    PagedTable registro, infoPeces;
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)"};
     float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
@@ -67,10 +67,28 @@ public class GUI {
                     "Depredador que se alimenta de peces, pulpos y camarones.",
                     "Suele formar bancos y nadar cerca de la superficie para cazar, utilizando una visión aérea para sorprender a sus presas.",
                     "N/C"
+            ),
+            new Especie(
+                    "Pez Limón, Verderol, Serviola",
+                    "Seriola Dumerili",
+                    "Cuerpo ovalado y alargado, de color más pálido en el vientre y verdoso-amarillento en la mayor parte del cuerpo o gris oseáceo y a veces el reflejo de la luz hace que produzca reflejos brillantes, puede llegar a medir hasta 2 metros.",
+                    "Dependiendo de la estación varían su localización, mientras que en invierno bajan a las profundidades de hasta 70m, es en verano donde se acerca a costas rocosas y se hace más visible debido a que sube a la superficie.",
+                    "Es un cazador activo de pequeños  peces, crustáceos o cefalópodos.",
+                    "Forman bancos y suelen ser muy curiosos, nadan a media profundidad y de forma constante, no muy apegados a las rocas.",
+                    "35 cm en época de veda (islas baleares)."
+            ),
+            new Especie(
+                    "Palometón",
+                    "Lichia Amia",
+                    "Cuerpo alargado y ciertamente comprimido, tiene una característica línea lateral serpenteante, tiene color verdoso o gris, su aleta caudal está bifurcada, pueden llegar a medir hasta 2 metros de longitud, aunque su tallaje normal ronda los 50cm – 1 metro.",
+                    "Vive por la costa y en hasta 50m de profundidad y sobre fondos arenosos, en verano frecuentan la costa a pocos centímetros de la superficie.",
+                    "Se alimentan pequeños  peces y crustáceos.",
+                    "Son muy rápidos y tienen una gran vista.",
+                    "60cm"
             )
     };
     Catch[] capturas = {
-           new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
+            new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
             new Catch(searchSpecies(especies, "Espetón"), 1, 45, "Cala Millor","28/10/25", "Minnow", "Lucha dura"),
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","2/11/25", "Paseante", "Nada"),
             new Catch(searchSpecies(especies, "Bacoreta"), 0.5f, 34, "Alcúdia","20/11/25", "Popper", ""),
@@ -86,7 +104,7 @@ public class GUI {
     CalendariPlus cp1;
     String dataCalendari = "";
 
-    public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, PEZ};
+    public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, ESPECIE};
 
 
     public PANTALLA pantallaActual;
@@ -138,10 +156,20 @@ public class GUI {
         tamano.setValues(0,10000);
         tamano.setStepValue(0.5f);
 
-        registro = new PagedTable(6, 4);
+        registro = new PagedTable(PagedTable.TableMode.GRID, 6, 4);
         registro.setHeaders(registroHeaders);
-        registro.setData(catchesToTableData(this.capturas));
+        registro.setGridData(catchesToTableData(this.capturas));
         registro.setColumnWidths(colWidths);
+
+        infoPeces = new PagedTable(PagedTable.TableMode.LIST,4, 0);
+        infoPeces.setData(especies);
+
+        previousPage2 = new Button(p5, "<", p5.width/2-40,775, 30, 30 );
+        previousPage2.setBlues(colors);
+        nextPage2 = new Button(p5, ">", p5.width/2+10,775, 30, 30 );
+        nextPage2.setBlues(colors);
+
+
 
         previousPage = new Button(p5, "<", p5.width/2-40,775, 30, 30 );
         previousPage.setBlues(colors);
@@ -209,11 +237,9 @@ public class GUI {
                 "",
                 p5.nf(avgL, 1, 1) + " cm"
         );
-        float cw = 450;
-        float ch = 200;
+
         float gap = 30;
         float marginX = 40;
-
 
         float bigCardW = (p5.width - marginX*2 - gap) / 2;
         float bigCardH = p5.height*0.28f;
@@ -326,6 +352,18 @@ public class GUI {
         avgWeightCard.display(p5, false);
         avgLengthCard.display(p5, false);
 
+    }
+
+    public void dibujaPantallaInformacion(PApplet p5){
+        p5.background(255);
+        dibujaBotonesTopBar(p5);
+        p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
+        p5.text("INFORMACIÓN DE PECES", p5.width/2, 225);
+        float contentW = p5.width * 0.75f;
+        float contentX = (p5.width - contentW) / 2;
+        infoPeces.displayList(p5, contentX, 300, contentW, p5.height-450);
+        nextPage2.display(p5);
+        previousPage2.display(p5);
     }
 
 

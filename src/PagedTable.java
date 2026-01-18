@@ -1,8 +1,15 @@
 import processing.core.PApplet;
 
+import static java.lang.Math.ceil;
+
 public class PagedTable {
+    enum TableMode {GRID, LIST}
+    TableMode mode = TableMode.GRID;
+
     String[] tableHeaders;   // Títols de les columnes
-    String[][] tableData;    // Dades de la taula
+    Object[] data;
+    String[][] gridData;
+    // Dades de la taula
     float[] columnWidths;    // Amplades de les columnes
 
     int numCols, numRows;  // Número de files i columnes
@@ -10,8 +17,12 @@ public class PagedTable {
     int numPage;
     int numTotalPages;
 
+    public int selectedIndex = -1;
+
+
     // Constructor
-    public PagedTable(int nr, int nc){
+    public PagedTable(TableMode mode, int nr, int nc){
+        this.mode = mode;
         this.numRows = nr;
         this.numCols = nc;
         this.numPage = 0;
@@ -19,17 +30,30 @@ public class PagedTable {
 
     // Setters
 
+    public void setMode(TableMode mode){
+        this.mode=mode;
+    }
+
     public void setHeaders(String[] h){
         this.tableHeaders = h;
     }
 
-    public void setData(String[][] d){
-        this.tableData = d;
-        if(d.length % (this.numRows-1)==0){
-            this.numTotalPages = (d.length / (this.numRows-1)) -1;
+    public void setData(Object[] data){
+        this.data = data;
+
+        if(data.length % numRows == 0){
+            numTotalPages = (data.length / numRows) - 1;
+        } else {
+            numTotalPages = data.length / numRows;
         }
-        else {
-            this.numTotalPages = (d.length / (this.numRows-1)) ;
+    }
+    public void setGridData(String[][] d){
+        this.gridData = d;
+
+        if(d.length % (numRows - 1) == 0){
+            numTotalPages = (d.length / (numRows - 1)) - 1;
+        } else {
+            numTotalPages = (d.length / (numRows - 1));
         }
     }
 
@@ -53,9 +77,16 @@ public class PagedTable {
         }
     }
 
-    // Dibuixa taula
     public void display(PApplet p5, float x, float y, float w, float h){
+        if(mode == TableMode.GRID){
+            displayGrid(p5, x, y, w, h);
+        }
+        else if(mode == TableMode.LIST){
+            displayList(p5, x, y, w, h);
+        }
+    }
 
+    private void displayGrid(PApplet p5, float x, float y, float w, float h){
         p5.pushStyle();
 
         p5.fill(200, 50); p5.stroke(0); p5.strokeWeight(1);
@@ -97,8 +128,8 @@ public class PagedTable {
                 }
                 else{
                     int k = (numRows-1)*numPage + (r-1);
-                    if(k<tableData.length){
-                        p5.text(tableData[k][c], xCol + 125, y + (r+1)*rowHeight - 10);
+                    if(k<gridData.length){
+                        p5.text(gridData[k][c], xCol + 125, y + (r+1)*rowHeight - 10);
                     }
                 }
                 xCol += w*columnWidths[c]/100.0;
@@ -111,4 +142,82 @@ public class PagedTable {
 
         p5.popStyle();
     }
+
+    // Dibuixa taula
+    public void displayList(PApplet p5, float x, float y, float w, float h){
+        p5.pushStyle();
+
+        float rowHeight = h / numRows;
+
+        for(int r = 0; r < numRows; r++){
+
+            int k = numPage * numRows + r;
+            if(k >= data.length) break;
+
+            float ry = y + r * rowHeight;
+
+            drawListRow(p5, x, ry, w, rowHeight, data[k], k);
+        }
+
+        p5.fill(20, 93, 160);
+        p5.textAlign(p5.LEFT);
+        p5.textSize(18);
+        p5.text(
+                "Pag: " + (numPage + 1) + " / " + (numTotalPages + 1),
+                x,
+                y + h + 40
+        );
+
+
+        p5.popStyle();
+    }
+
+    public void drawListRow(
+            PApplet p5,
+            float x, float y,
+            float w, float h,
+            Object obj,
+            int index
+    ){
+        Colors c = new Colors(p5);
+        float pad = 20;
+
+        // Fondo
+        p5.stroke(180);
+        p5.fill(255);
+        p5.rect(x, y, w, h-6, 12);
+
+        // Imagen
+        float imgSize = h - pad*2;
+        p5.fill(220);
+        p5.rect(x + pad, y + pad, imgSize, imgSize, 8);
+
+        // Texto
+        p5.fill(30, 90, 150);
+        p5.textAlign(p5.LEFT, p5.CENTER);
+        p5.textSize(36);
+
+        Especie s = (Especie) obj;
+
+        p5.text(
+                s.commonName + " (" + s.scientificName + ")",
+                x + imgSize + pad*2+50,
+                y + h/2
+        );
+
+        // Botón "VER DETALLES"
+        float bw = 150;
+        float bh = 50;
+        float bx = x + w - bw - pad;
+        float by = y + h/2 - bh/2;
+
+        p5.stroke(20, 93, 160);
+        p5.noFill();
+        Button b = new Button(p5, "VER DETALLES", bx, by, bw, bh);
+        b.setBlues(c);
+        b.display(p5);
+
+
+    }
+
 }

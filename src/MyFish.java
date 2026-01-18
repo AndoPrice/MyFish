@@ -80,8 +80,8 @@ public class MyFish extends PApplet {
             case ESTADISTICAS:     gui.dibujaPantallaEstadisticas(this);
                 break;
 
-
-
+            case INFO:     gui.dibujaPantallaInformacion(this);
+                break;
 
         }
         updateCursor(this);
@@ -147,6 +147,7 @@ public class MyFish extends PApplet {
             }
             else if (gui.b4.mouseOverButton(this)) {
                 println(" B4 has been pressed!!! ");
+                gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
         if (gui.homeB.mouseOverButton(this)) {
@@ -162,6 +163,9 @@ public class MyFish extends PApplet {
         }
         if (gui.ib3.mouseOverButton(this)) {
             gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+        }
+        if (gui.ib4.mouseOverButton(this)) {
+            gui.pantallaActual = GUI.PANTALLA.INFO;
         }
 
         if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
@@ -228,7 +232,14 @@ public class MyFish extends PApplet {
         }
 
 
-        if(gui.pantallaActual== GUI.PANTALLA.ESTADISTICAS){
+        if(gui.pantallaActual== GUI.PANTALLA.INFO){
+            if(gui.nextPage2.mouseOverButton(this)){
+                gui.infoPeces.nextPage();
+                System.out.println("next page");
+            }
+            if(gui.previousPage2.mouseOverButton(this)) {
+                gui.infoPeces.prevPage();
+            }
 
         }
 
