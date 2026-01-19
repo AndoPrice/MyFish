@@ -49,8 +49,8 @@ public class TextField {
         p5.rect(x, y, w, h, 5);
 
         p5.fill(fgColor);
-        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);p5.textFont(font);
-        p5.text(text, x + 5, y + textSize);
+        p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.TOP);p5.textFont(font);
+        p5.text(text, x + 5, y+textSize/2, w, h);
         p5.popStyle();
 
         p5.fill(fgColor); p5.textFont(bebasNeue); p5.textAlign(p5.LEFT, p5.BOTTOM);

@@ -173,27 +173,19 @@ public class PagedTable {
         p5.popStyle();
     }
 
-    public void drawListRow(
-            PApplet p5,
-            float x, float y,
-            float w, float h,
-            Object obj,
-            int index
-    ){
+    public void drawListRow(PApplet p5, float x, float y, float w, float h, Object obj, int index){
         Colors c = new Colors(p5);
         float pad = 20;
 
-        // Fondo
         p5.stroke(180);
         p5.fill(255);
         p5.rect(x, y, w, h-6, 12);
 
-        // Imagen
+        //IMAGEN
         float imgSize = h - pad*2;
         p5.fill(220);
         p5.rect(x + pad, y + pad, imgSize, imgSize, 8);
 
-        // Texto
         p5.fill(30, 90, 150);
         p5.textAlign(p5.LEFT, p5.CENTER);
         p5.textSize(36);
@@ -206,7 +198,6 @@ public class PagedTable {
                 y + h/2
         );
 
-        // Botón "VER DETALLES"
         float bw = 150;
         float bh = 50;
         float bx = x + w - bw - pad;
@@ -229,7 +220,6 @@ public class PagedTable {
         for (int r = 0; r < rowButtons.length; r++) {
             Button b = rowButtons[r];
             if (b != null && b.mouseOverButton(p5)) {
-                // Return the corresponding Especie from the current page
                 int dataIndex = numPage * numRows + r;
                 return (Especie) data[dataIndex];
             }
