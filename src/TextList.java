@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TextList {
     float x, y, w, h;          // Posició i dimensions
-    String[] texts;// Valors possibles
+    Especie[] especies;// Valors possibles
     String name;
 
     TextField textField;       // Camp de text
@@ -23,12 +23,12 @@ public class TextList {
     Fonts fonts;
 
 
-    public TextList(PApplet p5, String name, String[] texts, float x, float y, float w, float h) {
+    public TextList(PApplet p5, String name, Especie[] especies, float x, float y, float w, float h) {
 
         colors = new Colors(p5);
         fonts = new Fonts(p5);
 
-        this.texts = texts;
+        this.especies = especies;
         this.selectedId = "";
         this.selectedValue = "";
         this.x = x;
@@ -68,10 +68,10 @@ public class TextList {
         this.buttons = new ArrayList<Button>();
 
         if (searchFor.length() > 0) {
-            for (int i=0; i<texts.length; i++) {
-                if (texts[i].toLowerCase().startsWith(searchFor.toLowerCase())) {
+            for (int i=0; i<especies.length; i++) {
+                if (especies[i].commonName.toLowerCase().startsWith(searchFor.toLowerCase())) {
                     float espai = 10;
-                    Button b = new Button(p5, texts[i], x, y + h + 10 + (h + espai)*numMatchs, w, h);
+                    Button b = new Button(p5, especies[i].commonName, x, y + h + 10 + (h + espai)*numMatchs, w, h);
                     b.setBlues(colors);
                     buttons.add(b);
                     this.numMatchs++;

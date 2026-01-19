@@ -145,7 +145,7 @@ public class GUI {
         t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50, fonts.getFirstFont());
         t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50, fonts.getFirstFont());
         t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50, fonts.getFirstFont());
-        tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
+        tl1 = new TextList(p5, "Especie:",especies, p5.width/2+50, 300, 500, 50);
 
         tb1 = new TextBox(p5, "Descripción:", p5.width/2+50, 300, 500, 100, fonts.getFontAt(2));
         tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 450, 500, 80, fonts.getFontAt(2));
