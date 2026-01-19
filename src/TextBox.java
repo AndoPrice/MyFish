@@ -15,7 +15,7 @@ public class TextBox {
 
 
     public String text = "";
-    int textSize = 24;
+    int textSize = 10;
     String name;
 
     public boolean selected = false;
@@ -48,7 +48,7 @@ public class TextBox {
         p5.strokeWeight(borderWeight);
         p5.stroke(borderColor);
         p5.rectMode(CORNER);
-        p5.rect(x, y, w, h, 5);
+        //p5.rect(x, y, w, h, 5);
 
         p5.fill(fgColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.CENTER);p5.textFont(font);
