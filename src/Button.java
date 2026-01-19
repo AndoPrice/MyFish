@@ -32,6 +32,11 @@ public class Button {
         this.fillColorOver = c.getAzureSelected();
     }
 
+    public void setGreys(Colors c){
+        this.fillColor = c.getColorAt(3);
+        this.fillColorOver = c.getColorAt(4);
+    }
+
     public void setDateButtonColors(PApplet p5, Colors c){
         this.fillColor = p5.color(255);
         this.fillColorOver = p5.color(230);

@@ -247,9 +247,14 @@ public class MyFish extends PApplet {
             }
             clicked = gui.infoPeces.handleClick(this);
             if (clicked != null) {
-                gui.pantallaActual= GUI.PANTALLA.ESPECIE;
+                gui.pantallaActual = GUI.PANTALLA.ESPECIE;
             }
 
+        }
+        if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
+            if(gui.volver.mouseOverButton(this)){
+                gui.pantallaActual = GUI.PANTALLA.INFO;
+            }
         }
 
 

@@ -11,7 +11,7 @@ public class GUI {
 
     Fonts fonts;
 
-    Button b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2;
+    Button b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
@@ -148,10 +148,13 @@ public class GUI {
         tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
 
         tb1 = new TextBox(p5, "Descripción:", p5.width/2+50, 300, 500, 100, fonts.getFontAt(2));
-        tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 425, 500, 100, fonts.getFontAt(2));
-        tb3 = new TextBox(p5, "Más Información:",p5.width/2+50, 575, 500, 50, fonts.getFontAt(2));
-        tb4 = new TextBox(p5, "Comportamiento:",p5.width/2+50, 675, 500, 50, fonts.getFontAt(2));
-        tb5 = new TextBox(p5, "Talla mínima:",p5.width/2+50, 775, 500, 50, fonts.getFontAt(2));
+        tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 450, 500, 80, fonts.getFontAt(2));
+        tb3 = new TextBox(p5, "Más Información:",p5.width/2+50, 580, 500, 50, fonts.getFontAt(2));
+        tb4 = new TextBox(p5, "Comportamiento:",p5.width/2+50, 680, 500, 50, fonts.getFontAt(2));
+        tb5 = new TextBox(p5, "Talla mínima:",p5.width/2+50, 780, 500, 50, fonts.getFontAt(2));
+
+        volver = new Button(p5, "VOLVER", p5.width/2+450, 800, 100, 50);
+        volver.setGreys(colors);
 
 
         peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
@@ -281,7 +284,7 @@ public class GUI {
         ib1.display(p5, pantallaActual==PANTALLA.REGISTRAR_CAPTURA);
         ib2.display(p5, pantallaActual==PANTALLA.VER_REGISTRO);
         ib3.display(p5, pantallaActual==PANTALLA.ESTADISTICAS);
-        ib4.display(p5, pantallaActual==PANTALLA.INFO);
+        ib4.display(p5, pantallaActual==PANTALLA.INFO||pantallaActual==PANTALLA.ESPECIE);
         homeB.display(p5, pantallaActual==PANTALLA.INICIO);
 
 
@@ -391,6 +394,7 @@ public class GUI {
         tb3.display(p5);
         tb4.display(p5);
         tb5.display(p5);
+        volver.display(p5);
 
     }
 
