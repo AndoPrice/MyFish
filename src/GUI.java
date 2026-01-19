@@ -148,10 +148,10 @@ public class GUI {
         tl1 = new TextList(p5, "Especie:",species, p5.width/2+50, 300, 500, 50);
 
         tb1 = new TextBox(p5, "Descripción:", p5.width/2+50, 300, 500, 100, fonts.getFontAt(2));
-        tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 450, 500, 100, fonts.getFontAt(2));
-        tb3 = new TextBox(p5, "Más Información:",p5.width/2+50, 600, 500, 50, fonts.getFontAt(2));
-        tb4 = new TextBox(p5, "Comportamiento:",p5.width/2+50, 700, 500, 50, fonts.getFontAt(2));
-        tb5 = new TextBox(p5, "Talla mínima:",p5.width/2+50, 800, 500, 50, fonts.getFontAt(2));
+        tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 425, 500, 100, fonts.getFontAt(2));
+        tb3 = new TextBox(p5, "Más Información:",p5.width/2+50, 575, 500, 50, fonts.getFontAt(2));
+        tb4 = new TextBox(p5, "Comportamiento:",p5.width/2+50, 675, 500, 50, fonts.getFontAt(2));
+        tb5 = new TextBox(p5, "Talla mínima:",p5.width/2+50, 775, 500, 50, fonts.getFontAt(2));
 
 
         peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
@@ -380,7 +380,7 @@ public class GUI {
         p5.textFont(bebasNeue);
         p5.textSize(50);
         p5.textAlign(p5.CENTER);
-        p5.text(e.commonName+"("+e.scientificName+")", p5.width / 2, 225);
+        p5.text(e.commonName+" ("+e.scientificName+")", p5.width / 2, 225);
         tb1.setText(e.description);
         tb2.setText(e.location);
         tb3.setText(e.moreInfo);
