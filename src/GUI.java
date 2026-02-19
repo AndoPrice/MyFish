@@ -11,7 +11,7 @@ public class GUI {
 
     Fonts fonts;
 
-    Button b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
+    Button iniciar, b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
@@ -22,9 +22,9 @@ public class GUI {
     String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
     TextList tl1;
-    TextBox tb1, tb2, tb3, tb4, tb5;
+    TextBox  tb1, tb2, tb3, tb4, tb5;
 
-    static TextField t1, t2, t3, t4;
+    TextField usuario, contrasena, t1, t2, t3, t4;
 
     Counter peso, tamano;
 
@@ -105,7 +105,7 @@ public class GUI {
     CalendariPlus cp1;
     String dataCalendari = "";
 
-    public enum PANTALLA {INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, ESPECIE};
+    public enum PANTALLA {INICIAR, INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, ESPECIE};
 
 
     public PANTALLA pantallaActual;
@@ -116,6 +116,13 @@ public class GUI {
 
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
         fonts = new Fonts(p5);
+
+        iniciar = new Button(p5, "INICIAR", p5.width/2-100, 700, 200, 80);
+        iniciar.setBlues(colors);
+        usuario = new TextField(p5, "Usuario", p5.width/2-150, 450, 300, 50, fonts.getFontAt(2));
+        contrasena = new TextField(p5, "Contrasena", p5.width/2-150, 575, 300, 50, fonts.getFontAt(2));
+
+
 
         b1 = new Button(p5, "REGISTRAR CAPTURA", p5.width/2-100, 400, 200, 80);
         b1.setBlues(colors);
@@ -196,7 +203,7 @@ public class GUI {
 
 
 
-        pantallaActual = PANTALLA.INICIO;
+        pantallaActual = PANTALLA.INICIAR;
         this.logo = logo;
 
         Catch longest = CatchStats.longestCatch(capturas);
@@ -313,6 +320,13 @@ public class GUI {
         bCal.display(p5);
         t4.display(p5);
         cp1.display(p5);
+    }
+
+    public void dibujaPantallaIniciar(PApplet p5){
+        dibujaLogo(p5);
+        usuario.display(p5);
+        contrasena.display(p5);
+        iniciar.display(p5);
     }
 
 

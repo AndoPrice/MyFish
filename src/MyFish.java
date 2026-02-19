@@ -69,6 +69,10 @@ public class MyFish extends PApplet {
         background(255);
 
         switch(gui.pantallaActual){
+
+            case INICIAR:   gui.dibujaPantallaIniciar(this);
+                break;
+
             case INICIO:   gui.dibujaPantallaInicio(this);
                 break;
 
@@ -136,6 +140,11 @@ public class MyFish extends PApplet {
     }
 
     public void mousePressed(){
+        if(gui.pantallaActual==GUI.PANTALLA.INICIAR){
+            if(gui.iniciar.mouseOverButton(this)){
+                gui.pantallaActual = GUI.PANTALLA.INICIO;
+            }
+        }
 
         if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
             if (gui.b1.mouseOverButton(this)) {
