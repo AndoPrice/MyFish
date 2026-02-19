@@ -164,23 +164,28 @@ public class MyFish extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
-        if (gui.homeB.mouseOverButton(this)) {
-            gui.pantallaActual = GUI.PANTALLA.INICIO;
+        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
+                gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE){
+            if (gui.homeB.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.INICIO;
+            }
+
+            if (gui.ib1.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
+            }
+
+            if (gui.ib2.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
+            }
+            if (gui.ib3.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }
+            if (gui.ib4.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.INFO;
+            }
         }
 
-        if (gui.ib1.mouseOverButton(this)) {
-            gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
-        }
 
-        if (gui.ib2.mouseOverButton(this)) {
-            gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
-        }
-        if (gui.ib3.mouseOverButton(this)) {
-            gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
-        }
-        if (gui.ib4.mouseOverButton(this)) {
-            gui.pantallaActual = GUI.PANTALLA.INFO;
-        }
 
         if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
