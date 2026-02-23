@@ -152,7 +152,7 @@ public class MyFish extends PApplet {
             }
         }
 
-        if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
+        else if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
             if (gui.b1.mouseOverButton(this)) {
                 println(" B1 has been pressed!!! ");
                 gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
@@ -170,7 +170,7 @@ public class MyFish extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
-        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
+        else if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
                 gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE){
             if (gui.homeB.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
@@ -193,7 +193,7 @@ public class MyFish extends PApplet {
 
 
 
-        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
+        else if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
             gui.t1.isPressed(this);
             gui.t2.isPressed(this);
@@ -247,7 +247,7 @@ public class MyFish extends PApplet {
             }
         }
 
-        if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
+        else if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
             if(gui.nextPage.mouseOverButton(this)){
                 gui.registro.nextPage();
             }
@@ -257,7 +257,7 @@ public class MyFish extends PApplet {
         }
 
 
-        if(gui.pantallaActual== GUI.PANTALLA.INFO){
+        else if(gui.pantallaActual== GUI.PANTALLA.INFO){
             if(gui.nextPage2.mouseOverButton(this)){
                 gui.infoPeces.nextPage();
                 System.out.println("next page");
@@ -271,7 +271,7 @@ public class MyFish extends PApplet {
             }
 
         }
-        if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
+        else if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
             if(gui.volver.mouseOverButton(this)){
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
