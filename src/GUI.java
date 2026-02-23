@@ -212,7 +212,7 @@ public class GUI {
                 "Captura más larga",
                 longest.ubicacion,
                 longest.fecha,
-                longest.especie.commonName,
+                longest.especie.nombreComun,
                 "Longitud: " + longest.tamano + " cm"
         );
         Catch heavy = CatchStats.heaviestCatch(capturas);
@@ -221,7 +221,7 @@ public class GUI {
                 "Captura más pesada",
                 heavy.ubicacion,
                 heavy.fecha,
-                heavy.especie.commonName,
+                heavy.especie.nombreComun,
                 "Peso: " + heavy.peso + " kg"
         );
         Object[] result = CatchStats.commonSpecies(capturas);
@@ -232,7 +232,7 @@ public class GUI {
                 "Especie más común",
                 "",
                 "",
-                especie.commonName,
+                especie.nombreComun,
                 "Número de capturas: "+times
         );
         float avgW = CatchStats.averageWeight(capturas);
@@ -397,12 +397,12 @@ public class GUI {
         p5.textFont(bebasNeue);
         p5.textSize(50);
         p5.textAlign(p5.CENTER);
-        p5.text(e.commonName+" ("+e.scientificName+")", p5.width / 2, 225);
-        tb1.setText(e.description);
-        tb2.setText(e.location);
-        tb3.setText(e.moreInfo);
-        tb4.setText(e.behaviour);
-        tb5.setText(e.minLength);
+        p5.text(e.nombreComun +" ("+e.nombreCientifico +")", p5.width / 2, 225);
+        tb1.setText(e.descripcion);
+        tb2.setText(e.ubicacion);
+        tb3.setText(e.masInfo);
+        tb4.setText(e.comportamiento);
+        tb5.setText(e.tallaMin);
         tb1.display(p5);
         tb2.display(p5);
         tb3.display(p5);
@@ -420,7 +420,7 @@ public class GUI {
 
     public Especie searchSpecies(Especie[] especies, String name){
         for (int i=0; i<especies.length; i++){
-            if(especies[i].commonName==name){
+            if(especies[i].nombreComun ==name){
                 return especies[i];
             }
 
@@ -435,7 +435,7 @@ public class GUI {
             Catch c = capturas[i];
 
             data[i][0] = c.fecha;
-            data[i][1] = c.especie.commonName;
+            data[i][1] = c.especie.nombreComun;
             data[i][2] = String.valueOf(c.peso);
             data[i][3] = String.valueOf(c.tamano);
         }

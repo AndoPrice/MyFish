@@ -1,77 +1,77 @@
 public class Especie {
 
-    String commonName;
-    String scientificName;
-    String description;
-    String location;
-    String moreInfo;
-    String behaviour;
-    String minLength;
+    String nombreComun;
+    String nombreCientifico;
+    String descripcion;
+    String ubicacion;
+    String masInfo;
+    String comportamiento;
+    String tallaMin;
 
 
-    public Especie(String commonName, String scientificName, String description, String location, String moreInfo, String behaviour, String minLength) {
-        this.commonName = commonName;
-        this.scientificName = scientificName;
-        this.description = description;
-        this.location = location;
-        this.moreInfo = moreInfo;
-        this.behaviour = behaviour;
-        this.minLength = minLength;
+    public Especie(String nombreComun, String scientificName, String descripcion, String ubicacion, String masInfo, String comportamiento, String tallaMin) {
+        this.nombreComun = nombreComun;
+        this.nombreCientifico = scientificName;
+        this.descripcion = descripcion;
+        this.ubicacion = ubicacion;
+        this.masInfo = masInfo;
+        this.comportamiento = comportamiento;
+        this.tallaMin = tallaMin;
     }
 
-    public String getCommonName() {
-        return commonName;
+    public String getNombreComun() {
+        return nombreComun;
     }
 
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
+    public void setNombreComun(String nombreComun) {
+        this.nombreComun = nombreComun;
     }
 
-    public String getScientificName() {
-        return scientificName;
+    public String getNombreCientifico() {
+        return nombreCientifico;
     }
 
-    public void setScientificName(String scientificName) {
-        this.scientificName = scientificName;
+    public void setNombreCientifico(String nombreCientifico) {
+        this.nombreCientifico = nombreCientifico;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getLocation() {
-        return location;
+    public String getUbicacion() {
+        return ubicacion;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
-    public String getMoreInfo() {
-        return moreInfo;
+    public String getMasInfo() {
+        return masInfo;
     }
 
-    public void setMoreInfo(String moreInfo) {
-        this.moreInfo = moreInfo;
+    public void setMasInfo(String masInfo) {
+        this.masInfo = masInfo;
     }
 
-    public String getBehaviour() {
-        return behaviour;
+    public String getComportamiento() {
+        return comportamiento;
     }
 
-    public void setBehaviour(String behaviour) {
-        this.behaviour = behaviour;
+    public void setComportamiento(String comportamiento) {
+        this.comportamiento = comportamiento;
     }
 
-    public String getMinLength() {
-        return minLength;
+    public String getTallaMin() {
+        return tallaMin;
     }
 
-    public void setMinLength(String minLength) {
-        this.minLength = minLength;
+    public void setTallaMin(String tallaMin) {
+        this.tallaMin = tallaMin;
     }
 }

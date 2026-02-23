@@ -193,7 +193,7 @@ public class PagedTable {
         Especie s = (Especie) obj;
 
         p5.text(
-                s.commonName + " (" + s.scientificName + ")",
+                s.nombreComun + " (" + s.nombreCientifico + ")",
                 x + imgSize + pad*2+50,
                 y + h/2
         );

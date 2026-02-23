@@ -128,6 +128,9 @@ public class MyFish extends PApplet {
 
     public void keyPressed(){
 
+        gui.usuario.keyPressed(key,keyCode);
+        gui.contrasena.keyPressed(key,keyCode);
+
         gui.t1.keyPressed(key, keyCode);
         gui.t2.keyPressed(key, keyCode);
         gui.t3.keyPressed(key, keyCode);
@@ -141,8 +144,11 @@ public class MyFish extends PApplet {
 
     public void mousePressed(){
         if(gui.pantallaActual==GUI.PANTALLA.INICIAR){
+            gui.usuario.isPressed(this);
+            gui.contrasena.isPressed(this);
             if(gui.iniciar.mouseOverButton(this)){
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
+                println("iniciar");
             }
         }
 

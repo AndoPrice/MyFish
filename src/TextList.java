@@ -69,9 +69,9 @@ public class TextList {
 
         if (searchFor.length() > 0) {
             for (int i=0; i<especies.length; i++) {
-                if (especies[i].commonName.toLowerCase().startsWith(searchFor.toLowerCase())) {
+                if (especies[i].nombreComun.toLowerCase().startsWith(searchFor.toLowerCase())) {
                     float espai = 10;
-                    Button b = new Button(p5, especies[i].commonName, x, y + h + 10 + (h + espai)*numMatchs, w, h);
+                    Button b = new Button(p5, especies[i].nombreComun, x, y + h + 10 + (h + espai)*numMatchs, w, h);
                     b.setBlues(colors);
                     buttons.add(b);
                     this.numMatchs++;
