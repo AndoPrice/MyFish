@@ -1,3 +1,4 @@
+import bbdd.DataBase;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
@@ -5,6 +6,8 @@ import processing.core.PShape;
 import java.io.File;
 
 public class MyFish extends PApplet {
+
+    public static DataBase db;
 
     GUI gui;
     public PImage logo, home, mes, menys;
@@ -29,8 +32,8 @@ public class MyFish extends PApplet {
 
     public void setup(){
 
-
-
+        db = new DataBase("admin", "12345", "myfish");
+        db.connect();
 
 
         logo = loadImage("data/MyFish-Logo (1).png");
@@ -170,30 +173,30 @@ public class MyFish extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
-        else if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
+        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
                 gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE){
             if (gui.homeB.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
             }
 
-            if (gui.ib1.mouseOverButton(this)) {
+            else if (gui.ib1.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
             }
 
-            if (gui.ib2.mouseOverButton(this)) {
+            else if (gui.ib2.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
             }
-            if (gui.ib3.mouseOverButton(this)) {
+            else if (gui.ib3.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
             }
-            if (gui.ib4.mouseOverButton(this)) {
+            else if (gui.ib4.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
 
 
 
-        else if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
+        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
             gui.t1.isPressed(this);
             gui.t2.isPressed(this);
@@ -206,18 +209,18 @@ public class MyFish extends PApplet {
             if (gui.tamano.mouseOverButtonMes(this)) {
                 gui.tamano.increment();
             }
-            if (gui.tamano.mouseOverButtonMenys(this)) {
+            else if (gui.tamano.mouseOverButtonMenys(this)) {
                 gui.tamano.decrement();
             }
 
-            if (gui.peso.mouseOverButtonMes(this)) {
+            else if (gui.peso.mouseOverButtonMes(this)) {
                 gui.peso.increment();
             }
-            if (gui.peso.mouseOverButtonMenys(this)) {
+            else if (gui.peso.mouseOverButtonMenys(this)) {
                 gui.peso.decrement();
             }
 
-            if(gui.registrar.mouseOverButton(this)){
+            else if(gui.registrar.mouseOverButton(this)){
                 gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;
             }
             // Comprovar si clicam sobre botons del Calendari
@@ -247,7 +250,7 @@ public class MyFish extends PApplet {
             }
         }
 
-        else if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
+        if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
             if(gui.nextPage.mouseOverButton(this)){
                 gui.registro.nextPage();
             }
@@ -257,7 +260,7 @@ public class MyFish extends PApplet {
         }
 
 
-        else if(gui.pantallaActual== GUI.PANTALLA.INFO){
+        if(gui.pantallaActual== GUI.PANTALLA.INFO){
             if(gui.nextPage2.mouseOverButton(this)){
                 gui.infoPeces.nextPage();
                 System.out.println("next page");
@@ -271,7 +274,7 @@ public class MyFish extends PApplet {
             }
 
         }
-        else if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
+        if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
             if(gui.volver.mouseOverButton(this)){
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
