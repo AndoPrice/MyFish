@@ -315,12 +315,12 @@ public class DataBase {
         try {
             ResultSet rs = query.executeQuery( q);
             rs.next();
-            return rs.getInt("n");
+            return rs.getInt('n');
         }
         catch(Exception e) {
             System.out.println(e);
-            return 0;
         }
+        return 0;
     }
 
     // Retorna el número de columnes d'una taula de la base de dades
@@ -584,5 +584,42 @@ public class DataBase {
             System.out.println(e);
         }
         return null;
+    }
+
+    public String[][] getCapturasPozo(){
+        String qf = "SELECT COUNT(*) AS n " +
+                "FROM Captura c, Usuario u, Especie e " +
+                "WHERE c.Usuario_id=u.id AND u.id='pozo' "+
+                "ORDER BY c.fecha ASC";
+        System.out.println(qf);
+
+        int nf = getNumRowsQuery(qf);
+        String[][] info = new String[nf][3];
+
+
+        String q = "SELECT c.fecha, e.nombreComun, c.peso, c.tamano \n" +
+                "FROM Captura c, Usuario u, Especie e \n" +
+                "WHERE c.Usuario_id=u.id AND u.id='pozo' AND c.Especie_numero=e.numero \n" +
+                "ORDER BY c.fecha ASC";
+
+
+        System.out.println(q);
+
+        try{
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f][0] = rs.getString("fecha");
+                info[f][1] = rs.getString("especie");
+                info[f][2] = rs.getString("peso");
+                info[f][3] = rs.getString("tamano");
+
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return info;
+
     }
 }
