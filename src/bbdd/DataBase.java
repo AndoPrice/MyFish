@@ -508,4 +508,81 @@ public class DataBase {
             System.out.println(e);
         }
     }
+
+    public void printArray1D(String[] info){
+        System.out.println();
+        for(int i = 0; i<info.length; i++){
+            System.out.printf("%d:", i);
+            System.out.printf("%s. \t", info[i]);
+            System.out.println();
+        }
+    }
+
+    public void printArray2D(String[][] info){
+        System.out.println();
+        for(int i = 0; i<info.length; i++){
+            System.out.printf("%d:", i);
+            for(int j = 0; j<info[i].length; j++) {
+                System.out.printf("%s. \t", info[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+    public String getIdUsuarioConContrasena(String contrasena){
+        String q = "SELECT id FROM Usuario WHERE contrasena='"+contrasena+"'";
+        System.out.println(q);
+        try{
+            ResultSet rs = query.executeQuery(q);
+            rs.next();
+            String nom = rs.getString("id");
+            return nom;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public String[] getIdTodosUsuarios(){
+        String q = "SELECT id FROM Usuario ORDER BY id ASC";
+        System.out.println(q);
+        try{
+            int numFilas = getNumFilesTaula("Usuario");
+            String[] info = new String[numFilas];
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f] = rs.getString("id");
+                f++;
+            }
+            return info;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public String[][] getInfoTodosUsuarios(){
+        String q = "SELECT contrasena, id FROM Usuario ORDER BY id ASC";
+        System.out.println(q);
+        try{
+            int numFilas = getNumFilesTaula("Usuario");
+            String[][] info = new String[numFilas][2];
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f][0] = rs.getString("id");
+                info[f][1] = rs.getString("contrasena");
+                f++;
+            }
+            return info;
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
 }
