@@ -8,6 +8,7 @@ public class GUI {
     Colors colors;
     PImage logo;
     PFont bebasNeue;
+    DataBase dataBase;
 
     Fonts fonts;
 
@@ -32,62 +33,7 @@ public class GUI {
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)"};
     float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
-    Especie[] especies = {
-            new Especie(
-                    "Llampuga",
-                    "Coryphaena hippurus",
-                    "Cuerpo muy alargado, destaca por su gran cabeza y frente redondeada. Color azul y amarillento, aletas pectorales negras. Puede alcanzar alrededor de 100 cm de longitud.",
-                    "Frecuenta la superficie marina entre 5 y 10 metros de profundidad. Aunque a veces se acerca a la costa, es más común encontrarla en alta mar.",
-                    "Su alimentación es muy variada: peces, zooplancton, crustáceos y calamares.",
-                    "Forma bancos y es una especie migratoria.",
-                    "N/C"
-            ),
-            new Especie(
-                    "Lubina",
-                    "Dicentrarchus labrax",
-                    "Cuerpo alargado con morro pronunciado y elevado. Color gris plateado. En edad adulta mide entre 60 y 90 cm. Cola ligeramente dividida.",
-                    "Cerca de la costa, sobre bancos de arena, zonas portuarias o rocosas, desde la superficie hasta los 30 metros de profundidad.",
-                    "Depredador de crustáceos, gusanos marinos y peces pequeños. Se reproduce en invierno.",
-                    "Nada constantemente sin detenerse en el fondo.",
-                    "25 cm"
-            ),
-            new Especie(
-                    "Bacoreta",
-                    "Euthynnus alletteratus",
-                    "Cuerpo alargado y sin escamas en forma de proyectil, muy similar al atún rojo. Dorso azulado que tiende al plateado, aleta caudal en forma de media luna y manchas oscuras en el vientre. Puede superar el metro de longitud.",
-                    "Especie pelágica que se concentra en aguas cálidas de la costa. Durante la caza suele asociarse con gaviotas u otras aves marinas.",
-                    "Depredador de pequeños peces como anchoas o sardinas. Ocasionalmente se alimenta de crustáceos o calamares.",
-                    "Forma cardúmenes en aguas costeras y habita desde la superficie hasta los 150 metros de profundidad.",
-                    "N/C"
-            ),
-            new Especie(
-                    "Espetón",
-                    "Sphyraena sphyraena",
-                    "Cuerpo muy alargado y fino en forma de aguja, con gran boca puntiaguda. Color gris azulado con bandas verticales oscuras en el lomo. Puede alcanzar hasta 1 metro de longitud.",
-                    "Habita el litoral entre 5 y 100 metros de profundidad, sobre fondos arenosos o formaciones rocosas sumergidas.",
-                    "Depredador que se alimenta de peces, pulpos y camarones.",
-                    "Suele formar bancos y nadar cerca de la superficie para cazar, utilizando una visión aérea para sorprender a sus presas.",
-                    "N/C"
-            ),
-            new Especie(
-                    "Pez Limón, Verderol, Serviola",
-                    "Seriola Dumerili",
-                    "Cuerpo ovalado y alargado, de color más pálido en el vientre y verdoso-amarillento en la mayor parte del cuerpo o gris oseáceo y a veces el reflejo de la luz hace que produzca reflejos brillantes, puede llegar a medir hasta 2 metros.",
-                    "Dependiendo de la estación varían su localización, mientras que en invierno bajan a las profundidades de hasta 70m, es en verano donde se acerca a costas rocosas y se hace más visible debido a que sube a la superficie.",
-                    "Es un cazador activo de pequeños  peces, crustáceos o cefalópodos.",
-                    "Forman bancos y suelen ser muy curiosos, nadan a media profundidad y de forma constante, no muy apegados a las rocas.",
-                    "35 cm en época de veda (islas baleares)."
-            ),
-            new Especie(
-                    "Palometón",
-                    "Lichia Amia",
-                    "Cuerpo alargado y ciertamente comprimido, tiene una característica línea lateral serpenteante, tiene color verdoso o gris, su aleta caudal está bifurcada, pueden llegar a medir hasta 2 metros de longitud, aunque su tallaje normal ronda los 50cm – 1 metro.",
-                    "Vive por la costa y en hasta 50m de profundidad y sobre fondos arenosos, en verano frecuentan la costa a pocos centímetros de la superficie.",
-                    "Se alimentan pequeños  peces y crustáceos.",
-                    "Son muy rápidos y tienen una gran vista.",
-                    "60cm"
-            )
-    };
+    Especie[] especies;
     Catch[] capturas = {
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
             new Catch(searchSpecies(especies, "Espetón"), 1, 45, "Cala Millor","28/10/25", "Minnow", "Lucha dura"),
@@ -111,8 +57,10 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys){
+    public GUI(PApplet p5, DataBase db, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys){
         colors = new Colors(p5);
+
+        this. dataBase = db;
 
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
         fonts = new Fonts(p5);
@@ -121,6 +69,18 @@ public class GUI {
         iniciar.setBlues(colors);
         usuario = new TextField(p5, "Usuario", p5.width/2-150, 450, 300, 50, fonts.getFontAt(2));
         contrasena = new TextField(p5, "Contrasena", p5.width/2-150, 575, 300, 50, fonts.getFontAt(2));
+
+        String[][] infoEspecies = dataBase.getInfoTodasEspecies();
+        especies = new Especie[infoEspecies.length];
+        for(int e=0; e<especies.length; e++){
+            especies[e] = new Especie (infoEspecies[e][0],infoEspecies[e][1], infoEspecies[e][2], infoEspecies[e][3], infoEspecies[e][4], infoEspecies[e][5], infoEspecies[e][6]);
+        }
+
+        String[][] capturas = dataBase.getCapturasPozo();
+        capturas = new Catch[capturas.length];
+        for(int c=0; c< capturas.length; c++){
+            capturas[c] = new Catch(searchSpecies(especies, capturas[c][0])
+        }
 
 
 

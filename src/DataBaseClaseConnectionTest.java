@@ -1,5 +1,3 @@
-package bbdd;
-
 public class DataBaseClaseConnectionTest {
     public static DataBase db;
 
@@ -26,6 +24,9 @@ public class DataBaseClaseConnectionTest {
 
         String[][] infoUsuarios = db.getInfoTodosUsuarios();
         db.printArray2D(infoUsuarios);
+
+        String[][] capturasPozo = db.getCapturasPozo();
+        db.printArray2D(capturasPozo);
 
 
     }

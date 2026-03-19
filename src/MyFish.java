@@ -1,4 +1,3 @@
-import bbdd.DataBase;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PShape;
@@ -54,7 +53,7 @@ public class MyFish extends PApplet {
         fontsApp = new Fonts(this);
         noStroke();
         textAlign(CENTER); textSize(18);
-        gui = new GUI(this, logo, add, list, stat, info, home, mes, menys);//passar a array
+        gui = new GUI(this, db, logo, add, list, stat, info, home, mes, menys);//passar a array
 
         setShapeColor(add, gui.colors.getAzure());
         setShapeColor(list, gui.colors.getAzure());

@@ -1,7 +1,3 @@
-package bbdd;
-
-import jdk.jshell.spi.ExecutionControlProvider;
-
 import java.sql.*;
 
 public class DataBase {
@@ -123,7 +119,7 @@ public class DataBase {
         try{
             ResultSet rs = query.executeQuery(q);
             rs.next();
-            return rs.getInt("num");
+            return rs.getInt("n");
         }
         catch(Exception e){
             System.out.println(e);
@@ -586,15 +582,74 @@ public class DataBase {
         return null;
     }
 
+    public String[][] getInfoTodasEspecies(){
+        String q = "SELECT nombreComun, nombreCientifico, descripcion, ubicacion, masInfo, comportamiento, tallaMin FROM Especie ORDER BY nombreComun ASC";
+        System.out.println(q);
+        try{
+            int numFilas = getNumFilesTaula("Especie");
+            String[][] info = new String[numFilas][7];
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f][0] = rs.getString("nombreComun");
+                info[f][1] = rs.getString("nombreCientifico");
+                info[f][2] = rs.getString("descripcion");
+                info[f][3] = rs.getString("ubicacion");
+                info[f][4] = rs.getString("masInfo");
+                info[f][5] = rs.getString("comportamiento");
+                info[f][6] = rs.getString("tallaMin");
+
+                f++;
+            }
+            return info;
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public String[][] getInfoTodasCapturas(){
+        String q = "SELECT c.peso, c.tamano, c.ubicacion, c.fecha, c.senuelo, c.notas, e.nombreComun " +
+                "FROM Captura c, Especie e " +
+                "WHERE "!! +
+                "ORDER BY nombreComun ASC";
+        System.out.println(q);
+        try{
+            int numFilas = getNumFilesTaula("Captura");
+            String[][] info = new String[numFilas][7];
+            ResultSet rs = query.executeQuery(q);
+            int f = 0;
+            while(rs.next()){
+                info[f][0] = rs.getString("nombreComun");
+                info[f][1] = rs.getString("nombreCientifico");
+                info[f][2] = rs.getString("descripcion");
+                info[f][3] = rs.getString("ubicacion");
+                info[f][4] = rs.getString("masInfo");
+                info[f][5] = rs.getString("comportamiento");
+                info[f][6] = rs.getString("tallaMin");
+
+                f++;
+            }
+            return info;
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public String[][] getCapturasPozo(){
         String qf = "SELECT COUNT(*) AS n " +
                 "FROM Captura c, Usuario u, Especie e " +
-                "WHERE c.Usuario_id=u.id AND u.id='pozo' "+
+                "WHERE c.Usuario_id=u.id AND u.id='pozo' AND c.Especie_numero=e.numero "+
                 "ORDER BY c.fecha ASC";
         System.out.println(qf);
 
-        int nf = getNumRowsQuery(qf);
-        String[][] info = new String[nf][3];
+        int nf = getNumFilesMatchQuery(qf);
+        String[][] info = new String[nf][4];
 
 
         String q = "SELECT c.fecha, e.nombreComun, c.peso, c.tamano \n" +
@@ -610,9 +665,11 @@ public class DataBase {
             int f = 0;
             while(rs.next()){
                 info[f][0] = rs.getString("fecha");
-                info[f][1] = rs.getString("especie");
+                info[f][1] = rs.getString("nombreComun");
                 info[f][2] = rs.getString("peso");
                 info[f][3] = rs.getString("tamano");
+
+                f++;
 
             }
         }
