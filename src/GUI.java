@@ -34,7 +34,7 @@ public class GUI {
     float tableW = 1000, tableH = 500;
     float[] colWidths = {25, 25, 25, 25};
     Especie[] especies;
-    Catch[] capturas = {
+    Catch[] capturas; /*= {
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
             new Catch(searchSpecies(especies, "Espetón"), 1, 45, "Cala Millor","28/10/25", "Minnow", "Lucha dura"),
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","2/11/25", "Paseante", "Nada"),
@@ -46,10 +46,11 @@ public class GUI {
 
 
 
-    };
+    };*/
     Card c1;
     CalendariPlus cp1;
     String dataCalendari = "";
+
 
     public enum PANTALLA {INICIAR, INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, ESPECIE};
 
@@ -76,10 +77,10 @@ public class GUI {
             especies[e] = new Especie (infoEspecies[e][0],infoEspecies[e][1], infoEspecies[e][2], infoEspecies[e][3], infoEspecies[e][4], infoEspecies[e][5], infoEspecies[e][6]);
         }
 
-        String[][] capturas = dataBase.getCapturasPozo();
-        capturas = new Catch[capturas.length];
+        String[][] infoCapturas = dataBase.getCapturasPozo();
+        capturas = new Catch[infoCapturas.length];
         for(int c=0; c< capturas.length; c++){
-            capturas[c] = new Catch(searchSpecies(especies, capturas[c][0])
+            capturas[c] = new Catch(searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
         }
 
 
@@ -380,7 +381,7 @@ public class GUI {
 
     public Especie searchSpecies(Especie[] especies, String name){
         for (int i=0; i<especies.length; i++){
-            if(especies[i].nombreComun ==name){
+            if(especies[i].nombreComun.equals(name)){
                 return especies[i];
             }
 

@@ -583,7 +583,9 @@ public class DataBase {
     }
 
     public String[][] getInfoTodasEspecies(){
-        String q = "SELECT nombreComun, nombreCientifico, descripcion, ubicacion, masInfo, comportamiento, tallaMin FROM Especie ORDER BY nombreComun ASC";
+        String q = "SELECT nombreComun, nombreCientifico, descripcion, ubicacion, masInfo, comportamiento, tallaMin " +
+                "FROM Especie " +
+                "ORDER BY nombreComun ASC";
         System.out.println(q);
         try{
             int numFilas = getNumFilesTaula("Especie");
@@ -610,10 +612,10 @@ public class DataBase {
         return null;
     }
 
-    public String[][] getInfoTodasCapturas(){
+    /*public String[][] getInfoTodasCapturas(){
         String q = "SELECT c.peso, c.tamano, c.ubicacion, c.fecha, c.senuelo, c.notas, e.nombreComun " +
                 "FROM Captura c, Especie e " +
-                "WHERE "!! +
+                "WHERE " +
                 "ORDER BY nombreComun ASC";
         System.out.println(q);
         try{
@@ -639,7 +641,7 @@ public class DataBase {
             System.out.println(e);
         }
         return null;
-    }
+    }*/
 
     public String[][] getCapturasPozo(){
         String qf = "SELECT COUNT(*) AS n " +
@@ -649,13 +651,13 @@ public class DataBase {
         System.out.println(qf);
 
         int nf = getNumFilesMatchQuery(qf);
-        String[][] info = new String[nf][4];
+        String[][] info = new String[nf][7];
 
 
-        String q = "SELECT c.fecha, e.nombreComun, c.peso, c.tamano \n" +
+        String q = "SELECT c.fecha, e.nombreComun, c.peso, c.tamano, c.ubicacion, c.senuelo, c.notas \n" +
                 "FROM Captura c, Usuario u, Especie e \n" +
                 "WHERE c.Usuario_id=u.id AND u.id='pozo' AND c.Especie_numero=e.numero \n" +
-                "ORDER BY c.fecha ASC";
+                "ORDER BY c.fecha DESC";
 
 
         System.out.println(q);
@@ -664,10 +666,14 @@ public class DataBase {
             ResultSet rs = query.executeQuery(q);
             int f = 0;
             while(rs.next()){
-                info[f][0] = rs.getString("fecha");
-                info[f][1] = rs.getString("nombreComun");
-                info[f][2] = rs.getString("peso");
-                info[f][3] = rs.getString("tamano");
+                info[f][0] = rs.getString("nombreComun");
+                info[f][1] = rs.getString("peso");
+                info[f][2] = rs.getString("tamano");
+                info[f][3] = rs.getString("ubicacion");
+                info[f][4] = rs.getString("fecha");
+                info[f][5] = rs.getString("senuelo");
+                info[f][6] = rs.getString("notas");
+
 
                 f++;
 

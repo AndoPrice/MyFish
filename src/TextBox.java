@@ -29,8 +29,6 @@ public class TextBox {
         this.borderColor = p5.color(20, 93, 160);
         this.borderWeight = 1;
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
-        System.out.println(p5.width);
-        System.out.println(p5.height);
         this.name = name;
         this.font = font;
     }
