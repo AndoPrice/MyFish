@@ -256,6 +256,16 @@ public class MyFish extends PApplet {
             if(gui.previousPage.mouseOverButton(this)) {
                 gui.registro.prevPage();
             }
+
+            int editIndex = gui.registro.handleEditGridClick(this);
+            if (editIndex != -1) {
+                System.out.println("EDIT clicked for row index " + editIndex);
+            }
+
+            int deleteIndex = gui.registro.handleDeleteGridClick(this);
+            if (deleteIndex != -1) {
+                System.out.println("DELETE clicked for row index " + deleteIndex);
+            }
         }
 
 
@@ -283,14 +293,17 @@ public class MyFish extends PApplet {
     }
 
     public void updateCursor(PApplet p5){
-        if ( gui.b1.updateHandCursor(p5)||gui.b2.updateHandCursor(p5)||gui.b3.updateHandCursor(p5)||gui.b4.updateHandCursor(p5)){
+        boolean overButton = gui.b1.updateHandCursor(p5)||gui.b2.updateHandCursor(p5)||gui.b3.updateHandCursor(p5)||gui.b4.updateHandCursor(p5);
+        if (gui.pantallaActual == GUI.PANTALLA.VER_REGISTRO && gui.registro.mouseOverGridButtons(p5)) {
+            overButton = true;
+        }
+
+        if (overButton) {
             cursor(HAND);
         }
-        if(gui.t1.selected == true){
+        else if(gui.t1.selected == true){
             cursor(TEXT);
-
         }
-
         else {
             cursor(ARROW);
         }

@@ -30,9 +30,9 @@ public class GUI {
     Counter peso, tamano;
 
     PagedTable registro, infoPeces;
-    String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)"};
+    String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)", "ACCIONES"};
     float tableW = 1000, tableH = 500;
-    float[] colWidths = {25, 25, 25, 25};
+    float[] colWidths = {20, 20, 20, 20, 20};
     Especie[] especies;
     Catch[] capturas; /*= {
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
@@ -134,7 +134,7 @@ public class GUI {
         tamano.setValues(0,10000);
         tamano.setStepValue(0.5f);
 
-        registro = new PagedTable(PagedTable.TableMode.GRID, 6, 4);
+        registro = new PagedTable(PagedTable.TableMode.GRID, 6, 5);
         registro.setHeaders(registroHeaders);
         registro.setGridData(catchesToTableData(this.capturas));
         registro.setColumnWidths(colWidths);
@@ -390,7 +390,7 @@ public class GUI {
     }
 
     public String[][] catchesToTableData(Catch[] capturas) {
-        String[][] data = new String[capturas.length][4];
+        String[][] data = new String[capturas.length][5];
 
         for (int i = 0; i < capturas.length; i++) {
             Catch c = capturas[i];
@@ -399,6 +399,7 @@ public class GUI {
             data[i][1] = c.especie.nombreComun;
             data[i][2] = String.valueOf(c.peso);
             data[i][3] = String.valueOf(c.tamano);
+            data[i][4] = "";
         }
 
         return data;
