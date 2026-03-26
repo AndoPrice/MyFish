@@ -24,7 +24,7 @@ public class TextField {
 
     public TextField(PApplet p5, String name, int x, int y, int w, int h, PFont font) {
         this.x = x; this.y = y; this.w = w; this.h = h;
-        this.bgColor = p5.color(20, 93, 160);
+        this.bgColor = p5.color(255);
         this.fgColor = p5.color(20, 93, 160);
         this.selectedColor = p5.color(171, 193, 213);
         this.borderColor = p5.color(20, 93, 160);
@@ -40,7 +40,7 @@ public class TextField {
     public void display(PApplet p5) {
         p5.pushStyle();
 
-        p5.fill(255);
+        p5.fill(bgColor);
 
 
         p5.strokeWeight(borderWeight);
@@ -75,6 +75,24 @@ public class TextField {
                 }
             }
         }
+    }
+
+    public void keyPressed(int keyCode) {
+        if (!selected) return;
+
+        if (keyCode == BACKSPACE) {
+            removeText();
+        }
+    }
+
+    // Gestiona entrada de text real (inclou accents)
+    public void keyTyped(char key) {
+        if (!selected) return;
+
+        // Evita caracteres de control
+        if (key == '\n' || key == '\r' || key == '\b') return;
+
+        addText(key);
     }
 
 
@@ -113,8 +131,11 @@ public class TextField {
     public void isPressed(PApplet p5) {
         if (mouseOverTextField(p5)) {
             selected = true;
+            bgColor = p5.color(240);
+            System.out.println(selected);
         } else {
             selected = false;
+            bgColor = p5.color(255);
         }
     }
 }

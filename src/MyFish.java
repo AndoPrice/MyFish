@@ -20,6 +20,8 @@ public class MyFish extends PApplet {
 
     Fonts fontsApp;
 
+    boolean loginOK=true;
+
     public static void main(String[] args) {
         PApplet.main("MyFish");
     }
@@ -73,6 +75,12 @@ public class MyFish extends PApplet {
         switch(gui.pantallaActual){
 
             case INICIAR:   gui.dibujaPantallaIniciar(this);
+                            if(loginOK==false){
+                                this.textAlign(CENTER);
+                                this.fill(210, 43, 43);
+                                this.textFont(fontsApp.getFirstFont());
+                                this.text("ID o contraseña incorrecto", this.width/2, 850);
+                            }
                 break;
 
             case INICIO:   gui.dibujaPantallaInicio(this);
@@ -130,28 +138,52 @@ public class MyFish extends PApplet {
 
     public void keyPressed(){
 
-        gui.usuario.keyPressed(key,keyCode);
-        gui.contrasena.keyPressed(key,keyCode);
+        gui.usuario.keyPressed(key);
+        gui.contrasena.keyPressed(key);
 
-        gui.t1.keyPressed(key, keyCode);
-        gui.t2.keyPressed(key, keyCode);
-        gui.t3.keyPressed(key, keyCode);
-        gui.t4.keyPressed(key, keyCode);
+        gui.t1.keyPressed(key);
+        gui.t2.keyPressed(key);
+        gui.t3.keyPressed(key);
+        gui.t4.keyPressed(key);
 
         if(gui.tl1.getTextField().mouseOverTextField(this)){
-            gui.tl1.getTextField().keyPressed(key, (int)keyCode);
+            gui.tl1.getTextField().keyPressed(key, keyCode);
             gui.tl1.update(this);
+        }
+    }
+
+    public void keyTyped(){
+        gui.usuario.keyTyped(key);
+        gui.contrasena.keyTyped(key);
+
+        gui.t1.keyTyped(key);
+        gui.t2.keyTyped(key);
+        gui.t3.keyTyped(key);
+        gui.t4.keyTyped(key);
+
+
+    }
+
+    public void mousePresedantallaINICIAR(){
+        gui.usuario.isPressed(this);
+        gui.contrasena.isPressed(this);
+        if(gui.iniciar.mouseOverButton(this)){
+            String id = gui.usuario.getText();
+            String contrasena = gui.contrasena.getText();
+            if(db.loginCorrecte(id, contrasena)){
+                loginOK = true;
+                gui.pantallaActual = GUI.PANTALLA.INICIO;
+                println("iniciar");
+            }
+            else{
+                loginOK = false;
+            }
         }
     }
 
     public void mousePressed(){
         if(gui.pantallaActual==GUI.PANTALLA.INICIAR){
-            gui.usuario.isPressed(this);
-            gui.contrasena.isPressed(this);
-            if(gui.iniciar.mouseOverButton(this)){
-                gui.pantallaActual = GUI.PANTALLA.INICIO;
-                println("iniciar");
-            }
+            mousePresedantallaINICIAR();
         }
 
         else if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
@@ -172,35 +204,16 @@ public class MyFish extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
-        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
-                gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE){
-            if (gui.homeB.mouseOverButton(this)) {
-                gui.pantallaActual = GUI.PANTALLA.INICIO;
-            }
-
-            else if (gui.ib1.mouseOverButton(this)) {
-                gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
-            }
-
-            else if (gui.ib2.mouseOverButton(this)) {
-                gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
-            }
-            else if (gui.ib3.mouseOverButton(this)) {
-                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
-            }
-            else if (gui.ib4.mouseOverButton(this)) {
-                gui.pantallaActual = GUI.PANTALLA.INFO;
-            }
-        }
 
 
-
-        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
+        else if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
             gui.t1.isPressed(this);
             gui.t2.isPressed(this);
             gui.t3.isPressed(this);
             gui.t4.isPressed(this);
+
+
 
             gui.tl1.getTextField().isPressed(this);
             gui.tl1.buttonPressed(this);
@@ -249,7 +262,7 @@ public class MyFish extends PApplet {
             }
         }
 
-        if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
+        else if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
             if(gui.nextPage.mouseOverButton(this)){
                 gui.registro.nextPage();
             }
@@ -269,7 +282,7 @@ public class MyFish extends PApplet {
         }
 
 
-        if(gui.pantallaActual== GUI.PANTALLA.INFO){
+        else if(gui.pantallaActual== GUI.PANTALLA.INFO){
             if(gui.nextPage2.mouseOverButton(this)){
                 gui.infoPeces.nextPage();
                 System.out.println("next page");
@@ -283,11 +296,37 @@ public class MyFish extends PApplet {
             }
 
         }
-        if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
+        else if(gui.pantallaActual == GUI.PANTALLA.ESPECIE){
             if(gui.volver.mouseOverButton(this)){
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
         }
+
+
+        if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
+                gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE){
+            if (gui.homeB.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.INICIO;
+            }
+
+            else if (gui.ib1.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
+            }
+
+            else if (gui.ib2.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
+            }
+            else if (gui.ib3.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.ESTADISTICAS;
+            }
+            else if (gui.ib4.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.INFO;
+            }
+
+            gui.tl1.getTextField().isPressed(this);
+            gui.tl1.buttonPressed(this);
+        }
+
 
 
     }
