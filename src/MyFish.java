@@ -9,7 +9,7 @@ public class MyFish extends PApplet {
     public static DataBase db;
 
     GUI gui;
-    public PImage logo, home, mes, menys;
+    public PImage background, logo, home, mes, menys;
     PShape add, list, stat, info;
 
     PImage uploadImage;
@@ -45,6 +45,7 @@ public class MyFish extends PApplet {
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
+        background = loadImage("data/MyFishBackground.png");
 
         float scaleFactor = 0.1f;
         add.scale(scaleFactor);
@@ -55,7 +56,7 @@ public class MyFish extends PApplet {
         fontsApp = new Fonts(this);
         noStroke();
         textAlign(CENTER); textSize(18);
-        gui = new GUI(this, db, logo, add, list, stat, info, home, mes, menys);//passar a array
+        gui = new GUI(this, db, logo, add, list, stat, info, home, mes, menys, background);//passar a array
 
         setShapeColor(add, gui.colors.getAzure());
         setShapeColor(list, gui.colors.getAzure());
@@ -79,7 +80,7 @@ public class MyFish extends PApplet {
                                 this.textAlign(CENTER);
                                 this.fill(210, 43, 43);
                                 this.textFont(fontsApp.getFirstFont());
-                                this.text("ID o contraseña incorrecto", this.width/2, 850);
+                                this.text("Usuario o contraseña incorrectos", this.width/2, 850);
                             }
                 break;
 
@@ -141,14 +142,14 @@ public class MyFish extends PApplet {
         gui.usuario.keyPressed(key);
         gui.contrasena.keyPressed(key);
 
-        gui.t1.keyPressed(key);
-        gui.t2.keyPressed(key);
-        gui.t3.keyPressed(key);
-        gui.t4.keyPressed(key);
+        gui.tNotas.keyPressed(key);
+        gui.tUbicacion.keyPressed(key);
+        gui.tFecha.keyPressed(key);
+        gui.tSenuelo.keyPressed(key);
 
-        if(gui.tl1.getTextField().mouseOverTextField(this)){
-            gui.tl1.getTextField().keyPressed(key, keyCode);
-            gui.tl1.update(this);
+        if(gui.tlEspecie.getTextField().mouseOverTextField(this)){
+            gui.tlEspecie.getTextField().keyPressed(key, keyCode);
+            gui.tlEspecie.update(this);
         }
     }
 
@@ -156,15 +157,15 @@ public class MyFish extends PApplet {
         gui.usuario.keyTyped(key);
         gui.contrasena.keyTyped(key);
 
-        gui.t1.keyTyped(key);
-        gui.t2.keyTyped(key);
-        gui.t3.keyTyped(key);
-        gui.t4.keyTyped(key);
+        gui.tNotas.keyTyped(key);
+        gui.tUbicacion.keyTyped(key);
+        gui.tFecha.keyTyped(key);
+        gui.tSenuelo.keyTyped(key);
 
 
     }
 
-    public void mousePresedantallaINICIAR(){
+    public void mousePressedPantallaINICIAR(){
         gui.usuario.isPressed(this);
         gui.contrasena.isPressed(this);
         if(gui.iniciar.mouseOverButton(this)){
@@ -173,6 +174,7 @@ public class MyFish extends PApplet {
             if(db.loginCorrecte(id, contrasena)){
                 loginOK = true;
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
+                gui.updateCaptuarasUsuario(this);
                 println("iniciar");
             }
             else{
@@ -183,7 +185,7 @@ public class MyFish extends PApplet {
 
     public void mousePressed(){
         if(gui.pantallaActual==GUI.PANTALLA.INICIAR){
-            mousePresedantallaINICIAR();
+            mousePressedPantallaINICIAR();
         }
 
         else if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
@@ -208,15 +210,15 @@ public class MyFish extends PApplet {
 
         else if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA) {
 
-            gui.t1.isPressed(this);
-            gui.t2.isPressed(this);
-            gui.t3.isPressed(this);
-            gui.t4.isPressed(this);
+            gui.tNotas.isPressed(this);
+            gui.tUbicacion.isPressed(this);
+            gui.tFecha.isPressed(this);
+            gui.tSenuelo.isPressed(this);
 
 
 
-            gui.tl1.getTextField().isPressed(this);
-            gui.tl1.buttonPressed(this);
+            gui.tlEspecie.getTextField().isPressed(this);
+            gui.tlEspecie.buttonPressed(this);
 
             if (gui.tamano.mouseOverButtonMes(this)) {
                 gui.tamano.increment();
@@ -233,6 +235,17 @@ public class MyFish extends PApplet {
             }
 
             else if(gui.registrar.mouseOverButton(this)){
+                db.insertCaptura(gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(),gui.tNotas.getText(), gui.tlEspecie.selectedValue, gui.usuario.getText());
+                gui.updateCaptuarasUsuario(this);
+                gui.tNotas.text="";
+                gui.tUbicacion.text="";
+                gui.tSenuelo.text="";
+                gui.tFecha.text="";
+                gui.tlEspecie.selectedValue="";
+                gui.peso.value=0;
+                gui.tamano.value=0;
+
+
                 gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;
             }
             // Comprovar si clicam sobre botons del Calendari
@@ -270,15 +283,11 @@ public class MyFish extends PApplet {
                 gui.registro.prevPage();
             }
 
-            int editIndex = gui.registro.handleEditGridClick(this);
-            if (editIndex != -1) {
-                System.out.println("EDIT clicked for row index " + editIndex);
-            }
+//            int editIndex = gui.registro.handleEditGridClick(this);
+//            if (editIndex != -1) {
+//                System.out.println("EDIT clicked for row index " + editIndex);
+//            }
 
-            int deleteIndex = gui.registro.handleDeleteGridClick(this);
-            if (deleteIndex != -1) {
-                System.out.println("DELETE clicked for row index " + deleteIndex);
-            }
         }
 
 
@@ -323,8 +332,8 @@ public class MyFish extends PApplet {
                 gui.pantallaActual = GUI.PANTALLA.INFO;
             }
 
-            gui.tl1.getTextField().isPressed(this);
-            gui.tl1.buttonPressed(this);
+            gui.tlEspecie.getTextField().isPressed(this);
+            gui.tlEspecie.buttonPressed(this);
         }
 
 
@@ -333,14 +342,15 @@ public class MyFish extends PApplet {
 
     public void updateCursor(PApplet p5){
         boolean overButton = gui.b1.updateHandCursor(p5)||gui.b2.updateHandCursor(p5)||gui.b3.updateHandCursor(p5)||gui.b4.updateHandCursor(p5);
-        if (gui.pantallaActual == GUI.PANTALLA.VER_REGISTRO && gui.registro.mouseOverGridButtons(p5)) {
+        if (gui.pantallaActual == GUI.PANTALLA.VER_REGISTRO &&
+                (gui.registro!=null && gui.registro.mouseOverGridButtons(p5))) {
             overButton = true;
         }
 
         if (overButton) {
             cursor(HAND);
         }
-        else if(gui.t1.selected == true){
+        else if(gui.tNotas.selected == true){
             cursor(TEXT);
         }
         else {

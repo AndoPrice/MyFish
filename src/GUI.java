@@ -6,7 +6,7 @@ import processing.core.PShape;
 public class GUI {
 
     Colors colors;
-    PImage logo;
+    PImage logo, background;
     PFont bebasNeue;
     DataBase dataBase;
 
@@ -22,17 +22,17 @@ public class GUI {
 
     String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
-    TextList tl1;
+    TextList tlEspecie;
     TextBox  tb1, tb2, tb3, tb4, tb5;
 
-    TextField usuario, contrasena, t1, t2, t3, t4;
+    TextField usuario, contrasena, tNotas, tUbicacion, tFecha, tSenuelo;
 
     Counter peso, tamano;
 
     PagedTable registro, infoPeces;
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)", "ACCIONES"};
     float tableW = 1000, tableH = 500;
-    float[] colWidths = {20, 20, 20, 20, 20};
+    float[] colWidths = {22, 22, 22, 22, 12};
     Especie[] especies;
     Catch[] capturas; /*= {
             new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
@@ -51,6 +51,8 @@ public class GUI {
     CalendariPlus cp1;
     String dataCalendari = "";
 
+    String[][] infoCapturas;
+
 
     public enum PANTALLA {INICIAR, INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, ESPECIE};
 
@@ -58,8 +60,10 @@ public class GUI {
     public PANTALLA pantallaActual;
 
     // Constructor de la GUI
-    public GUI(PApplet p5, DataBase db, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys){
+    public GUI(PApplet p5, DataBase db, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys, PImage background){
         colors = new Colors(p5);
+
+        this.background = background;
 
         this. dataBase = db;
 
@@ -77,10 +81,12 @@ public class GUI {
             especies[e] = new Especie (infoEspecies[e][0],infoEspecies[e][1], infoEspecies[e][2], infoEspecies[e][3], infoEspecies[e][4], infoEspecies[e][5], infoEspecies[e][6]);
         }
 
-        String[][] infoCapturas = dataBase.getCapturasPozo();
-        capturas = new Catch[infoCapturas.length];
-        for(int c=0; c< capturas.length; c++){
-            capturas[c] = new Catch(searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+        infoCapturas = dataBase.getCapturasUsuario("lian");
+        if(infoCapturas.length>0) {
+            capturas = new Catch[infoCapturas.length];
+            for (int c = 0; c < capturas.length; c++) {
+                capturas[c] = new Catch(searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+            }
         }
 
 
@@ -109,11 +115,11 @@ public class GUI {
         ib4.setColors(colors);
         this.homeB = new IconButton(p5, "", (p5.width/5)-150, 100, 200, 125, home);
 
-        t1 = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 90, fonts.getFontAt(2));
-        t2 = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50, fonts.getFirstFont());
-        t3 = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50, fonts.getFirstFont());
-        t4 = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50, fonts.getFirstFont());
-        tl1 = new TextList(p5, "Especie:",especies, p5.width/2+50, 300, 500, 50);
+        tNotas = new TextField(p5, "Notas adicionales:", p5.width/2+50, 700, 500, 90, fonts.getFontAt(2));
+        tUbicacion = new TextField(p5, "Ubicación:",p5.width/2+50, 500, 250, 50, fonts.getFirstFont());
+        tFecha = new TextField(p5, "Fecha:",p5.width/2+350, 500, 200, 50, fonts.getFirstFont());
+        tSenuelo = new TextField(p5, "Señuelo:",p5.width/2+50, 600, 500, 50, fonts.getFirstFont());
+        tlEspecie = new TextList(p5, "Especie:",especies, p5.width/2+50, 300, 500, 50);
 
         tb1 = new TextBox(p5, "Descripción:", p5.width/2+50, 300, 500, 100, fonts.getFontAt(2));
         tb2 = new TextBox(p5, "Ubicación:",p5.width/2+50, 450, 500, 80, fonts.getFontAt(2));
@@ -121,7 +127,7 @@ public class GUI {
         tb4 = new TextBox(p5, "Comportamiento:",p5.width/2+50, 680, 500, 50, fonts.getFontAt(2));
         tb5 = new TextBox(p5, "Talla mínima:",p5.width/2+50, 780, 500, 50, fonts.getFontAt(2));
 
-        volver = new Button(p5, "VOLVER", p5.width/2+450, 800, 100, 50);
+        volver = new Button(p5, "VOLVER", p5.width/2+475, 805, 100, 50);
         volver.setGreys(colors);
 
 
@@ -134,10 +140,82 @@ public class GUI {
         tamano.setValues(0,10000);
         tamano.setStepValue(0.5f);
 
-        registro = new PagedTable(PagedTable.TableMode.GRID, 6, 5);
-        registro.setHeaders(registroHeaders);
-        registro.setGridData(catchesToTableData(this.capturas));
-        registro.setColumnWidths(colWidths);
+        if(this.capturas!=null) {
+            registro = new PagedTable(PagedTable.TableMode.GRID, 6, 5);
+            registro.setHeaders(registroHeaders);
+            registro.setGridData(catchesToTableData(this.capturas));
+            registro.setColumnWidths(colWidths);
+
+            Catch longest = CatchStats.longestCatch(capturas);
+            longCard = new Card(
+                    Card.CardType.CATCH,
+                    "Captura más larga",
+                    longest.ubicacion,
+                    longest.fecha,
+                    longest.especie.nombreComun,
+                    "Longitud: " + longest.tamano + " cm"
+            );
+            Catch heavy = CatchStats.heaviestCatch(capturas);
+            heavyCard = new Card(
+                    Card.CardType.CATCH,
+                    "Captura más pesada",
+                    heavy.ubicacion,
+                    heavy.fecha,
+                    heavy.especie.nombreComun,
+                    "Peso: " + heavy.peso + " kg"
+            );
+            Object[] result = CatchStats.commonSpecies(capturas);
+            Especie especie = (Especie) result[0];
+            int times = (int) result[1];
+            mostCommonCard = new Card(
+                    Card.CardType.SPECIES,
+                    "Especie más común",
+                    "",
+                    "",
+                    especie.nombreComun,
+                    "Número de capturas: "+times
+            );
+            float avgW = CatchStats.averageWeight(capturas);
+            avgWeightCard = new Card(
+                    Card.CardType.AVERAGE,
+                    "Peso promedio",
+                    "",
+                    "",
+                    "",
+                     p5.nf(avgW, 1, 2) + " kg"
+            );
+
+            float avgL = CatchStats.averageLength(capturas);
+            avgLengthCard = new Card(
+                    Card.CardType.AVERAGE,
+                    "Tamaño promedio",
+                    "",
+                    "",
+                    "",
+                    p5.nf(avgL, 1, 1) + " cm"
+            );
+
+            float gap = 30;
+            float marginX = 40;
+
+            float bigCardW = (p5.width - marginX*2 - gap) / 2;
+            float bigCardH = p5.height*0.28f;
+
+            float mediumCardW = bigCardW;
+            float smallCardW = (bigCardW - gap) / 2;
+            float bottomCardH = p5.height * 0.22f;
+
+            float topY = 275;
+
+            heavyCard.setDimensions(marginX, topY, bigCardW, bigCardH,20);
+            longCard.setDimensions(marginX + bigCardW + gap, topY, bigCardW, bigCardH, 20);
+
+            float bottomY = topY + bigCardH + gap+20;
+
+            mostCommonCard.setDimensions(marginX, bottomY, mediumCardW, bottomCardH, 20);
+            avgWeightCard.setDimensions(marginX + mediumCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+            avgLengthCard.setDimensions(marginX + mediumCardW + gap + smallCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+        }
 
         infoPeces = new PagedTable(PagedTable.TableMode.LIST,4, 0);
         infoPeces.setData(especies);
@@ -167,75 +245,93 @@ public class GUI {
         pantallaActual = PANTALLA.INICIAR;
         this.logo = logo;
 
-        Catch longest = CatchStats.longestCatch(capturas);
-        longCard = new Card(
-                Card.CardType.CATCH,
-                "Captura más larga",
-                longest.ubicacion,
-                longest.fecha,
-                longest.especie.nombreComun,
-                "Longitud: " + longest.tamano + " cm"
-        );
-        Catch heavy = CatchStats.heaviestCatch(capturas);
-        heavyCard = new Card(
-                Card.CardType.CATCH,
-                "Captura más pesada",
-                heavy.ubicacion,
-                heavy.fecha,
-                heavy.especie.nombreComun,
-                "Peso: " + heavy.peso + " kg"
-        );
-        Object[] result = CatchStats.commonSpecies(capturas);
-        Especie especie = (Especie) result[0];
-        int times = (int) result[1];
-        mostCommonCard = new Card(
-                Card.CardType.SPECIES,
-                "Especie más común",
-                "",
-                "",
-                especie.nombreComun,
-                "Número de capturas: "+times
-        );
-        float avgW = CatchStats.averageWeight(capturas);
-        avgWeightCard = new Card(
-                Card.CardType.AVERAGE,
-                "Peso promedio",
-                "",
-                "",
-                "",
-                 p5.nf(avgW, 1, 2) + " kg"
-        );
+//
 
-        float avgL = CatchStats.averageLength(capturas);
-        avgLengthCard = new Card(
-                Card.CardType.AVERAGE,
-                "Tamaño promedio",
-                "",
-                "",
-                "",
-                p5.nf(avgL, 1, 1) + " cm"
-        );
+    }
 
-        float gap = 30;
-        float marginX = 40;
+    public void updateCaptuarasUsuario (PApplet p5){
+        infoCapturas = dataBase.getCapturasUsuario(usuario.getText());
+        if(infoCapturas.length>0) {
+            capturas = new Catch[infoCapturas.length];
+            for (int c = 0; c < capturas.length; c++) {
+                capturas[c] = new Catch(searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+            }
+            registro = new PagedTable(PagedTable.TableMode.GRID, 6, 5);
+            registro.setHeaders(registroHeaders);
+            registro.setGridData(catchesToTableData(this.capturas));
+            registro.setColumnWidths(colWidths);
 
-        float bigCardW = (p5.width - marginX*2 - gap) / 2;
-        float bigCardH = p5.height*0.28f;
+            Catch longest = CatchStats.longestCatch(capturas);
+            longCard = new Card(
+                    Card.CardType.CATCH,
+                    "Captura más larga",
+                    longest.ubicacion,
+                    longest.fecha,
+                    longest.especie.nombreComun,
+                    "Longitud: " + longest.tamano + " cm"
+            );
+            Catch heavy = CatchStats.heaviestCatch(capturas);
+            heavyCard = new Card(
+                    Card.CardType.CATCH,
+                    "Captura más pesada",
+                    heavy.ubicacion,
+                    heavy.fecha,
+                    heavy.especie.nombreComun,
+                    "Peso: " + heavy.peso + " kg"
+            );
+            Object[] result = CatchStats.commonSpecies(capturas);
+            Especie especie = (Especie) result[0];
+            int times = (int) result[1];
+            mostCommonCard = new Card(
+                    Card.CardType.SPECIES,
+                    "Especie más común",
+                    "",
+                    "",
+                    especie.nombreComun,
+                    "Número de capturas: "+times
+            );
+            float avgW = CatchStats.averageWeight(capturas);
+            avgWeightCard = new Card(
+                    Card.CardType.AVERAGE,
+                    "Peso promedio",
+                    "",
+                    "",
+                    "",
+                    p5.nf(avgW, 1, 2) + " kg"
+            );
 
-        float mediumCardW = bigCardW;
-        float smallCardW = (bigCardW - gap) / 2;
-        float bottomCardH = p5.height * 0.22f;
+            float avgL = CatchStats.averageLength(capturas);
+            avgLengthCard = new Card(
+                    Card.CardType.AVERAGE,
+                    "Tamaño promedio",
+                    "",
+                    "",
+                    "",
+                    p5.nf(avgL, 1, 1) + " cm"
+            );
 
-        float topY = 275;
+            float gap = 30;
+            float marginX = 40;
 
-        heavyCard.setDimensions(marginX, topY, bigCardW, bigCardH,20);
-        longCard.setDimensions(marginX + bigCardW + gap, topY, bigCardW, bigCardH, 20);
+            float bigCardW = (p5.width - marginX*2 - gap) / 2;
+            float bigCardH = p5.height*0.28f;
 
-        float bottomY = topY + bigCardH + gap+20;
+            float mediumCardW = bigCardW;
+            float smallCardW = (bigCardW - gap) / 2;
+            float bottomCardH = p5.height * 0.22f;
 
-        mostCommonCard.setDimensions(marginX, bottomY, mediumCardW, bottomCardH, 20);
-        avgWeightCard.setDimensions(marginX + mediumCardW + gap, bottomY, smallCardW, bottomCardH, 20);
-        avgLengthCard.setDimensions(marginX + mediumCardW + gap + smallCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+            float topY = 275;
+
+            heavyCard.setDimensions(marginX, topY, bigCardW, bigCardH,20);
+            longCard.setDimensions(marginX + bigCardW + gap, topY, bigCardW, bigCardH, 20);
+
+            float bottomY = topY + bigCardH + gap+20;
+
+            mostCommonCard.setDimensions(marginX, bottomY, mediumCardW, bottomCardH, 20);
+            avgWeightCard.setDimensions(marginX + mediumCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+            avgLengthCard.setDimensions(marginX + mediumCardW + gap + smallCardW + gap, bottomY, smallCardW, bottomCardH, 20);
+        }
+
 
     }
 
@@ -261,8 +357,8 @@ public class GUI {
     }
 
     public void dibujaTextFieldRegistrar(PApplet p5){
-        t1.display(p5);
-        t2.display(p5);
+        tNotas.display(p5);
+        tUbicacion.display(p5);
 
 
         // Rectangle
@@ -279,11 +375,13 @@ public class GUI {
         p5.popStyle();
 
         bCal.display(p5);
-        t4.display(p5);
+        tSenuelo.display(p5);
         cp1.display(p5);
     }
 
     public void dibujaPantallaIniciar(PApplet p5){
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
         dibujaLogo(p5);
         usuario.display(p5);
         contrasena.display(p5);
@@ -295,6 +393,9 @@ public class GUI {
     public void dibujaPantallaInicio(PApplet p5){
 
         p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
+
         dibujaLogo(p5);
         dibujaBotonesInicio(p5);
 
@@ -302,11 +403,13 @@ public class GUI {
 
     public void dibujaPantallaRegistrarCaptura(PApplet p5){
         p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
 
         dibujaBotonesTopBar(p5);
         peso.display(p5);
         tamano.display(p5);
-        tl1.display(p5);
+        tlEspecie.display(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
         registrar.display(p5);
@@ -317,30 +420,66 @@ public class GUI {
 
     public void dibujaPantallaVerRegistro(PApplet p5){
         p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
         dibujaBotonesTopBar(p5);
-        registro.display(p5, 220, 250, tableW, tableH);
-        nextPage.display(p5);
-        previousPage.display(p5);
+        if(registro!=null) {
+            registro.display(p5, 220, 250, tableW, tableH);
+            nextPage.display(p5);
+            previousPage.display(p5);
+        }
+        else {
+            p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(30); p5.textAlign(p5.CENTER);
+            p5.text("SIN CAPTURAS", p5.width/2, 400);
+        }
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("MIS CAPTURAS", p5.width/2, 225);
 
     }
-    public void dibujaPantallaEstadisticas(PApplet p5){
+
+    public void dibujaPantallaEditarCaptura(PApplet p5){
         p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
+
+        dibujaBotonesTopBar(p5);
+        peso.display(p5);
+        tamano.display(p5);
+        tlEspecie.display(p5);
+        p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
+        p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
+        registrar.display(p5);
+        dibujaTextFieldRegistrar(p5);
+
+
+    }
+
+    public void dibujaPantallaEstadisticas(PApplet p5){
+
+        p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
         dibujaBotonesTopBar(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("ESTADÍSTICAS", p5.width/2, 225);
-        heavyCard.display(p5, false);
-        longCard.display(p5, false);
-
-        mostCommonCard.display(p5, false);
-        avgWeightCard.display(p5, false);
-        avgLengthCard.display(p5, false);
+        if(registro!=null) {
+            heavyCard.display(p5, false);
+            longCard.display(p5, false);
+            mostCommonCard.display(p5, false);
+            avgWeightCard.display(p5, false);
+            avgLengthCard.display(p5, false);
+        }
+        else{
+            p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(30); p5.textAlign(p5.CENTER);
+            p5.text("SIN CAPTURAS", p5.width/2, 400);
+        }
 
     }
 
     public void dibujaPantallaInformacion(PApplet p5){
         p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
         dibujaBotonesTopBar(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
         p5.text("INFORMACIÓN DE PECES", p5.width/2, 225);
@@ -353,7 +492,12 @@ public class GUI {
 
     public void dibujaPantallaEspecie(PApplet p5, Especie e) {
         p5.background(255);
+        p5.imageMode(p5.CORNER);
+        p5.image(background, 0, 0);
         dibujaBotonesTopBar(p5);
+        p5.rectMode(p5.CORNER);
+        p5.fill(255, 200);
+        p5.rect(p5.width/2+25, 225, 550, 580);
         p5.fill(colors.getAzure());
         p5.textFont(bebasNeue);
         p5.textSize(50);

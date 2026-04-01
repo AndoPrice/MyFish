@@ -25,8 +25,8 @@ public class DataBaseClaseConnectionTest {
         String[][] infoUsuarios = db.getInfoTodosUsuarios();
         db.printArray2D(infoUsuarios);
 
-        String[][] capturasPozo = db.getCapturasPozo();
-        db.printArray2D(capturasPozo);
+//        String[][] capturasPozo = db.getCapturasPozo();
+//        db.printArray2D(capturasPozo);
 
 
     }

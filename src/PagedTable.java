@@ -17,7 +17,6 @@ public class PagedTable {
 
     private Button[] rowButtons;
     private Button[] editButtons;
-    private Button[] deleteButtons;
 
 
     // Constructor
@@ -89,12 +88,12 @@ public class PagedTable {
     private void displayGrid(PApplet p5, float x, float y, float w, float h){
         p5.pushStyle();
 
-        p5.fill(200, 50); p5.stroke(0); p5.strokeWeight(1);
-        p5.rect(x, y, w, h);
+        p5.fill(250, 200); p5.stroke(0); p5.strokeWeight(1);
+        p5.rect(x, y, w, h, 6);
 
         float rowHeight = h / numRows;
         p5.fill(171, 193, 213); p5.stroke(0); p5.strokeWeight(1);
-        p5.rect(x, y, w, rowHeight);
+        p5.rect(x, y, w, rowHeight, 6);
 
         p5.stroke(0);
 
@@ -119,44 +118,37 @@ public class PagedTable {
         }
 
         // Dibuixa textos
-        p5.fill(20, 93, 160); p5.textSize(24); p5.textAlign(p5.CENTER);
+        p5.fill(20, 93, 160); p5.textSize(24); p5.textAlign(p5.CENTER, p5.CENTER);
         for(int r = 0; r < numRows; r++){
             xCol = x;
             for(int c = 0; c< numCols; c++){
                 float colW = w * columnWidths[c] / 100.0f;
                 float textX = xCol + colW / 2;
+                float textY = y + r * rowHeight + rowHeight / 2;
                 if(r==0){
-                    p5.text(tableHeaders[c], textX, y + (r+1)*rowHeight - 10);
+                    p5.text(tableHeaders[c], textX, textY);
                 }
                 else{
                     int k = (numRows-1)*numPage + (r-1);
                     if(k<gridData.length){
-                        if (c == 4) { // Action column
-                            float buttonW = 80;
+                        if (c == 4) {
+                            float buttonW = 100;
                             float buttonH = rowHeight - 16;
-                            float space = 10;
-                            float totalW = buttonW * 2 + space;
-                            float startX = xCol + (colW - totalW) / 2;
-                            float by = y + r*rowHeight + (rowHeight - buttonH) / 2;
 
-                            Button editBtn = new Button(p5, "EDITAR", startX, by, buttonW, buttonH);
+                            float bx = xCol + (colW - buttonW) / 2;
+                            float by = y + r * rowHeight + (rowHeight - buttonH) / 2;
+
+                            Button editBtn = new Button(p5, "EDITAR", bx, by, buttonW, buttonH);
                             Colors colors = new Colors(p5);
                             editBtn.setBlues(colors);
                             editBtn.display(p5);
+
                             if (editButtons == null || editButtons.length != numRows - 1) {
                                 editButtons = new Button[numRows - 1];
                             }
-                            editButtons[r-1] = editBtn;
-
-                            Button delBtn = new Button(p5, "ELIMINAR", startX + buttonW + space, by, buttonW, buttonH);
-                            delBtn.setGreys(colors);
-                            delBtn.display(p5);
-                            if (deleteButtons == null || deleteButtons.length != numRows - 1) {
-                                deleteButtons = new Button[numRows - 1];
-                            }
-                            deleteButtons[r-1] = delBtn;
+                            editButtons[r - 1] = editBtn;;
                         } else {
-                            p5.text(gridData[k][c], textX, y + (r+1)*rowHeight - 10);
+                            p5.text(gridData[k][c], textX, textY);
                         }
                     }
                 }
@@ -166,7 +158,7 @@ public class PagedTable {
 
         // Informació de la Pàgina
         p5.fill(20, 93, 160);
-        p5.text("Pag: "+(this.numPage+1)+" / "+(this.numTotalPages+1), x, y + h + 50);
+        p5.text("Pag: "+(this.numPage+1)+" / "+(this.numTotalPages+1), x+w/2, y + h + 90);
 
         p5.popStyle();
     }
@@ -268,26 +260,11 @@ public class PagedTable {
         return -1;
     }
 
-    public int handleDeleteGridClick(PApplet p5) {
-        if (deleteButtons == null || mode != TableMode.GRID) return -1;
-        for (int r = 0; r < deleteButtons.length; r++) {
-            Button b = deleteButtons[r];
-            if (b != null && b.mouseOverButton(p5)) {
-                return (numRows - 1) * numPage + r;
-            }
-        }
-        return -1;
-    }
 
     public boolean mouseOverGridButtons(PApplet p5) {
         if (mode != TableMode.GRID) return false;
         if (editButtons != null) {
             for (Button b : editButtons) {
-                if (b != null && b.mouseOverButton(p5)) return true;
-            }
-        }
-        if (deleteButtons != null) {
-            for (Button b : deleteButtons) {
                 if (b != null && b.mouseOverButton(p5)) return true;
             }
         }
