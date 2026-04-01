@@ -45,7 +45,7 @@ public class MyFish extends PApplet {
         list = loadShape("data/Icons/list-ul-solid.svg");
         stat = loadShape("data/Icons/chart-bar-regular.svg");
         info = loadShape("data/Icons/info-solid.svg");
-        background = loadImage("data/MyFishBackground.png");
+        background = loadImage("data/MyFishBackground lowquality.jpg");
 
         float scaleFactor = 0.1f;
         add.scale(scaleFactor);
