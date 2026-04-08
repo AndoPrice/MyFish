@@ -16,6 +16,10 @@ public class GUI {
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
+    public boolean enModoEdicion = false;
+    public Catch capturaActiva = null;
+    public Button editCapturaBtn, deleteCapturaBtn, volverVerCapturaBtn;
+
     DayButton db1;
 
     Card longCard, heavyCard, mostCommonCard, avgWeightCard, avgLengthCard;
@@ -85,7 +89,7 @@ public class GUI {
         if(infoCapturas.length>0) {
             capturas = new Catch[infoCapturas.length];
             for (int c = 0; c < capturas.length; c++) {
-                capturas[c] = new Catch(searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+                capturas[c] = new Catch(Integer.parseInt(infoCapturas[c][7]), searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
             }
         }
 
@@ -102,6 +106,15 @@ public class GUI {
 
         registrar = new Button(p5, "REGISTRAR", p5.width/2+450, 800, 100, 50);
         registrar.setBlues(colors);
+
+        editCapturaBtn = new Button(p5, "EDITAR", p5.width/2+330, 800, 100, 50);
+        editCapturaBtn.setBlues(colors);
+
+        deleteCapturaBtn = new Button(p5, "ELIMINAR", p5.width/2+450, 800, 100, 50);
+        deleteCapturaBtn.setGreys(colors);
+
+        volverVerCapturaBtn = new Button(p5, "VOLVER", p5.width/2+210, 800, 100, 50);
+        volverVerCapturaBtn.setGreys(colors);
 
 
 
@@ -254,7 +267,7 @@ public class GUI {
         if(infoCapturas.length>0) {
             capturas = new Catch[infoCapturas.length];
             for (int c = 0; c < capturas.length; c++) {
-                capturas[c] = new Catch(searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+                capturas[c] = new Catch(Integer.parseInt(infoCapturas[c][7]), searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
             }
             registro = new PagedTable(PagedTable.TableMode.GRID, 6, 5);
             registro.setHeaders(registroHeaders);
@@ -437,7 +450,7 @@ public class GUI {
 
     }
 
-    public void dibujaPantallaEditarCaptura(PApplet p5){
+    public void dibujaPantallaVerCaptura(PApplet p5){
         p5.background(255);
         p5.imageMode(p5.CORNER);
         p5.image(background, 0, 0);
@@ -447,8 +460,12 @@ public class GUI {
         tamano.display(p5);
         tlEspecie.display(p5);
         p5.fill(colors.getAzure()); p5.textFont(bebasNeue); p5.textSize(50); p5.textAlign(p5.CENTER);
-        p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
-        registrar.display(p5);
+        p5.text(enModoEdicion ? "EDITAR CAPTURA" : "VER CAPTURA", p5.width/2, 225);
+
+        volverVerCapturaBtn.display(p5);
+        editCapturaBtn.setTextBoto(enModoEdicion ? "GUARDAR" : "EDITAR");
+        editCapturaBtn.display(p5);
+        deleteCapturaBtn.display(p5);
         dibujaTextFieldRegistrar(p5);
 
 
@@ -521,6 +538,35 @@ public class GUI {
     public void dibujaLogo(PApplet p5){
         p5.imageMode(p5.CENTER);
         p5.image(logo, p5.width/2, 250);
+    }
+
+    public void cargarCaptura(Catch c) {
+        capturaActiva = c;
+        enModoEdicion = false;
+
+        peso.value = c.peso;
+        tamano.value = c.tamano;
+
+        tUbicacion.text = c.ubicacion != null ? c.ubicacion : "";
+        tNotas.text = c.notas != null ? c.notas : "";
+        tSenuelo.text = c.senuelo != null ? c.senuelo : "";
+
+        if (c.fecha != null && c.fecha.contains("-")) {
+            String[] parts = c.fecha.split("-");
+            if (parts.length == 3) {
+                int any = Integer.parseInt(parts[0]);
+                int mes = Integer.parseInt(parts[1]);
+                int dia = Integer.parseInt(parts[2]);
+                cp1.dia = dia;
+                cp1.mes = mes;
+                cp1.any = any;
+                dataCalendari = dia + "/" + mes + "/" + any;
+                bCal.setTextBoto(dataCalendari);
+            }
+        }
+
+        tlEspecie.selectedValue = c.especie.nombreComun;
+        tlEspecie.getTextField().text = c.especie.nombreComun;
     }
 
     public Especie searchSpecies(Especie[] especies, String name){

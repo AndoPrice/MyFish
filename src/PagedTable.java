@@ -138,7 +138,7 @@ public class PagedTable {
                             float bx = xCol + (colW - buttonW) / 2;
                             float by = y + r * rowHeight + (rowHeight - buttonH) / 2;
 
-                            Button editBtn = new Button(p5, "EDITAR", bx, by, buttonW, buttonH);
+                            Button editBtn = new Button(p5, "VER", bx, by, buttonW, buttonH);
                             Colors colors = new Colors(p5);
                             editBtn.setBlues(colors);
                             editBtn.display(p5);
@@ -265,6 +265,16 @@ public class PagedTable {
         if (mode != TableMode.GRID) return false;
         if (editButtons != null) {
             for (Button b : editButtons) {
+                if (b != null && b.mouseOverButton(p5)) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean mouseOverListButtons(PApplet p5) {
+        if (mode != TableMode.LIST) return false;
+        if (rowButtons != null) {
+            for (Button b : rowButtons) {
                 if (b != null && b.mouseOverButton(p5)) return true;
             }
         }

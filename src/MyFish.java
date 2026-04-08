@@ -93,6 +93,9 @@ public class MyFish extends PApplet {
             case VER_REGISTRO:     gui.dibujaPantallaVerRegistro(this);
                 break;
 
+            case VER_CAPTURA:     gui.dibujaPantallaVerCaptura(this);
+                break;
+
             case ESTADISTICAS:     gui.dibujaPantallaEstadisticas(this);
                 break;
 
@@ -183,6 +186,23 @@ public class MyFish extends PApplet {
         }
     }
 
+    public void resetFormularioCaptura() {
+        gui.tNotas.text = "";
+        gui.tUbicacion.text = "";
+        gui.tSenuelo.text = "";
+        gui.tFecha.text = "";
+        gui.tlEspecie.selectedValue = "";
+        gui.tlEspecie.getTextField().text = "";
+        gui.peso.value = 0;
+        gui.tamano.value = 0;
+        gui.peso.setInitialValue(0);
+        gui.tamano.setInitialValue(0);
+        gui.dataCalendari = "";
+        gui.bCal.setTextBoto("  /  /  ");
+        uploadImage = null;
+        titol = "";
+    }
+
     public void mousePressed(){
         if(gui.pantallaActual==GUI.PANTALLA.INICIAR){
             mousePressedPantallaINICIAR();
@@ -191,6 +211,7 @@ public class MyFish extends PApplet {
         else if(gui.pantallaActual==GUI.PANTALLA.INICIO) {
             if (gui.b1.mouseOverButton(this)) {
                 println(" B1 has been pressed!!! ");
+                resetFormularioCaptura();
                 gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
             }
             else if (gui.b2.mouseOverButton(this)) {
@@ -244,16 +265,7 @@ public class MyFish extends PApplet {
                     db.insertImagen(titol);
                 }
                 gui.updateCaptuarasUsuario(this);
-                gui.tNotas.text="";
-                gui.tUbicacion.text="";
-                gui.tSenuelo.text="";
-                gui.tFecha.text="";
-                gui.tlEspecie.selectedValue="";
-                gui.peso.value=0;
-                gui.tamano.value=0;
-
-                uploadImage = null;
-                titol = "";
+                resetFormularioCaptura();
 
 
                 gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;
@@ -289,11 +301,73 @@ public class MyFish extends PApplet {
             if(gui.previousPage.mouseOverButton(this)) {
                 gui.registro.prevPage();
             }
+            int editIndex = gui.registro.handleEditGridClick(this);
+            if (editIndex != -1 && editIndex < gui.capturas.length) {
+                gui.cargarCaptura(gui.capturas[editIndex]);
+                gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
+            }
 
-//            int editIndex = gui.registro.handleEditGridClick(this);
-//            if (editIndex != -1) {
-//                System.out.println("EDIT clicked for row index " + editIndex);
-//            }
+        }
+        else if(gui.pantallaActual== GUI.PANTALLA.VER_CAPTURA){
+            if (gui.volverVerCapturaBtn.mouseOverButton(this)) {
+                gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
+            }
+            else if (gui.deleteCapturaBtn.mouseOverButton(this)) {
+                db.deleteCaptura(gui.capturaActiva.id);
+                gui.updateCaptuarasUsuario(this);
+                gui.pantallaActual = GUI.PANTALLA.VER_REGISTRO;
+            }
+            else if (gui.editCapturaBtn.mouseOverButton(this)) {
+                if (gui.enModoEdicion) {
+                    db.updateCaptura(gui.capturaActiva.id, gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(), gui.tNotas.getText(), gui.tlEspecie.selectedValue);
+                    gui.updateCaptuarasUsuario(this);
+                    gui.enModoEdicion = false;
+                    for(Catch c : gui.capturas) {
+                        if(c.id == gui.capturaActiva.id) {
+                            gui.cargarCaptura(c);
+                            break;
+                        }
+                    }
+                } else {
+                    gui.enModoEdicion = true;
+                }
+            }
+
+            if (gui.enModoEdicion) {
+                gui.tNotas.isPressed(this);
+                gui.tUbicacion.isPressed(this);
+                gui.tFecha.isPressed(this);
+                gui.tSenuelo.isPressed(this);
+
+                gui.tlEspecie.getTextField().isPressed(this);
+                gui.tlEspecie.buttonPressed(this);
+
+                if (gui.tamano.mouseOverButtonMes(this)) {
+                    gui.tamano.increment();
+                } else if (gui.tamano.mouseOverButtonMenys(this)) {
+                    gui.tamano.decrement();
+                } else if (gui.peso.mouseOverButtonMes(this)) {
+                    gui.peso.increment();
+                } else if (gui.peso.mouseOverButtonMenys(this)) {
+                    gui.peso.decrement();
+                }
+
+                gui.cp1.checkButtons(this);
+                if (gui.bCal.mouseOverButton(this) && gui.bCal.isEnabled()) {
+                    gui.cp1.toggleVisibility();
+                }
+                if (gui.cp1.bNext.mouseOverButton(this)) {
+                    gui.cp1.nextMonth();
+                }
+                if (gui.cp1.bPrev.mouseOverButton(this)) {
+                    gui.cp1.prevMonth();
+                }
+                if (gui.cp1.bOK.mouseOverButton(this) && gui.cp1.isDateSelected()) {
+                    gui.dataCalendari = gui.cp1.getSelectedDate();
+                    gui.cp1.setVisible(false);
+                    gui.bCal.setTextBoto(gui.dataCalendari);
+                }
+            }
 
         }
 
@@ -320,12 +394,13 @@ public class MyFish extends PApplet {
 
 
         if(gui.pantallaActual==GUI.PANTALLA.REGISTRAR_CAPTURA||gui.pantallaActual==GUI.PANTALLA.VER_REGISTRO||
-                gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE){
+                gui.pantallaActual==GUI.PANTALLA.ESTADISTICAS||gui.pantallaActual==GUI.PANTALLA.INFO||gui.pantallaActual==GUI.PANTALLA.ESPECIE||gui.pantallaActual==GUI.PANTALLA.VER_CAPTURA){
             if (gui.homeB.mouseOverButton(this)) {
                 gui.pantallaActual = GUI.PANTALLA.INICIO;
             }
 
             else if (gui.ib1.mouseOverButton(this)) {
+                resetFormularioCaptura();
                 gui.pantallaActual = GUI.PANTALLA.REGISTRAR_CAPTURA;
             }
 
@@ -348,21 +423,67 @@ public class MyFish extends PApplet {
     }
 
     public void updateCursor(PApplet p5){
-        boolean overButton = gui.b1.updateHandCursor(p5)||gui.b2.updateHandCursor(p5)||gui.b3.updateHandCursor(p5)||gui.b4.updateHandCursor(p5);
-        if (gui.pantallaActual == GUI.PANTALLA.VER_REGISTRO &&
-                (gui.registro!=null && gui.registro.mouseOverGridButtons(p5))) {
-            overButton = true;
+        boolean overButton = false;
+        boolean overText = false;
+
+        switch(gui.pantallaActual){
+            case INICIAR:
+                if (gui.iniciar.mouseOverButton(p5)) overButton = true;
+                if (gui.usuario.mouseOverTextField(p5) || gui.contrasena.mouseOverTextField(p5)) overText = true;
+                break;
+            case INICIO:
+                if (gui.b1.mouseOverButton(p5) || gui.b2.mouseOverButton(p5) || gui.b3.mouseOverButton(p5) || gui.b4.mouseOverButton(p5)) overButton = true;
+                break;
+            case REGISTRAR_CAPTURA:
+                if (gui.registrar.mouseOverButton(p5) || uploadB.mouseOverButton(p5)) overButton = true;
+                if (gui.bCal.mouseOverButton(p5) || gui.peso.mouseOverButtonMes(p5) || gui.peso.mouseOverButtonMenys(p5) || gui.tamano.mouseOverButtonMes(p5) || gui.tamano.mouseOverButtonMenys(p5)) overButton = true;
+                if (gui.tlEspecie.getTextField().mouseOverTextField(p5)) overText = true;
+                if (gui.tNotas.mouseOverTextField(p5) || gui.tUbicacion.mouseOverTextField(p5) || gui.tFecha.mouseOverTextField(p5) || gui.tSenuelo.mouseOverTextField(p5)) overText = true;
+                if (gui.cp1.visible) {
+                    if (gui.cp1.bNext.mouseOverButton(p5) || gui.cp1.bPrev.mouseOverButton(p5) || gui.cp1.bOK.mouseOverButton(p5)) overButton = true;
+                    for (int i=0; i < gui.cp1.buttons.length; i++) {
+                        if (gui.cp1.buttons[i] != null && gui.cp1.buttons[i].enabled && gui.cp1.buttons[i].mouseOver(p5)) overButton = true;
+                    }
+                }
+                break;
+            case VER_REGISTRO:
+                if (gui.nextPage.mouseOverButton(p5) || gui.previousPage.mouseOverButton(p5)) overButton = true;
+                if (gui.registro != null && gui.registro.mouseOverGridButtons(p5)) overButton = true;
+                break;
+            case VER_CAPTURA:
+                if (gui.editCapturaBtn.mouseOverButton(p5) || gui.deleteCapturaBtn.mouseOverButton(p5) || gui.volverVerCapturaBtn.mouseOverButton(p5)) overButton = true;
+                if (gui.enModoEdicion) {
+                    if (gui.bCal.mouseOverButton(p5) || gui.peso.mouseOverButtonMes(p5) || gui.peso.mouseOverButtonMenys(p5) || gui.tamano.mouseOverButtonMes(p5) || gui.tamano.mouseOverButtonMenys(p5)) overButton = true;
+                    if (gui.tlEspecie.getTextField().mouseOverTextField(p5)) overText = true;
+                    if (gui.tNotas.mouseOverTextField(p5) || gui.tUbicacion.mouseOverTextField(p5) || gui.tFecha.mouseOverTextField(p5) || gui.tSenuelo.mouseOverTextField(p5)) overText = true;
+                    if (gui.cp1.visible) {
+                        if (gui.cp1.bNext.mouseOverButton(p5) || gui.cp1.bPrev.mouseOverButton(p5) || gui.cp1.bOK.mouseOverButton(p5)) overButton = true;
+                        for (int i=0; i < gui.cp1.buttons.length; i++) {
+                            if (gui.cp1.buttons[i] != null && gui.cp1.buttons[i].enabled && gui.cp1.buttons[i].mouseOver(p5)) overButton = true;
+                        }
+                    }
+                }
+                break;
+            case INFO:
+                if (gui.nextPage2.mouseOverButton(p5) || gui.previousPage2.mouseOverButton(p5)) overButton = true;
+                if (gui.infoPeces != null && gui.infoPeces.mouseOverListButtons(p5)) overButton = true;
+                break;
+            case ESPECIE:
+                if (gui.volver.mouseOverButton(p5)) overButton = true;
+                break;
+            case ESTADISTICAS:
+                break;
         }
 
-        if (overButton) {
-            cursor(HAND);
+        if (gui.pantallaActual != GUI.PANTALLA.INICIO && gui.pantallaActual != GUI.PANTALLA.INICIAR) {
+            if (gui.homeB.mouseOverButton(p5) || gui.ib1.mouseOverButton(p5) || gui.ib2.mouseOverButton(p5) || gui.ib3.mouseOverButton(p5) || gui.ib4.mouseOverButton(p5)) {
+                overButton = true;
+            }
         }
-        else if(gui.tNotas.selected == true){
-            cursor(TEXT);
-        }
-        else {
-            cursor(ARROW);
-        }
+
+        if (overButton) cursor(HAND);
+        else if (overText) cursor(TEXT);
+        else cursor(ARROW);
     }
 
     void setShapeColor(PShape shape, int c) {

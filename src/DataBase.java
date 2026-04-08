@@ -308,10 +308,10 @@ public class DataBase {
         System.out.println(qf);
 
         int nf = getNumFilesMatchQuery(qf);
-        String[][] info = new String[nf][7];
+        String[][] info = new String[nf][8];
 
 
-        String q = "SELECT c.fecha, e.nombreComun, c.peso, c.tamano, c.ubicacion, c.senuelo, c.notas \n" +
+        String q = "SELECT c.numero, c.fecha, e.nombreComun, c.peso, c.tamano, c.ubicacion, c.senuelo, c.notas \n" +
                 "FROM Captura c, Usuario u, Especie e \n" +
                 "WHERE c.Usuario_id=u.id AND u.id='"+usuario+"' AND c.Especie_numero=e.numero \n" +
                 "ORDER BY c.fecha DESC";
@@ -330,6 +330,7 @@ public class DataBase {
                 info[f][4] = rs.getString("fecha");
                 info[f][5] = rs.getString("senuelo");
                 info[f][6] = rs.getString("notas");
+                info[f][7] = rs.getString("numero");
 
 
                 f++;
@@ -383,6 +384,26 @@ public class DataBase {
             query.execute(q);
         }
         catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public void updateCaptura(int id, float peso, float tamano, String ubicacion, int dia, int mes, int ano, String senuelo, String notas, String especie) {
+        String idEspecie = getIdEspecie(especie);
+        String q = "UPDATE Captura SET peso=" + peso + ", tamano=" + tamano + ", ubicacion='" + ubicacion + "', fecha='" + ano + "-" + mes + "-" + dia + "', senuelo='" + senuelo + "', notas='" + notas + "', Especie_numero=" + idEspecie + " WHERE numero=" + id;
+        System.out.println(q);
+        try {
+            query.execute(q);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void deleteCaptura(int id) {
+        String q = "DELETE FROM Captura WHERE numero=" + id;
+        System.out.println(q);
+        try {
+            query.execute(q);
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

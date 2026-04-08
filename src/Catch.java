@@ -1,4 +1,5 @@
 public class Catch{
+    public int id;
     Especie especie;
     float peso;
     float tamano;
@@ -7,7 +8,8 @@ public class Catch{
     String senuelo;
     String notas;
 
-    public Catch(Especie e, float peso, float tamano, String ubicacion, String fecha, String senuelo, String notas) {
+    public Catch(int id, Especie e, float peso, float tamano, String ubicacion, String fecha, String senuelo, String notas) {
+        this.id = id;
         this.especie = e;
         this.peso = peso;
         this.tamano = tamano;

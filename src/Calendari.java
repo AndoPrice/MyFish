@@ -30,7 +30,7 @@ public class Calendari {
     // Constructor
     public Calendari(int x, int y, int w, int h){
 
-        this.buttons = new DayButton[37];
+        this.buttons = new DayButton[42];
 
         this.cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -89,14 +89,15 @@ public class Calendari {
     // Va un mes enrera en el Calendari
     public void prevMonth(){
 
-        this.buttons = new DayButton[37];
+        this.buttons = new DayButton[42];
 
         this.mes --;
         if(this.mes==0){
             this.mes = 12;
             this.any--;
         }
-        setCalendar(this.dia, this.mes -1, this.any);
+        setCalendar(1, this.mes - 1, this.any);
+
 
         this.numDaysMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
@@ -149,14 +150,14 @@ public class Calendari {
     // Va un mes endavant en el calendari
     public void nextMonth(){
 
-        this.buttons = new DayButton[37];
+        this.buttons = new DayButton[42];
 
         this.mes ++;
         if(this.mes==13){
             this.mes = 1;
             this.any++;
         }
-        setCalendar(this.dia, this.mes-1, this.any);
+        setCalendar(1, this.mes - 1, this.any);
 
         this.numDaysMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
