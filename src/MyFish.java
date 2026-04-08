@@ -240,7 +240,9 @@ public class MyFish extends PApplet {
 
             else if(gui.registrar.mouseOverButton(this)){
                 db.insertCaptura(gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(),gui.tNotas.getText(), gui.tlEspecie.selectedValue, gui.usuario.getText());
-
+                if(uploadImage!=null && !titol.isEmpty()) {
+                    db.insertImagen(titol);
+                }
                 gui.updateCaptuarasUsuario(this);
                 gui.tNotas.text="";
                 gui.tUbicacion.text="";
@@ -249,6 +251,9 @@ public class MyFish extends PApplet {
                 gui.tlEspecie.selectedValue="";
                 gui.peso.value=0;
                 gui.tamano.value=0;
+
+                uploadImage = null;
+                titol = "";
 
 
                 gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;

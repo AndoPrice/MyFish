@@ -389,8 +389,8 @@ public class DataBase {
 
     public void insertImagen(String nombre){
         int n = getMaxCaptura();
-        String q = "INSERT INTO `Imagen`(`numero`, `nombre`, `Especie_numero`, `Captura_numero`) " +
-                "VALUES ('"+nombre+"','NULL',''"+n+"')";
+        String q = "INSERT INTO `Imagen`(`nombre`, `Especie_numero`, `Captura_numero`) " +
+                "VALUES ('"+nombre+"', NULL, "+n+")";
         System.out.println(q);
         try{
             query.execute(q);
