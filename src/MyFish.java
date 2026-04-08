@@ -233,9 +233,14 @@ public class MyFish extends PApplet {
             else if (gui.peso.mouseOverButtonMenys(this)) {
                 gui.peso.decrement();
             }
+            if(uploadB.mouseOverButton(this)){
+                // Obrim el dialeg
+                selectInput("Selecciona una imatge ...", "fileSelected");
+            }
 
             else if(gui.registrar.mouseOverButton(this)){
                 db.insertCaptura(gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(),gui.tNotas.getText(), gui.tlEspecie.selectedValue, gui.usuario.getText());
+
                 gui.updateCaptuarasUsuario(this);
                 gui.tNotas.text="";
                 gui.tUbicacion.text="";
@@ -269,10 +274,7 @@ public class MyFish extends PApplet {
                 gui.cp1.setVisible(false);
                 gui.bCal.setTextBoto(gui.dataCalendari);
             }
-            if(uploadB.mouseOverButton(this)){
-                // Obrim el dialeg
-                selectInput("Selecciona una imatge ...", "fileSelected");
-            }
+
         }
 
         else if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){

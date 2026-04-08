@@ -387,5 +387,33 @@ public class DataBase {
         }
     }
 
+    public void insertImagen(String nombre){
+        int n = getMaxCaptura();
+        String q = "INSERT INTO `Imagen`(`numero`, `nombre`, `Especie_numero`, `Captura_numero`) " +
+                "VALUES ('"+nombre+"','NULL',''"+n+"')";
+        System.out.println(q);
+        try{
+            query.execute(q);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public int getMaxCaptura(){
+        String q = "SELECT MAX(numero) FROM Captura";
+        System.out.println(q);
+        try{
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return 0;
+    }
+
 
 }
