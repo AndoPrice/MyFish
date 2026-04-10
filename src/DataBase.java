@@ -434,6 +434,25 @@ public class DataBase {
         return null;
     }
 
+    public void updateImagenCaptura(int capturaId, String nombreImagen) {
+        String testQ = "SELECT COUNT(*) FROM Imagen WHERE Captura_numero=" + capturaId;
+        try {
+            ResultSet rs = query.executeQuery(testQ);
+            rs.next();
+            if (rs.getInt(1) > 0) {
+                String updateQ = "UPDATE Imagen SET nombre='" + nombreImagen + "' WHERE Captura_numero=" + capturaId;
+                System.out.println(updateQ);
+                query.execute(updateQ);
+            } else {
+                String insertQ = "INSERT INTO `Imagen`(`nombre`, `Especie_numero`, `Captura_numero`) VALUES ('" + nombreImagen + "', NULL, " + capturaId + ")";
+                System.out.println(insertQ);
+                query.execute(insertQ);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
     public int getMaxCaptura(){
         String q = "SELECT MAX(numero) FROM Captura";

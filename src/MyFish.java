@@ -127,7 +127,7 @@ public class MyFish extends PApplet {
                 }
             }
 
-            if (gui.pantallaActual == GUI.PANTALLA.REGISTRAR_CAPTURA) {
+            if (gui.pantallaActual == GUI.PANTALLA.REGISTRAR_CAPTURA || (gui.pantallaActual == GUI.PANTALLA.VER_CAPTURA && gui.enModoEdicion)) {
                 uploadB.display(this);
             }
         }
@@ -349,6 +349,9 @@ public class MyFish extends PApplet {
             else if (gui.editCapturaBtn.mouseOverButton(this)) {
                 if (gui.enModoEdicion) {
                     db.updateCaptura(gui.capturaActiva.id, gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(), gui.tNotas.getText(), gui.tlEspecie.selectedValue);
+                    if (titol != null && !titol.isEmpty()) {
+                        db.updateImagenCaptura(gui.capturaActiva.id, titol);
+                    }
                     gui.updateCaptuarasUsuario(this);
                     gui.enModoEdicion = false;
                     for(Catch c : gui.capturas) {
@@ -395,6 +398,10 @@ public class MyFish extends PApplet {
                     gui.dataCalendari = gui.cp1.getSelectedDate();
                     gui.cp1.setVisible(false);
                     gui.bCal.setTextBoto(gui.dataCalendari);
+                }
+
+                if (uploadB.mouseOverButton(this)) {
+                    selectInput("Selecciona una imatge ...", "fileSelected");
                 }
 
                 int editIndex = gui.registro.handleEditGridClick(this);
@@ -488,7 +495,7 @@ public class MyFish extends PApplet {
             case VER_CAPTURA:
                 if (gui.editCapturaBtn.mouseOverButton(p5) || gui.deleteCapturaBtn.mouseOverButton(p5) || gui.volverVerCapturaBtn.mouseOverButton(p5)) overButton = true;
                 if (gui.enModoEdicion) {
-                    if (gui.bCal.mouseOverButton(p5) || gui.peso.mouseOverButtonMes(p5) || gui.peso.mouseOverButtonMenys(p5) || gui.tamano.mouseOverButtonMes(p5) || gui.tamano.mouseOverButtonMenys(p5)) overButton = true;
+                    if (gui.bCal.mouseOverButton(p5) || gui.peso.mouseOverButtonMes(p5) || gui.peso.mouseOverButtonMenys(p5) || gui.tamano.mouseOverButtonMes(p5) || gui.tamano.mouseOverButtonMenys(p5) || uploadB.mouseOverButton(p5)) overButton = true;
                     if (gui.tlEspecie.getTextField().mouseOverTextField(p5)) overText = true;
                     if (gui.tNotas.mouseOverTextField(p5) || gui.tUbicacion.mouseOverTextField(p5) || gui.tFecha.mouseOverTextField(p5) || gui.tSenuelo.mouseOverTextField(p5)) overText = true;
                     if (gui.cp1.visible) {
