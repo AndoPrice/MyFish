@@ -421,6 +421,20 @@ public class DataBase {
         }
     }
 
+    public String getImagenPorCapturaId(int capturaId) {
+        String q = "SELECT nombre FROM Imagen WHERE Captura_numero=" + capturaId;
+        try {
+            ResultSet rs = query.executeQuery(q);
+            if (rs.next()) {
+                return rs.getString("nombre");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+
     public int getMaxCaptura(){
         String q = "SELECT MAX(numero) FROM Captura";
         System.out.println(q);

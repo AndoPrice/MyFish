@@ -108,7 +108,7 @@ public class MyFish extends PApplet {
 
         }
         updateCursor(this);
-        if(gui.pantallaActual== GUI.PANTALLA.REGISTRAR_CAPTURA){
+        if(gui.pantallaActual== GUI.PANTALLA.REGISTRAR_CAPTURA || gui.pantallaActual == GUI.PANTALLA.VER_CAPTURA){
             if(uploadImage!=null){
                 imageMode(CORNER);
                 image(uploadImage, 150, 275, 520, 520);
@@ -119,10 +119,17 @@ public class MyFish extends PApplet {
                 fill(200);
                 rect(150, 275, 520, 520);
                 textSize(34); textAlign(RIGHT);
+                if (gui.pantallaActual == GUI.PANTALLA.VER_CAPTURA) {
+                    fill(gui.colors.getAzure());
+                    textSize(24);
+                    textAlign(CENTER, CENTER);
+                    text("SIN IMAGEN", 150 + 260, 275 + 260);
+                }
             }
 
-            // Dibuixa el botó
-            uploadB.display(this);
+            if (gui.pantallaActual == GUI.PANTALLA.REGISTRAR_CAPTURA) {
+                uploadB.display(this);
+            }
         }
 
     }
@@ -136,7 +143,7 @@ public class MyFish extends PApplet {
             String rutaImatge = selection.getAbsolutePath();
 
             uploadImage = loadImage(rutaImatge);  // Actualitzam imatge
-            titol = selection.getName();  // Actualitzam títol
+            titol = rutaImatge;  // Actualitzam títol
         }
     }
 
@@ -304,6 +311,28 @@ public class MyFish extends PApplet {
             int editIndex = gui.registro.handleEditGridClick(this);
             if (editIndex != -1 && editIndex < gui.capturas.length) {
                 gui.cargarCaptura(gui.capturas[editIndex]);
+                String imgName = db.getImagenPorCapturaId(gui.capturas[editIndex].id);
+                if (imgName != null && !imgName.isEmpty()) {
+                    File file = new File(imgName);
+                    if (file.exists()) {
+                        uploadImage = loadImage(imgName);
+                        titol = imgName;
+                    } else if (new File(dataPath(imgName)).exists()) {
+                        uploadImage = loadImage(imgName);
+                        titol = imgName;
+                    } else if (new File("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName).exists()) {
+                        System.out.println("Image found!");
+                        uploadImage = loadImage("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName);
+                        titol = imgName;
+                    } else {
+                        // File not found explicitly, avoid attempting to load it
+                        uploadImage = null;
+                        titol = "";
+                    }
+                } else {
+                    uploadImage = null;
+                    titol = "";
+                }
                 gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
             }
 
@@ -366,6 +395,12 @@ public class MyFish extends PApplet {
                     gui.dataCalendari = gui.cp1.getSelectedDate();
                     gui.cp1.setVisible(false);
                     gui.bCal.setTextBoto(gui.dataCalendari);
+                }
+
+                int editIndex = gui.registro.handleEditGridClick(this);
+                if (editIndex != -1 && editIndex < gui.capturas.length) {
+                    gui.cargarCaptura(gui.capturas[editIndex]);
+                    gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
                 }
             }
 
