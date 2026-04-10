@@ -107,40 +107,63 @@ public class Card {
 
     void drawCatchCard(PApplet p5) {
 
-        float imgW = (w/3) - 2*b;
+        float imgW = (w/2) - 2*b;
         float imgH = h - 3*b;
 
         if (img != null) {
-            p5.image(img, x + b, y + 2*b, imgW, imgH);
+            p5.imageMode(p5.CORNER);
+            p5.image(img, x + b, y + 2*b + 5, imgW, imgH);
+        } else {
+            p5.fill(220);
+            p5.rect(x + b, y + 2*b +5, imgW, imgH, 8);
+            p5.fill(100);
+            p5.textAlign(p5.CENTER, p5.CENTER);
+            p5.textSize(20);
+            p5.text("SIN IMAGEN", x + b + imgW/2, y + 2*b + imgH/2);
         }
 
         float tx = x + w/2 + b;
 
         p5.textAlign(p5.LEFT);
         p5.textSize(28);
+        p5.fill(20, 93, 160);
 
+        p5.text("ESPECIE: " + (species != null ? species : ""), tx, y + h/3 + 10);
+        p5.text(description != null ? description : "", tx, y + h/2 + 10);
 
-        p5.text("ESPECIE: " + species, tx, y + h/3);
-        p5.text(description, tx, y + h/2);
-
-        p5.textSize(26);
-        p5.text(place + " · " + date, tx, y + h - b*2);
+        p5.textSize(24);
+        p5.text((place != null ? place : "") + " · " + (date != null ? date : ""), tx, y + h - b*2);
     }
+
     void drawSpeciesCard(PApplet p5) {
 
-        float imgW = (w/3) - 2*b;
+        float imgW = (w/2) - 2*b;
         float imgH = h - 3*b;
 
         if (img != null) {
-            p5.image(img, x + b, y + 2*b, imgW, imgH);
+            p5.imageMode(p5.CORNER);
+            p5.image(img, x + b, y + 2*b +5, imgW, imgH);
+        } else {
+            p5.fill(220);
+            p5.rect(x + b, y + 2*b +5, imgW, imgH, 8);
+            p5.fill(100);
+            p5.textAlign(p5.CENTER, p5.CENTER);
+            p5.textSize(20);
+            p5.text("SIN FOTO", x + b + imgW/2, y + 2*b + imgH/2);
         }
 
-        p5.textAlign(p5.LEFT);
-        p5.textSize(28);
+        float tx = x + w/2 + b;
 
-        p5.text("ESPECIE: " + species, x + w/2 + b, y + h/2);
-        p5.text(description, x + w/2 + b, y + h/2 + 40);
+        p5.textAlign(p5.LEFT);
+        p5.textSize(32);
+        p5.fill(20, 93, 160);
+
+        p5.text(species != null ? species : "", tx, y + h/2 + 10);
+
+        p5.textSize(24);
+        p5.text(description != null ? description : "", tx, y + h/2 + 50);
     }
+
     void drawAverageCard(PApplet p5) {
 
         p5.textAlign(p5.CENTER);

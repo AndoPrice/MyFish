@@ -203,16 +203,22 @@ public class PagedTable {
         p5.fill(255);
         p5.rect(x, y, w, h-6, 12);
 
+        Especie s = (Especie) obj;
+
         //IMAGEN
         float imgSize = h - pad*2;
-        p5.fill(220);
-        p5.rect(x + pad, y + pad, imgSize, imgSize, 8);
+        if(s.getFoto()!=null){
+            p5.imageMode(p5.CORNER);
+            p5.image(s.getFoto(), x + pad, y + pad, imgSize, imgSize);
+        } else {
+            p5.fill(220);
+            p5.rect(x + pad, y + pad, imgSize, imgSize, 8);
+        }
 
         p5.fill(30, 90, 150);
         p5.textAlign(p5.LEFT, p5.CENTER);
         p5.textSize(36);
 
-        Especie s = (Especie) obj;
 
         p5.text(
                 s.nombreComun + " (" + s.nombreCientifico + ")",

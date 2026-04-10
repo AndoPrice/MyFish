@@ -38,19 +38,7 @@ public class GUI {
     float tableW = 1000, tableH = 500;
     float[] colWidths = {22, 22, 22, 22, 12};
     Especie[] especies;
-    Catch[] capturas; /*= {
-            new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","20/10/25", "Popper", "Nada"),
-            new Catch(searchSpecies(especies, "Espetón"), 1, 45, "Cala Millor","28/10/25", "Minnow", "Lucha dura"),
-            new Catch(searchSpecies(especies, "Espetón"), 2, 60, "Sa Coma","2/11/25", "Paseante", "Nada"),
-            new Catch(searchSpecies(especies, "Bacoreta"), 0.5f, 34, "Alcúdia","20/11/25", "Popper", ""),
-            new Catch(searchSpecies(especies, "Bacoreta"), 0.8f, 40, "Porto Cristo","23/11/25", "Spotter", "Nada"),
-            new Catch(searchSpecies(especies, "Llampuga"), 3, 55, "Sa Coma","26/11/25", "Bombeta", ""),
-            new Catch(searchSpecies(especies, "Llampuga"), 4, 62, "Sa Coma","3/11/25", "Paseante", "PR"),
-            new Catch(searchSpecies(especies, "Lubina"), 0.7f, 32, "Alcúdia","4/12/25", "Paseante", ""),
-
-
-
-    };*/
+    Catch[] capturas;
     Card c1;
     CalendariPlus cp1;
     String dataCalendari = "";
@@ -82,14 +70,18 @@ public class GUI {
         String[][] infoEspecies = dataBase.getInfoTodasEspecies();
         especies = new Especie[infoEspecies.length];
         for(int e=0; e<especies.length; e++){
-            especies[e] = new Especie (infoEspecies[e][0],infoEspecies[e][1], infoEspecies[e][2], infoEspecies[e][3], infoEspecies[e][4], infoEspecies[e][5], infoEspecies[e][6]);
+            especies[e] = new Especie (infoEspecies[e][0],infoEspecies[e][1], infoEspecies[e][2], infoEspecies[e][3], infoEspecies[e][4], infoEspecies[e][5], infoEspecies[e][6], infoEspecies[e][7]);
+            if (especies[e].nombreImagen != null) {
+                String fullPath = especies[e].nombreImagen.startsWith("/") ? especies[e].nombreImagen : "/Users/andoprice/Documents/MyFishImages/Especies/" + especies[e].nombreImagen;
+                especies[e].foto = p5.loadImage(fullPath);
+            }
         }
 
         infoCapturas = dataBase.getCapturasUsuario("lian");
         if(infoCapturas.length>0) {
             capturas = new Catch[infoCapturas.length];
             for (int c = 0; c < capturas.length; c++) {
-                capturas[c] = new Catch(Integer.parseInt(infoCapturas[c][7]), searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+                capturas[c] = new Catch(Integer.parseInt(infoCapturas[c][7]), searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6], infoCapturas[c][8]);
             }
         }
 
@@ -168,6 +160,10 @@ public class GUI {
                     longest.especie.nombreComun,
                     "Longitud: " + longest.tamano + " cm"
             );
+            if (longest.getNombreImagen() != null) {
+                String fullPath = longest.getNombreImagen().startsWith("/") ? longest.getNombreImagen() : "/Users/andoprice/Documents/MyFishImages/Capturas/" + longest.getNombreImagen();
+                longCard.setImage(p5.loadImage(fullPath));
+            }
             Catch heavy = CatchStats.heaviestCatch(capturas);
             heavyCard = new Card(
                     Card.CardType.CATCH,
@@ -177,6 +173,11 @@ public class GUI {
                     heavy.especie.nombreComun,
                     "Peso: " + heavy.peso + " kg"
             );
+            if (heavy.getNombreImagen() != null) {
+                String fullPath = heavy.getNombreImagen().startsWith("/") ? heavy.getNombreImagen() : "/Users/andoprice/Documents/MyFishImages/Capturas/" + heavy.getNombreImagen();
+                heavyCard.setImage(p5.loadImage(fullPath));
+            }
+
             Object[] result = CatchStats.commonSpecies(capturas);
             Especie especie = (Especie) result[0];
             int times = (int) result[1];
@@ -188,6 +189,9 @@ public class GUI {
                     especie.nombreComun,
                     "Número de capturas: "+times
             );
+            if (especie.foto != null) {
+                mostCommonCard.setImage(especie.foto);
+            }
             float avgW = CatchStats.averageWeight(capturas);
             avgWeightCard = new Card(
                     Card.CardType.AVERAGE,
@@ -263,11 +267,12 @@ public class GUI {
     }
 
     public void updateCaptuarasUsuario (PApplet p5){
+        registro = null;
         infoCapturas = dataBase.getCapturasUsuario(usuario.getText());
         if(infoCapturas.length>0) {
             capturas = new Catch[infoCapturas.length];
             for (int c = 0; c < capturas.length; c++) {
-                capturas[c] = new Catch(Integer.parseInt(infoCapturas[c][7]), searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6]);
+                capturas[c] = new Catch(Integer.parseInt(infoCapturas[c][7]), searchSpecies(especies, infoCapturas[c][0]), Float.parseFloat(infoCapturas[c][1]), Float.parseFloat(infoCapturas[c][2]), infoCapturas[c][3], infoCapturas[c][4], infoCapturas[c][5], infoCapturas[c][6], infoCapturas[c][8]);
             }
             registro = new PagedTable(PagedTable.TableMode.GRID, 6, 5);
             registro.setHeaders(registroHeaders);
@@ -283,6 +288,10 @@ public class GUI {
                     longest.especie.nombreComun,
                     "Longitud: " + longest.tamano + " cm"
             );
+            if (longest.getNombreImagen() != null) {
+                String fullPath = longest.getNombreImagen().startsWith("/") ? longest.getNombreImagen() : "/Users/andoprice/Documents/MyFishImages/Capturas/" + longest.getNombreImagen();
+                longCard.setImage(p5.loadImage(fullPath));
+            }
             Catch heavy = CatchStats.heaviestCatch(capturas);
             heavyCard = new Card(
                     Card.CardType.CATCH,
@@ -292,6 +301,10 @@ public class GUI {
                     heavy.especie.nombreComun,
                     "Peso: " + heavy.peso + " kg"
             );
+            if (heavy.getNombreImagen() != null) {
+                String fullPath = heavy.getNombreImagen().startsWith("/") ? heavy.getNombreImagen() : "/Users/andoprice/Documents/MyFishImages/Capturas/" + heavy.getNombreImagen();
+                heavyCard.setImage(p5.loadImage(fullPath));
+            }
             Object[] result = CatchStats.commonSpecies(capturas);
             Especie especie = (Especie) result[0];
             int times = (int) result[1];
@@ -303,6 +316,9 @@ public class GUI {
                     especie.nombreComun,
                     "Número de capturas: "+times
             );
+            if (especie.foto != null) {
+                mostCommonCard.setImage(especie.foto);
+            }
             float avgW = CatchStats.averageWeight(capturas);
             avgWeightCard = new Card(
                     Card.CardType.AVERAGE,
@@ -419,6 +435,9 @@ public class GUI {
         p5.imageMode(p5.CORNER);
         p5.image(background, 0, 0);
 
+        p5.fill(255, 200);
+        p5.rect(p5.width/2+25, 225, 550, 580, 12);
+
         dibujaBotonesTopBar(p5);
         peso.display(p5);
         tamano.display(p5);
@@ -454,6 +473,9 @@ public class GUI {
         p5.background(255);
         p5.imageMode(p5.CORNER);
         p5.image(background, 0, 0);
+
+        p5.fill(255, 200);
+        p5.rect(p5.width/2+25, 225, 550, 580, 12);
 
         dibujaBotonesTopBar(p5);
         peso.display(p5);
@@ -513,13 +535,24 @@ public class GUI {
         p5.image(background, 0, 0);
         dibujaBotonesTopBar(p5);
         p5.rectMode(p5.CORNER);
+
+        if (e.foto != null) {
+            p5.imageMode(p5.CORNER);
+            p5.image(e.foto, 40, 225, p5.width/2 - 60, 580);
+        } else {
+            p5.fill(220);
+            p5.rect(40, 225, p5.width/2 - 60, 580, 12);
+            p5.fill(100); p5.textAlign(p5.CENTER, p5.CENTER); p5.textSize(20);
+            p5.text("SIN FOTO", 40 + (p5.width/2 - 60)/2.0f, 225 + 580/2.0f);
+        }
+
         p5.fill(255, 200);
-        p5.rect(p5.width/2+25, 225, 550, 580);
+        p5.rect(p5.width/2+25, 225, 550, 580, 12);
         p5.fill(colors.getAzure());
         p5.textFont(bebasNeue);
         p5.textSize(50);
         p5.textAlign(p5.CENTER);
-        p5.text(e.nombreComun +" ("+e.nombreCientifico +")", p5.width / 2, 225);
+        p5.text(e.nombreComun +" ("+e.nombreCientifico +")", p5.width / 2, 225-20);
         tb1.setText(e.descripcion);
         tb2.setText(e.ubicacion);
         tb3.setText(e.masInfo);

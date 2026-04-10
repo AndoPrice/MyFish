@@ -240,13 +240,14 @@ public class DataBase {
     }
 
     public String[][] getInfoTodasEspecies(){
-        String q = "SELECT nombreComun, nombreCientifico, descripcion, ubicacion, masInfo, comportamiento, tallaMin " +
-                "FROM Especie " +
-                "ORDER BY nombreComun ASC";
+        String q = "SELECT e.nombreComun, e.nombreCientifico, e.descripcion, e.ubicacion, e.masInfo, e.comportamiento, e.tallaMin, i.nombre " +
+                "FROM Especie e " +
+                "LEFT JOIN Imagen i ON e.numero = i.Especie_numero AND i.Captura_numero IS NULL " +
+                "ORDER BY e.nombreComun ASC";
         System.out.println(q);
         try{
             int numFilas = getNumFilesTaula("Especie");
-            String[][] info = new String[numFilas][7];
+            String[][] info = new String[numFilas][8];
             ResultSet rs = query.executeQuery(q);
             int f = 0;
             while(rs.next()){
@@ -257,6 +258,7 @@ public class DataBase {
                 info[f][4] = rs.getString("masInfo");
                 info[f][5] = rs.getString("comportamiento");
                 info[f][6] = rs.getString("tallaMin");
+                info[f][7] = rs.getString("nombre");
 
                 f++;
             }
@@ -308,12 +310,15 @@ public class DataBase {
         System.out.println(qf);
 
         int nf = getNumFilesMatchQuery(qf);
-        String[][] info = new String[nf][8];
+        String[][] info = new String[nf][9];
 
 
-        String q = "SELECT c.numero, c.fecha, e.nombreComun, c.peso, c.tamano, c.ubicacion, c.senuelo, c.notas \n" +
-                "FROM Captura c, Usuario u, Especie e \n" +
-                "WHERE c.Usuario_id=u.id AND u.id='"+usuario+"' AND c.Especie_numero=e.numero \n" +
+        String q = "SELECT c.numero, c.fecha, e.nombreComun, c.peso, c.tamano, c.ubicacion, c.senuelo, c.notas, i.nombre AS nombreImagen \n" +
+                "FROM Captura c \n" +
+                "JOIN Usuario u ON c.Usuario_id=u.id \n" +
+                "JOIN Especie e ON c.Especie_numero=e.numero \n" +
+                "LEFT JOIN Imagen i ON c.numero=i.Captura_numero \n" +
+                "WHERE u.id='"+usuario+"' \n" +
                 "ORDER BY c.fecha DESC";
 
 
@@ -331,6 +336,7 @@ public class DataBase {
                 info[f][5] = rs.getString("senuelo");
                 info[f][6] = rs.getString("notas");
                 info[f][7] = rs.getString("numero");
+                info[f][8] = rs.getString("nombreImagen");
 
 
                 f++;

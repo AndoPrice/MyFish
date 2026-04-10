@@ -1,3 +1,5 @@
+import processing.core.PImage;
+
 public class Especie {
 
     String nombreComun;
@@ -7,9 +9,11 @@ public class Especie {
     String masInfo;
     String comportamiento;
     String tallaMin;
+    String nombreImagen;
+    PImage foto;
 
 
-    public Especie(String nombreComun, String scientificName, String descripcion, String ubicacion, String masInfo, String comportamiento, String tallaMin) {
+    public Especie(String nombreComun, String scientificName, String descripcion, String ubicacion, String masInfo, String comportamiento, String tallaMin, String nombreImagen) {
         this.nombreComun = nombreComun;
         this.nombreCientifico = scientificName;
         this.descripcion = descripcion;
@@ -17,6 +21,7 @@ public class Especie {
         this.masInfo = masInfo;
         this.comportamiento = comportamiento;
         this.tallaMin = tallaMin;
+        this.nombreImagen = nombreImagen;
     }
 
     public String getNombreComun() {
@@ -73,5 +78,21 @@ public class Especie {
 
     public void setTallaMin(String tallaMin) {
         this.tallaMin = tallaMin;
+    }
+
+    public String getNombreImagen() {
+        return nombreImagen;
+    }
+
+    public void setNombreImagen(String nombreImagen) {
+        this.nombreImagen = nombreImagen;
+    }
+
+    public PImage getFoto() {
+        return foto;
+    }
+
+    public void setFoto(PImage foto) {
+        this.foto = foto;
     }
 }

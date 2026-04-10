@@ -7,8 +7,9 @@ public class Catch{
     String fecha;
     String senuelo;
     String notas;
+    String nombreImagen;
 
-    public Catch(int id, Especie e, float peso, float tamano, String ubicacion, String fecha, String senuelo, String notas) {
+    public Catch(int id, Especie e, float peso, float tamano, String ubicacion, String fecha, String senuelo, String notas, String nombreImagen) {
         this.id = id;
         this.especie = e;
         this.peso = peso;
@@ -17,6 +18,15 @@ public class Catch{
         this.fecha = fecha;
         this.senuelo = senuelo;
         this.notas = notas;
+        this.nombreImagen = nombreImagen;
+    }
+
+    public String getNombreImagen() {
+        return nombreImagen;
+    }
+
+    public void setNombreImagen(String nombreImagen) {
+        this.nombreImagen = nombreImagen;
     }
 
     public float getPeso() {
