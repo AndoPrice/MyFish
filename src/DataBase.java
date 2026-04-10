@@ -399,9 +399,13 @@ public class DataBase {
     }
 
     public void deleteCaptura(int id) {
-        String q = "DELETE FROM Captura WHERE numero=" + id;
-        System.out.println(q);
         try {
+            String qImg = "DELETE FROM Imagen WHERE Captura_numero=" + id;
+            System.out.println(qImg);
+            query.execute(qImg);
+
+            String q = "DELETE FROM Captura WHERE numero=" + id;
+            System.out.println(q);
             query.execute(q);
         } catch (Exception e) {
             System.out.println(e);

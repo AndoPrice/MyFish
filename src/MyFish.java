@@ -267,7 +267,7 @@ public class MyFish extends PApplet {
             }
 
             else if(gui.registrar.mouseOverButton(this)){
-                db.insertCaptura(gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(),gui.tNotas.getText(), gui.tlEspecie.selectedValue, gui.usuario.getText());
+                db.insertCaptura(gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.selectedDay, gui.cp1.selectedMonth, gui.cp1.selectedYear, gui.tSenuelo.getText(),gui.tNotas.getText(), gui.tlEspecie.selectedValue, gui.usuario.getText());
                 if(uploadImage!=null && !titol.isEmpty()) {
                     db.insertImagen(titol);
                 }
@@ -302,38 +302,41 @@ public class MyFish extends PApplet {
         }
 
         else if(gui.pantallaActual== GUI.PANTALLA.VER_REGISTRO){
-            if(gui.nextPage.mouseOverButton(this)){
-                gui.registro.nextPage();
-            }
-            if(gui.previousPage.mouseOverButton(this)) {
-                gui.registro.prevPage();
-            }
-            int editIndex = gui.registro.handleEditGridClick(this);
-            if (editIndex != -1 && editIndex < gui.capturas.length) {
-                gui.cargarCaptura(gui.capturas[editIndex]);
-                String imgName = db.getImagenPorCapturaId(gui.capturas[editIndex].id);
-                if (imgName != null && !imgName.isEmpty()) {
-                    File file = new File(imgName);
-                    if (file.exists()) {
-                        uploadImage = loadImage(imgName);
-                        titol = imgName;
-                    } else if (new File(dataPath(imgName)).exists()) {
-                        uploadImage = loadImage(imgName);
-                        titol = imgName;
-                    } else if (new File("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName).exists()) {
-                        System.out.println("Image found!");
-                        uploadImage = loadImage("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName);
-                        titol = imgName;
+            if(gui.registro != null) {
+                if (gui.nextPage.mouseOverButton(this)) {
+                    gui.registro.nextPage();
+                }
+                if (gui.previousPage.mouseOverButton(this)) {
+                    gui.registro.prevPage();
+                }
+                int editIndex = gui.registro.handleEditGridClick(this);
+                if (editIndex != -1 && gui.capturas != null && editIndex < gui.capturas.length) {
+                    gui.cargarCaptura(gui.capturas[editIndex]);
+                    String imgName = db.getImagenPorCapturaId(gui.capturas[editIndex].id);
+                    if (imgName != null && !imgName.isEmpty()) {
+                        File file = new File(imgName);
+                        if (file.exists()) {
+                            uploadImage = loadImage(imgName);
+                            titol = imgName;
+                        } else if (new File(dataPath(imgName)).exists()) {
+                            uploadImage = loadImage(imgName);
+                            titol = imgName;
+                        } else if (new File("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName).exists()) {
+                            System.out.println("Image found!");
+                            uploadImage = loadImage("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName);
+                            titol = imgName;
+                        } else {
+                            // File not found explicitly, avoid attempting to load it
+                            uploadImage = null;
+                            titol = "";
+                        }
                     } else {
-                        // File not found explicitly, avoid attempting to load it
                         uploadImage = null;
                         titol = "";
                     }
-                } else {
-                    uploadImage = null;
-                    titol = "";
+                    gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
+                    return;
                 }
-                gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
             }
 
         }
@@ -348,7 +351,7 @@ public class MyFish extends PApplet {
             }
             else if (gui.editCapturaBtn.mouseOverButton(this)) {
                 if (gui.enModoEdicion) {
-                    db.updateCaptura(gui.capturaActiva.id, gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.dia, gui.cp1.mes, gui.cp1.any, gui.tSenuelo.getText(), gui.tNotas.getText(), gui.tlEspecie.selectedValue);
+                    db.updateCaptura(gui.capturaActiva.id, gui.peso.value, gui.tamano.value, gui.tUbicacion.getText(), gui.cp1.selectedDay, gui.cp1.selectedMonth, gui.cp1.selectedYear, gui.tSenuelo.getText(), gui.tNotas.getText(), gui.tlEspecie.selectedValue);
                     if (titol != null && !titol.isEmpty()) {
                         db.updateImagenCaptura(gui.capturaActiva.id, titol);
                     }
@@ -404,11 +407,11 @@ public class MyFish extends PApplet {
                     selectInput("Selecciona una imatge ...", "fileSelected");
                 }
 
-                int editIndex = gui.registro.handleEditGridClick(this);
-                if (editIndex != -1 && editIndex < gui.capturas.length) {
-                    gui.cargarCaptura(gui.capturas[editIndex]);
-                    gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
-                }
+//                int editIndex = gui.registro.handleEditGridClick(this);
+//                if (editIndex != -1 && editIndex < gui.capturas.length) {
+//                    gui.cargarCaptura(gui.capturas[editIndex]);
+//                    gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
+//                }
             }
 
         }

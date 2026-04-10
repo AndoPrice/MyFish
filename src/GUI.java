@@ -560,6 +560,10 @@ public class GUI {
                 cp1.dia = dia;
                 cp1.mes = mes;
                 cp1.any = any;
+                cp1.selectedDay = dia;
+                cp1.selectedMonth = mes;
+                cp1.selectedYear = any;
+                cp1.dateSelected = true;
                 dataCalendari = dia + "/" + mes + "/" + any;
                 bCal.setTextBoto(dataCalendari);
             }
