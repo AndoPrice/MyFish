@@ -479,5 +479,18 @@ public class DataBase {
         return 0;
     }
 
+    public boolean insertUsuario(String id, String contrasena){
+        String q = "INSERT INTO Usuario (id, contrasena) VALUES ('"+id+"', '"+contrasena+"')";
+        System.out.println(q);
+        try{
+            query.execute(q);
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
 
 }

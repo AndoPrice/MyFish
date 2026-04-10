@@ -191,6 +191,19 @@ public class MyFish extends PApplet {
                 loginOK = false;
             }
         }
+        else if(gui.registrarUsuario.mouseOverButton(this)){
+            String id = gui.usuario.getText();
+            String contrasena = gui.contrasena.getText();
+            if(!id.isEmpty() && !contrasena.isEmpty()){
+                if(db.insertUsuario(id, contrasena)){
+                    loginOK = true;
+                    gui.pantallaActual = GUI.PANTALLA.INICIO;
+                    gui.updateCaptuarasUsuario(this);
+                } else {
+                    loginOK = false;
+                }
+            }
+        }
     }
 
     public void resetFormularioCaptura() {
@@ -232,6 +245,11 @@ public class MyFish extends PApplet {
             else if (gui.b4.mouseOverButton(this)) {
                 println(" B4 has been pressed!!! ");
                 gui.pantallaActual = GUI.PANTALLA.INFO;
+            }
+            else if (gui.cerrarSesion.mouseOverButton(this)) {
+                gui.usuario.setText("");
+                gui.contrasena.setText("");
+                gui.pantallaActual = GUI.PANTALLA.INICIAR;
             }
         }
 
@@ -473,11 +491,11 @@ public class MyFish extends PApplet {
 
         switch(gui.pantallaActual){
             case INICIAR:
-                if (gui.iniciar.mouseOverButton(p5)) overButton = true;
+                if (gui.iniciar.mouseOverButton(p5) || gui.registrarUsuario.mouseOverButton(p5)) overButton = true;
                 if (gui.usuario.mouseOverTextField(p5) || gui.contrasena.mouseOverTextField(p5)) overText = true;
                 break;
             case INICIO:
-                if (gui.b1.mouseOverButton(p5) || gui.b2.mouseOverButton(p5) || gui.b3.mouseOverButton(p5) || gui.b4.mouseOverButton(p5)) overButton = true;
+                if (gui.b1.mouseOverButton(p5) || gui.b2.mouseOverButton(p5) || gui.b3.mouseOverButton(p5) || gui.b4.mouseOverButton(p5) || gui.cerrarSesion.mouseOverButton(p5)) overButton = true;
                 break;
             case REGISTRAR_CAPTURA:
                 if (gui.registrar.mouseOverButton(p5) || uploadB.mouseOverButton(p5)) overButton = true;

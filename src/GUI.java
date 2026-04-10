@@ -12,7 +12,7 @@ public class GUI {
 
     Fonts fonts;
 
-    Button iniciar, b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
+    Button iniciar, registrarUsuario, cerrarSesion, b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
 
     IconButton ib1, ib2, ib3, ib4, homeB;
 
@@ -24,7 +24,6 @@ public class GUI {
 
     Card longCard, heavyCard, mostCommonCard, avgWeightCard, avgLengthCard;
 
-    String [] species = {"Barracuda", "Llampuga", "Palometón", "Bacoreta"};
 
     TextList tlEspecie;
     TextBox  tb1, tb2, tb3, tb4, tb5;
@@ -62,8 +61,10 @@ public class GUI {
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
         fonts = new Fonts(p5);
 
-        iniciar = new Button(p5, "INICIAR", p5.width/2-100, 700, 200, 80);
+        iniciar = new Button(p5, "LOGIN", p5.width/2-210, 700, 200, 80);
         iniciar.setBlues(colors);
+        registrarUsuario = new Button(p5, "REGISTRAR", p5.width/2+10, 700, 200, 80);
+        registrarUsuario.setBlues(colors);
         usuario = new TextField(p5, "Usuario", p5.width/2-150, 450, 300, 50, fonts.getFontAt(2));
         contrasena = new TextField(p5, "Contrasena", p5.width/2-150, 575, 300, 50, fonts.getFontAt(2));
 
@@ -110,6 +111,8 @@ public class GUI {
 
 
 
+
+
         ib1 = new IconButton(p5, "REGISTRAR CAPTURA", (p5.width*2/5)-150, 100, 200, 125, add);
         ib1.setColors(colors);
         ib2 = new IconButton(p5, "VER REGISTRO", (p5.width*3/5)-150, 100, 200, 125, list);
@@ -134,6 +137,9 @@ public class GUI {
 
         volver = new Button(p5, "VOLVER", p5.width/2+475, 805, 100, 50);
         volver.setGreys(colors);
+
+        cerrarSesion = new Button(p5, "CERRAR SESION", p5.width - 250, 40, 200, 50);
+        cerrarSesion.setGreys(colors);
 
 
         peso = new Counter(p5, "Peso (kg): ", mes, menys,p5.width/2+50, 400, 100, 50);
@@ -415,6 +421,8 @@ public class GUI {
         usuario.display(p5);
         contrasena.display(p5);
         iniciar.display(p5);
+        registrarUsuario.display(p5);
+
     }
 
 
@@ -427,7 +435,19 @@ public class GUI {
 
         dibujaLogo(p5);
         dibujaBotonesInicio(p5);
+        dibujaInfoUsuario(p5);
 
+    }
+
+    public void dibujaInfoUsuario(PApplet p5){
+        p5.pushStyle();
+        p5.fill(colors.getAzure());
+        p5.textAlign(p5.RIGHT);
+        p5.textSize(24);
+        p5.textFont(fonts.getFirstFont());
+        p5.text("Usuario: " + usuario.getText(), p5.width - 270, 75);
+        cerrarSesion.display(p5);
+        p5.popStyle();
     }
 
     public void dibujaPantallaRegistrarCaptura(PApplet p5){
