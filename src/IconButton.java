@@ -1,5 +1,13 @@
 import processing.core.*;
 
+/**
+ * Representa un botón con icono en la interfaz.
+ *
+ * Permite:
+ * - Mostrar iconos (imagen o vector)
+ * - Detectar interacción del ratón
+ * - Cambiar estado visual (hover, disabled)
+ */
 public class IconButton {
     PFont bebasNeue;
     float x, y, w, h;
@@ -7,10 +15,15 @@ public class IconButton {
     int fillColorOver, fillColorDisabled;
     String textBoto;
     boolean enabled;
+    /** Icono vectorial */
     public PShape icon;
+
+    /** Icono en imagen */
     PImage home;
 
-
+    /**
+     * Constructor con icono vectorial.
+     */
     public IconButton(PApplet p5, String text, float x, float y, float w, float h, PShape icon){
         this.textBoto = text;
         this.x = x;
@@ -25,6 +38,9 @@ public class IconButton {
 
     }
 
+    /**
+     * Constructor con imagen.
+     */
     public IconButton(PApplet p5, String text, float x, float y, float w, float h, PImage icon){
         this.textBoto = text;
         this.x = x;
@@ -41,26 +57,39 @@ public class IconButton {
 
 
 
-
-
+    /**
+     * Define colores del botón.
+     */
     public void setColors(Colors c){
         this.fillColor = c.getAzure();
         this.fillColorOver = c.getAzureSelected();
     }
 
-
+    /**
+     * Activa o desactiva el botón.
+     */
     public void setEnabled(boolean b){
         this.enabled = b;
     }
 
+    /**
+     * Cambia el texto del botón.
+     */
     public void setTextBoto(String t){ this.textBoto = t; }
 
 
-
+    /** @return si está activo */
     public boolean isEnabled(){
         return  this.enabled;
     }
 
+    /**
+     * Dibuja el botón en pantalla.
+     *
+     * Cambia su apariencia según:
+     * - Si está activo
+     * - Si el ratón está encima
+     */
     public void display(PApplet p5, boolean b){
 
         p5.pushStyle();
@@ -106,6 +135,9 @@ public class IconButton {
 
     }
 
+    /**
+     * Aplica estilo cuando está seleccionado.
+     */
     public void selected(PApplet p5){
         if (home != null){
             p5.tint(171, 193, 213, 100);
@@ -116,17 +148,25 @@ public class IconButton {
     }
 
 
+    /**
+     * Dibuja solo el icono.
+     */
     public void dibujaIcons (PApplet p5){
         p5.shape(icon, x, y);
 
     }
 
+    /**
+     * Detecta si el ratón está sobre el botón.
+     */
     public boolean mouseOverButton(PApplet p5){
         return (p5.mouseX >= this.x-(w/2)) && (p5.mouseX <= this.x-(w/2) + this.w) &&
                 (p5.mouseY >= this.y-(y/2)) && (p5.mouseY <= this.y-(y/2) + this.h);
     }
 
-
+    /**
+     * Indica si debe mostrarse el cursor de mano.
+     */
     public boolean updateHandCursor(PApplet p5){
         return mouseOverButton(p5) && enabled;
     }

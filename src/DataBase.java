@@ -1,25 +1,47 @@
 import java.sql.*;
 
+/**
+ * Clase encargada de la gestión de la base de datos MySQL.
+ *
+ * Proporciona métodos para:
+ * - Conectar con la base de datos
+ * - Ejecutar consultas
+ * - Insertar, actualizar y eliminar datos
+ * - Obtener información de usuarios, capturas y especies
+ */
 public class DataBase {
+    /** Conexión a la base de datos */
     Connection c;
 
+    /** Objeto para ejecutar consultas SQL */
     Statement query;
 
+    /** Credenciales de acceso */
     String user, password, databaseName;
 
+    /** Indica si está conectado */
     boolean connectat = false;
 
+    /**
+     * Constructor de la base de datos.
+     * @param user usuario
+     * @param password contraseña
+     * @param databaseName nombre de la base de datos
+     */
     public DataBase(String user, String password, String databaseName){
         this.user = user;
         this.password = password;
         this.databaseName = databaseName;
     }
 
+    /**
+     * Establece conexión con la base de datos MySQL.
+     */
     public void connect(){
         try {
             c = DriverManager.getConnection("jdbc:mysql://localhost:8889/"+databaseName, user, password);
             query = c.createStatement();
-            System.out.println("Connectat a la BBDD! :) ");
+            System.out.println("Conectado a la BBDD! :) ");
             connectat = true;
         }
         catch(Exception e) {
@@ -27,22 +49,11 @@ public class DataBase {
         }
     }
 
-    public String getInfo(String nomTaula, String nomColumna, String nomClau, String identificador){
-        try{
-            String q =  "SELECT " + nomColumna +
-                    " FROM " + nomTaula +
-                    " WHERE "+ nomClau  + " = '" + identificador + "' ";
-            System.out.println(q);
-            ResultSet rs= query.executeQuery(q);
-            rs.next();
-            return rs.getString(nomColumna);
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return "";
-    }
-
+    /**
+     * Devuelve el número de filas de una tabla.
+     * @param nomTaula nombre de la tabla
+     * @return número de filas
+     */
     public int getNumFilesTaula(String nomTaula){
         String q = "SELECT COUNT(*) AS num FROM "+ nomTaula;
         try{
@@ -56,27 +67,12 @@ public class DataBase {
         return 0;
     }
 
-    public String[] getInfoArray(String nomTaula, String nomColumna){
-        int n = getNumFilesTaula(nomTaula);
-        String[] info = new String[n];
-        String q = "SELECT "+ nomColumna +
-                " FROM " + nomTaula +
-                " ORDER BY " + nomColumna + " ASC";
-        System.out.println(q);
-        try{
-            ResultSet rs = query.executeQuery(q);
-            int f=0;
-            while(rs.next()){
-                info[f] = rs.getString(nomColumna);
-                f++;
-            }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return info;
-    }
 
+    /**
+     * Obtiene el número de resultados de una query personalizada.
+     * @param q consulta SQL
+     * @return número de resultados
+     */
     public int getNumFilesMatchQuery(String q){
         try{
             ResultSet rs = query.executeQuery(q);
@@ -89,6 +85,9 @@ public class DataBase {
         return 0;
     }
 
+    /**
+     * Imprime un array unidimensional.
+     */
     public void printArray1D(String[] info){
         System.out.println();
         for(int i = 0; i<info.length; i++){
@@ -98,6 +97,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Imprime un array bidimensional.
+     */
     public void printArray2D(String[][] info){
         System.out.println();
         for(int i = 0; i<info.length; i++){
@@ -109,6 +111,13 @@ public class DataBase {
         }
     }
 
+
+    /**
+     * Obtiene el ID de un usuario a partir de su contraseña.
+     *
+     * @param contrasena contraseña del usuario
+     * @return ID del usuario o null si no se encuentra
+     */
     public String getIdUsuarioConContrasena(String contrasena){
         String q = "SELECT id FROM Usuario WHERE contrasena='"+contrasena+"'";
         System.out.println(q);
@@ -124,6 +133,14 @@ public class DataBase {
         return null;
     }
 
+    /**
+     * Obtiene los IDs de todos los usuarios.
+     *
+     * - Ordenados alfabéticamente
+     * - Devuelve un array con todos los IDs
+     *
+     * @return array de IDs de usuarios o null en caso de error
+     */
     public String[] getIdTodosUsuarios(){
         String q = "SELECT id FROM Usuario ORDER BY id ASC";
         System.out.println(q);
@@ -144,6 +161,15 @@ public class DataBase {
         return null;
     }
 
+    /**
+     * Obtiene información de todos los usuarios.
+     *
+     * Devuelve un array bidimensional donde:
+     * [i][0] → ID del usuario
+     * [i][1] → contraseña
+     *
+     * @return matriz con información de usuarios o null si ocurre un error
+     */
     public String[][] getInfoTodosUsuarios(){
         String q = "SELECT contrasena, id FROM Usuario ORDER BY id ASC";
         System.out.println(q);
@@ -166,6 +192,27 @@ public class DataBase {
         return null;
     }
 
+    /**
+     * Obtiene información de todas las especies.
+     *
+     * Funcionamiento:
+     * - Realiza un LEFT JOIN entre:
+     *   Especie e Imagen
+     * - Solo obtiene imágenes asociadas a especies (no capturas)
+     * - Ordena por nombre común
+     *
+     * Devuelve un array donde cada fila contiene:
+     * [0] nombre común
+     * [1] nombre científico
+     * [2] descripción
+     * [3] ubicación
+     * [4] información adicional
+     * [5] comportamiento
+     * [6] talla mínima
+     * [7] nombre de la imagen
+     *
+     * @return matriz con información de especies
+     */
     public String[][] getInfoTodasEspecies(){
         String q = "SELECT e.nombreComun, e.nombreCientifico, e.descripcion, e.ubicacion, e.masInfo, e.comportamiento, e.tallaMin, i.nombre " +
                 "FROM Especie e " +
@@ -198,6 +245,31 @@ public class DataBase {
         return null;
     }
 
+    /**
+     * Obtiene todas las capturas de un usuario.
+     *
+     * Funcionamiento:
+     * 1. Ejecuta una query para contar el número de capturas del usuario
+     * 2. Crea un array bidimensional con ese tamaño
+     * 3. Ejecuta una segunda query con JOINs entre:
+     *    - Captura
+     *    - Usuario
+     *    - Especie
+     *    - Imagen (opcional)
+     * 4. Recorre el ResultSet y rellena el array con:
+     *    [0] nombre de la especie
+     *    [1] peso
+     *    [2] tamaño
+     *    [3] ubicación
+     *    [4] fecha
+     *    [5] señuelo
+     *    [6] notas
+     *    [7] id de captura
+     *    [8] nombre de la imagen
+     *
+     * @param usuario ID del usuario
+     * @return matriz con la información de todas las capturas
+     */
     public String[][] getCapturasUsuario(String usuario){
         String qf = "SELECT COUNT(*) AS n " +
                 "FROM Captura c, Usuario u, Especie e " +
@@ -246,6 +318,12 @@ public class DataBase {
 
     }
 
+    /**
+     * Verifica si el login es correcto.
+     * @param nom usuario
+     * @param password contraseña
+     * @return true si es válido
+     */
     public boolean loginCorrecte (String nom, String password){
         String q = "SELECT COUNT(*) AS N " +
                 "FROM Usuario " +
@@ -264,6 +342,14 @@ public class DataBase {
         return false;
     }
 
+    /**
+     * Obtiene el ID (numero) de una especie a partir de su nombre común.
+     *
+     * Realiza una consulta SQL sobre la tabla Especie filtrando por nombreComun.
+     *
+     * @param nombre nombre común de la especie
+     * @return ID de la especie en formato String o null si no se encuentra
+     */
     public String getIdEspecie(String nombre){
         String q = "SELECT numero FROM Especie WHERE nombreComun ='"+nombre+"'";
         try{
@@ -275,6 +361,11 @@ public class DataBase {
         return null;
     }
 
+    /**
+     * Inserta una nueva captura en la base de datos.
+     *
+     * Construye una query SQL con todos los datos de la captura.
+     */
     public void insertCaptura(float peso, float tamano, String ubicacion, int dia, int mes, int ano, String senuelo, String notas, String especie, String usuario){
 
         String idEspecie = getIdEspecie(especie);
@@ -289,6 +380,10 @@ public class DataBase {
             System.out.println(e);
         }
     }
+
+    /**
+     * Actualiza una captura existente.
+     */
     public void updateCaptura(int id, float peso, float tamano, String ubicacion, int dia, int mes, int ano, String senuelo, String notas, String especie) {
         String idEspecie = getIdEspecie(especie);
         String q = "UPDATE Captura SET peso=" + peso + ", tamano=" + tamano + ", ubicacion='" + ubicacion + "', fecha='" + ano + "-" + mes + "-" + dia + "', senuelo='" + senuelo + "', notas='" + notas + "', Especie_numero=" + idEspecie + " WHERE numero=" + id;
@@ -300,6 +395,10 @@ public class DataBase {
         }
     }
 
+    /**
+     * Elimina una captura y su imagen asociada.
+     * @param id id de la captura
+     */
     public void deleteCaptura(int id) {
         try {
             String qImg = "DELETE FROM Imagen WHERE Captura_numero=" + id;
@@ -314,6 +413,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Inserta una imagen asociada a la última captura.
+     */
     public void insertImagen(String nombre){
         int n = getMaxCaptura();
         String q = "INSERT INTO `Imagen`(`nombre`, `Especie_numero`, `Captura_numero`) " +
@@ -327,6 +429,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Obtiene el nombre de la imagen asociada a una captura.
+     */
     public String getImagenPorCapturaId(int capturaId) {
         String q = "SELECT nombre FROM Imagen WHERE Captura_numero=" + capturaId;
         try {
@@ -340,6 +445,12 @@ public class DataBase {
         return null;
     }
 
+    /**
+     * Inserta o actualiza la imagen de una captura.
+     *
+     * Si ya existe → UPDATE
+     * Si no existe → INSERT
+     */
     public void updateImagenCaptura(int capturaId, String nombreImagen) {
         String testQ = "SELECT COUNT(*) FROM Imagen WHERE Captura_numero=" + capturaId;
         try {
@@ -360,6 +471,9 @@ public class DataBase {
     }
 
 
+    /**
+     * Obtiene el ID máximo de capturas.
+     */
     public int getMaxCaptura(){
         String q = "SELECT MAX(numero) FROM Captura";
         System.out.println(q);
@@ -375,6 +489,10 @@ public class DataBase {
         return 0;
     }
 
+    /**
+     * Inserta un nuevo usuario.
+     * @return true si se inserta correctamente
+     */
     public boolean insertUsuario(String id, String contrasena){
         String q = "INSERT INTO Usuario (id, contrasena) VALUES ('"+id+"', '"+contrasena+"')";
         System.out.println(q);

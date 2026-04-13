@@ -1,4 +1,10 @@
+/**
+ * Clase utilitaria para calcular estadísticas sobre capturas.
+ */
 public class CatchStats {
+    /**
+     * Devuelve la captura con mayor tamaño.
+     */
     public static Catch longestCatch(Catch[] capturas) {
         Catch max = capturas[0];
 
@@ -10,6 +16,9 @@ public class CatchStats {
         return max;
     }
 
+    /**
+     * Devuelve la captura con mayor peso.
+     */
     public static Catch heaviestCatch(Catch[] capturas) {
         Catch max = capturas[0];
 
@@ -21,6 +30,16 @@ public class CatchStats {
         return max;
     }
 
+    /**
+     * Calcula la especie más común.
+     *
+     * Funcionamiento:
+     * 1. Recorre todas las capturas
+     * 2. Cuenta cuántas veces aparece cada especie
+     * 3. Encuentra la especie con mayor frecuencia
+     *
+     * @return array con [Especie, número de veces]
+     */
     public static Object[] commonSpecies(Catch[] capturas){
         Especie[] species = new Especie[capturas.length];
         int[] counts = new int[capturas.length];
@@ -53,6 +72,10 @@ public class CatchStats {
 
         return new Object[]{species[maxIndex], counts[maxIndex]};
     }
+
+    /**
+     * Calcula el peso medio.
+     */
     public static float averageWeight(Catch[] capturas) {
         float sum = 0;
         for (int i = 0; i<capturas.length; i++){
@@ -66,6 +89,9 @@ public class CatchStats {
         }
     }
 
+    /**
+     * Calcula el tamaño medio.
+     */
     public static float averageLength(Catch[] capturas) {
         float sum = 0;
         for (int i = 0; i<capturas.length; i++){

@@ -1,5 +1,15 @@
 import processing.core.PImage;
-
+/**
+ * Representa una especie de pez.
+ *
+ * Contiene información descriptiva y visual:
+ * - Nombre común y científico
+ * - Descripción
+ * - Ubicación
+ * - Comportamiento
+ * - Talla mínima
+ * - Imagen
+ */
 public class Especie {
 
     String nombreComun;
@@ -10,9 +20,13 @@ public class Especie {
     String comportamiento;
     String tallaMin;
     String nombreImagen;
+
+    /** Imagen cargada */
     PImage foto;
 
-
+    /**
+     * Constructor de la especie.
+     */
     public Especie(String nombreComun, String scientificName, String descripcion, String ubicacion, String masInfo, String comportamiento, String tallaMin, String nombreImagen) {
         this.nombreComun = nombreComun;
         this.nombreCientifico = scientificName;
@@ -23,6 +37,8 @@ public class Especie {
         this.tallaMin = tallaMin;
         this.nombreImagen = nombreImagen;
     }
+
+    /** Getters y setters de todos los atributos */
 
     public String getNombreComun() {
         return nombreComun;

@@ -1,16 +1,46 @@
 import processing.core.PApplet;
 import processing.core.PFont;
 
+/**
+ * Clase que representa un botón interactivo.
+ * Permite mostrar texto, detectar interacción del ratón y cambiar estilos.
+ */
 public class Button {
+
+    /** Fuente utilizada para el texto. */
     PFont bebasNeue;
+
+    /** Posición y dimensiones del botón. */
     float x, y, w, h;
+
+    /** Colores del botón. */
     int fillColor, strokeColor, textColor;
-    int fillColorOver, fillColorDisabled;
+
+    /** Color al pasar el ratón por encima. */
+    int fillColorOver;
+
+    /** Color cuando está deshabilitado. */
+    int fillColorDisabled;
+
+    /** Grosor del borde. */
     int strokeWeight;
+
+    /** Texto del botón. */
     String textBoto;
+
+    /** Indica si el botón está habilitado. */
     boolean enabled;
 
-
+    /**
+     * Constructor del botón.
+     *
+     * @param p5 instancia de Processing
+     * @param text texto del botón
+     * @param x posición horizontal
+     * @param y posición vertical
+     * @param w anchura
+     * @param h altura
+     */
     public Button(PApplet p5, String text, float x, float y, float w, float h){
         this.textBoto = text;
         this.x = x;
@@ -27,21 +57,42 @@ public class Button {
 
 
 
+    /**
+     * Aplica colores azules al botón.
+     *
+     * @param c objeto de colores
+     */
     public void setBlues(Colors c){
         this.fillColor = c.getAzure();
         this.fillColorOver = c.getAzureSelected();
     }
 
+    /**
+     * Aplica colores grises al botón.
+     *
+     * @param c objeto de colores
+     */
     public void setGreys(Colors c){
         this.fillColor = c.getColorAt(3);
         this.fillColorOver = c.getColorAt(4);
     }
 
+    /**
+     * Aplica colores rojos al botón.
+     *
+     * @param c objeto de colores
+     */
     public void setReds(Colors c){
         this.fillColor = c.getColorAt(5);
         this.fillColorOver = c.getColorAt(6);
     }
 
+    /**
+     * Configura colores específicos para botones de calendario.
+     *
+     * @param p5 instancia de Processing
+     * @param c objeto de colores
+     */
     public void setDateButtonColors(PApplet p5, Colors c){
         this.fillColor = p5.color(255);
         this.fillColorOver = p5.color(230);
@@ -50,16 +101,41 @@ public class Button {
         this.strokeWeight = 1;
     }
 
+    /**
+     * Activa o desactiva el botón.
+     *
+     * @param b estado
+     */
     public void setEnabled(boolean b){
         this.enabled = b;
     }
 
+    /**
+     * Establece el texto del botón.
+     *
+     * @param t nuevo texto
+     */
     public void setTextBoto(String t){ this.textBoto = t; }
 
+    /**
+     * Indica si el botón está habilitado.
+     *
+     * @return true si está activo
+     */
     public boolean isEnabled(){
         return  this.enabled;
     }
 
+    /**
+     * Dibuja el botón en pantalla.
+     *
+     * Funcionamiento:
+     * - Cambia el color según el estado (normal, hover, deshabilitado).
+     * - Dibuja el rectángulo.
+     * - Renderiza el texto centrado.
+     *
+     * @param p5 instancia de Processing
+     */
     public void display(PApplet p5){
         p5.pushStyle();
         if(!enabled){
@@ -81,6 +157,12 @@ public class Button {
     }
 
 
+    /**
+     * Comprueba si el ratón está sobre el botón.
+     *
+     * @param p5 instancia de Processing
+     * @return true si el ratón está dentro del botón
+     */
     public boolean mouseOverButton(PApplet p5){
         return (p5.mouseX >= this.x) && (p5.mouseX <= this.x + this.w) &&
                 (p5.mouseY >= this.y) && (p5.mouseY <= this.y + this.h);

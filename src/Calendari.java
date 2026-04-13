@@ -1,25 +1,54 @@
 import processing.core.PApplet;
 
 import java.util.Calendar;
-
+/**
+ * Clase que implementa un calendario visual interactivo.
+ * Permite navegar entre meses y seleccionar una fecha mediante botones.
+ */
 public class Calendari {
 
+    /** Nombres abreviados de los meses. */
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun",
             "Jul","Aug","Sep","Oct","Nov","Dec"};
 
+    /** Año, mes y día actuales. */
     int any, mes, dia;
+
+    /** Número de días del mes actual y del mes anterior. */
     int numDaysMonth, numDaysPrevMonth;
+
+    /** Día de la semana del primer día del mes. */
     int dayOfWeek, firstDay;
 
+    /** Indica si hay una fecha seleccionada. */
     boolean dateSelected = false;
+
+    /** Fecha seleccionada. */
     int selectedDay=0, selectedMonth=0, selectedYear=0;
 
+    /** Calendarios para el mes actual y el anterior. */
     Calendar cal, cPrev;
 
+    /** Botones que representan los días (máximo 42). */
     DayButton[] buttons;
 
+    /** Posición y dimensiones del calendario. */
     int x, y, w, h;
 
+    /**
+     * Constructor del calendario.
+     *
+     * Inicializa:
+     * - Fecha actual
+     * - Número de días del mes
+     * - Día de inicio del calendario
+     * - Botones de los días
+     *
+     * @param x posición horizontal
+     * @param y posición vertical
+     * @param w anchura
+     * @param h altura
+     */
     public Calendari(int x, int y, int w, int h){
 
         this.buttons = new DayButton[42];
@@ -49,31 +78,72 @@ public class Calendari {
         createCalendar(x, y, w, h);
     }
 
+    /**
+     * Indica si hay una fecha seleccionada.
+     *
+     * @return true si hay selección
+     */
     public boolean isDateSelected(){
         return this.dateSelected;
     }
+
+    /**
+     * Devuelve la fecha seleccionada en formato String.
+     *
+     * @return fecha como "día/mes/año"
+     */
     public String getSelectedDate(){
         return this.selectedDay +"/"+ this.selectedMonth + "/"+ this.selectedYear;
     }
 
+    /**
+     * Configura el calendario actual.
+     *
+     * @param d día
+     * @param m mes
+     * @param y año
+     */
     public void setCalendar(int d, int m, int y){
         cal.set(Calendar.YEAR, y);
         cal.set(Calendar.MONTH, m);
         cal.set(Calendar.DATE, d);
     }
 
+    /**
+     * Configura el calendario del mes anterior.
+     *
+     * @param d día
+     * @param m mes
+     * @param y año
+     */
     public void setPrevCalendar(int d, int m, int y){
         cPrev.set(Calendar.YEAR, y);
         cPrev.set(Calendar.MONTH, m);
         cPrev.set(Calendar.DATE, d);
     }
 
+    /**
+     * Establece la fecha seleccionada.
+     *
+     * @param d día
+     * @param m mes
+     * @param y año
+     */
     public void setSelectedDate(int d, int m, int y){
         this.selectedDay = d;
         this.selectedMonth = m;
         this.selectedYear = y;
     }
 
+    /**
+     * Cambia al mes anterior.
+     *
+     * Funcionamiento:
+     * - Ajusta mes y año si es necesario.
+     * - Recalcula días del mes.
+     * - Calcula el día inicial.
+     * - Regenera los botones del calendario.
+     */
     public void prevMonth(){
 
         this.buttons = new DayButton[42];
@@ -101,6 +171,20 @@ public class Calendari {
         createCalendar(x, y, w, h);
     }
 
+    /**
+     * Genera los botones del calendario.
+     *
+     * Funcionamiento detallado:
+     * - Divide el espacio en una cuadrícula de 7x6.
+     * - Añade días del mes anterior si el mes no empieza en lunes.
+     * - Rellena con los días del mes actual.
+     * - Cada día se representa con un DayButton.
+     *
+     * @param x posición horizontal
+     * @param y posición vertical
+     * @param w anchura
+     * @param h altura
+     */
     public void createCalendar(int x, int y, int w, int h){
 
         float dayWidth  = w / 7;
@@ -134,6 +218,11 @@ public class Calendari {
         }
     }
 
+    /**
+     * Cambia al mes siguiente.
+     *
+     * Funcionamiento similar a prevMonth pero incrementando el mes.
+     */
     public void nextMonth(){
 
         this.buttons = new DayButton[42];
@@ -163,6 +252,11 @@ public class Calendari {
 
 
 
+    /**
+     * Dibuja el calendario en pantalla.
+     *
+     * @param p5 instancia de Processing
+     */
     public void display(PApplet p5){
         p5.pushStyle();
         p5.fill(0); p5.textSize(36); p5.textAlign(p5.LEFT);
@@ -181,6 +275,17 @@ public class Calendari {
         p5.popStyle();
     }
 
+    /**
+     * Comprueba si se ha pulsado algún botón del calendario.
+     *
+     * Funcionamiento:
+     * - Recorre todos los botones.
+     * - Si el ratón está sobre uno activo:
+     *   - Alterna su estado de selección.
+     *   - Actualiza la fecha seleccionada.
+     *
+     * @param p5 instancia de Processing
+     */
     public  void checkButtons(PApplet p5){
         for(DayButton b : buttons){
             if((b!=null)&&(b.enabled)&&(b.mouseOver(p5))){
@@ -198,6 +303,9 @@ public class Calendari {
         }
     }
 
+    /**
+     * Deselecciona todos los botones del calendario.
+     */
     public void deselectAll(){
         for(DayButton b : buttons){
             if(b!=null){

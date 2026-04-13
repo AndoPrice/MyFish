@@ -1,13 +1,28 @@
 import processing.core.PApplet;
-
+/**
+ * Gestiona los colores utilizados en la aplicación.
+ *
+ * Permite:
+ * - Cargar colores
+ * - Acceder a ellas
+ * - Mostrarlas en pantalla
+ */
 public class Colors {
 
+    /** Array de colores */
     int[] colors;
 
+    /**
+     * Constructor que inicializa los colores.
+     * @param p5 contexto Processing
+     */
     public Colors(PApplet p5){
         this.setColors(p5);
     }
 
+    /**
+     * Carga los colores.
+     */
     void setColors(PApplet p5){
         this.colors = new int[7];
         this.colors[0] = p5.color(20, 93, 160);
@@ -19,6 +34,7 @@ public class Colors {
         this.colors[6] = p5.color(255, 102, 102);
     }
 
+    /** getters de los diferentes colores */
     int getNumColors(){
         return this.colors.length;
     }
@@ -43,6 +59,9 @@ public class Colors {
         return this.colors[i];
     }
 
+    /**
+     * Muestra todas los colores en pantalla.
+     */
     public void displayColors(PApplet p5, float x, float y, float w){
         p5.pushStyle();
         //Llegenda

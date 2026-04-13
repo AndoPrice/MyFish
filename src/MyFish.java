@@ -4,33 +4,74 @@ import processing.core.PShape;
 
 import java.io.File;
 
+/**
+ * Clase principal de la aplicación MyFish.
+ * Extiende de PApplet (Processing) y gestiona toda la lógica de la interfaz gráfica,
+ * navegación entre pantallas y la interacción del usuario.
+ *
+ * Se encarga de:
+ * - Inicializar la aplicación y recursos gráficos
+ * - Gestionar eventos de teclado y ratón
+ * - Dibujar las diferentes pantallas
+ * - Coordinar la interacción con la base de datos
+ */
 public class MyFish extends PApplet {
 
+    /** Conexión global a la base de datos */
     public static DataBase db;
 
+    /** Gestor de la interfaz gráfica */
     GUI gui;
+
+    /** Imágenes usadas en la aplicación */
     public PImage background, logo, home, mes, menys;
+
+    /** Iconos en formato vectorial */
     PShape add, list, stat, info;
 
+    /** Imagen subida por el usuario */
     PImage uploadImage;
+
+    /** Botón para subir imagen */
     Button uploadB;
+
+    /** Nombre del archivo de la imagen */
     String titol = "";
+
+    /** Especie seleccionada en pantalla */
     Especie clicked;
 
-
+    /** Gestión de tipografías */
     Fonts fontsApp;
 
-    boolean loginOK=true;
+    /** Indica si el login es correcto */
+    boolean loginOK = true;
+
+    /**
+     * Método principal que lanza la aplicación.
+     * @param args argumentos de línea de comandos
+     */
 
     public static void main(String[] args) {
         PApplet.main("MyFish");
     }
 
+    /**
+     * Configuración inicial de la ventana.
+     * Define pantalla completa y suavizado.
+     */
     public void settings(){
         fullScreen();
         smooth(10);
     }
 
+    /**
+     * Inicializa todos los recursos:
+     * - Conexión a la base de datos
+     * - Carga de imágenes e iconos
+     * - Inicialización de la GUI
+     * - Configuración de botones
+     */
     public void setup(){
 
         db = new DataBase("admin", "12345", "myfish");
@@ -70,6 +111,16 @@ public class MyFish extends PApplet {
 
     }
 
+    /**
+     * Método principal de dibujo que se ejecuta continuamente.
+     *
+     * Funciona como un bucle que:
+     * 1. Limpia la pantalla
+     * 2. Detecta la pantalla actual
+     * 3. Dibuja la interfaz correspondiente
+     * 4. Muestra imágenes de captura si existen
+     * 5. Actualiza el cursor según interacción
+     */
     public void draw(){
         background(255);
 
@@ -134,6 +185,10 @@ public class MyFish extends PApplet {
 
     }
 
+    /**
+     * Gestiona eventos de tecla presionada.
+     * Redirige la entrada a los campos de texto activos.
+     */
     public void keyPressed(){
 
         gui.usuario.keyPressed(key);
@@ -150,6 +205,10 @@ public class MyFish extends PApplet {
         }
     }
 
+    /**
+     * Gestiona eventos de escritura de caracteres.
+     * Se utiliza para introducir texto en los campos.
+     */
     public void keyTyped(){
         gui.usuario.keyTyped(key);
         gui.contrasena.keyTyped(key);
@@ -162,6 +221,13 @@ public class MyFish extends PApplet {
 
     }
 
+    /**
+     * Gestiona clics en la pantalla de inicio de sesión.
+     *
+     * - Verifica credenciales
+     * - Permite registro de usuario
+     * - Cambia de pantalla según resultado
+     */
     public void mousePressedPantallaINICIAR(){
         gui.usuario.isPressed(this);
         gui.contrasena.isPressed(this);
@@ -193,6 +259,15 @@ public class MyFish extends PApplet {
         }
     }
 
+    /**
+     * Reinicia todos los campos del formulario de captura.
+     *
+     * Limpia:
+     * - Texto de inputs
+     * - Valores numéricos
+     * - Imagen subida
+     * - Fecha seleccionada
+     */
     public void resetFormularioCaptura() {
         gui.tNotas.text = "";
         gui.tUbicacion.text = "";
@@ -210,6 +285,17 @@ public class MyFish extends PApplet {
         titol = "";
     }
 
+    /**
+     * Gestiona todos los eventos de clic del ratón.
+     *
+     * Este método controla completamente la navegación:
+     * - Cambio entre pantallas
+     * - Interacción con botones
+     * - Registro, edición y eliminación de capturas
+     * - Selección de imágenes
+     *
+     * Es el núcleo de interacción del usuario.
+     */
     public void mousePressed(){
         if(gui.pantallaActual==GUI.PANTALLA.INICIAR){
             mousePressedPantallaINICIAR();
@@ -457,6 +543,15 @@ public class MyFish extends PApplet {
 
     }
 
+    /**
+     * Actualiza el tipo de cursor dependiendo de la interacción.
+     *
+     * - Mano: sobre botones
+     * - Texto: sobre campos de texto
+     * - Flecha: resto de casos
+     *
+     * @param p5 instancia de PApplet
+     */
     public void updateCursor(PApplet p5){
         boolean overButton = false;
         boolean overText = false;
@@ -521,6 +616,12 @@ public class MyFish extends PApplet {
         else cursor(ARROW);
     }
 
+    /**
+     * Aplica color a una figura vectorial (PShape) y a todos sus hijos.
+     *
+     * @param shape figura a modificar
+     * @param c color a aplicar
+     */
     void setShapeColor(PShape shape, int c) {
         shape.disableStyle();
         shape.setFill(c);

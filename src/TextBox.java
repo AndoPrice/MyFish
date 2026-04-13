@@ -2,24 +2,44 @@ import processing.core.PApplet;
 import processing.core.PFont;
 
 import static processing.core.PConstants.CORNER;
-
+/**
+ * Componente gráfico para mostrar texto en pantalla de forma no editable.
+ * A diferencia de TextField, este componente solo muestra información.
+ */
 public class TextBox {
+    /** Posición y dimensiones del cuadro de texto. */
     int x, y, h, w;
 
+    /** Fuentes utilizadas para el texto y el título. */
     PFont bebasNeue;
     PFont font;
 
-
+    /** Colores del componente. */
     int bgColor, fgColor, selectedColor, borderColor;
+
+    /** Grosor del borde. */
     int borderWeight = 1;
 
-
+    /** Texto que se muestra dentro del cuadro. */
     public String text = "";
+
+    /** Tamaño del texto. */
     int textSize = 10;
+
+    /** Nombre o etiqueta del TextBox. */
     String name;
 
-
-
+    /**
+     * Constructor de la clase TextBox.
+     *
+     * @param p5 instancia de Processing
+     * @param name nombre o etiqueta del cuadro
+     * @param x posición horizontal
+     * @param y posición vertical
+     * @param w anchura
+     * @param h altura
+     * @param font fuente para el texto
+     */
     public TextBox(PApplet p5, String name, int x, int y, int w, int h, PFont font) {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.bgColor = p5.color(20, 93, 160);
@@ -32,11 +52,27 @@ public class TextBox {
         this.font = font;
     }
 
+    /**
+     * Establece el texto que se mostrará en el cuadro.
+     *
+     * @param t texto a mostrar
+     */
     public void setText(String t){
         this.text= t;
     }
 
 
+    /**
+     * Dibuja el cuadro de texto en pantalla.
+     *
+     * Funcionamiento:
+     * - Aplica estilos gráficos.
+     * - Dibuja el fondo y el borde del cuadro.
+     * - Renderiza el texto dentro del área definida.
+     * - Muestra el nombre o etiqueta encima del cuadro.
+     *
+     * @param p5 instancia de Processing
+     */
     public void display(PApplet p5) {
         p5.pushStyle();
 

@@ -3,52 +3,105 @@ import processing.core.PFont;
 import processing.core.PImage;
 import processing.core.PShape;
 
+/**
+ * Clase principal encargada de gestionar toda la interfaz gráfica de la aplicación.
+ * Controla la navegación entre pantallas, la interacción del usuario y la visualización
+ * de datos como capturas, especies y estadísticas.
+ */
 public class GUI {
 
+    /** Gestión de colores y fuentes. */
     Colors colors;
-    PImage logo, background;
-    PFont bebasNeue;
-    DataBase dataBase;
-
     Fonts fonts;
 
-    Button iniciar, registrarUsuario, cerrarSesion, b1, b2, b3, b4, nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
+    /** Recursos gráficos. */
+    PImage logo, background;
 
+    /** Fuente principal. */
+    PFont bebasNeue;
+
+    /** Base de datos de la aplicación. */
+    DataBase dataBase;
+
+    /** Botones principales de la interfaz. */
+    Button iniciar, registrarUsuario, cerrarSesion, b1, b2, b3, b4;
+    Button nextPage, previousPage, bCal, registrar, nextPage2, previousPage2, volver;
+
+    /** Botones de acciones sobre capturas. */
+    Button editCapturaBtn, deleteCapturaBtn, volverVerCapturaBtn;
+
+    /** Botones con iconos. */
     IconButton ib1, ib2, ib3, ib4, homeB;
 
+    /** Estado de edición de captura. */
     public boolean enModoEdicion = false;
+
+    /** Captura actualmente seleccionada. */
     public Catch capturaActiva = null;
-    public Button editCapturaBtn, deleteCapturaBtn, volverVerCapturaBtn;
 
-
+    /** Tarjetas de estadísticas. */
     Card longCard, heavyCard, mostCommonCard, avgWeightCard, avgLengthCard;
 
-
+    /** Componentes de entrada y visualización. */
     TextList tlEspecie;
-    TextBox  tb1, tb2, tb3, tb4, tb5;
-
+    TextBox tb1, tb2, tb3, tb4, tb5;
     TextField usuario, contrasena, tNotas, tUbicacion, tFecha, tSenuelo;
 
+    /** Contadores de peso y tamaño. */
     Counter peso, tamano;
 
+    /** Tablas de datos. */
     PagedTable registro, infoPeces;
+
     String[] registroHeaders = {"FECHA", "ESPECIE", "PESO (Kg)", "TAMAÑO (cm)", "ACCIONES"};
     float tableW = 1000, tableH = 500;
     float[] colWidths = {22, 22, 22, 22, 12};
+    /** Datos de especies y capturas. */
     Especie[] especies;
     Catch[] capturas;
+
+    /** Calendario. */
     CalendariPlus cp1;
     String dataCalendari = "";
 
+    /** Información de capturas en formato tabla. */
     String[][] infoCapturas;
 
+    /**
+     * Enumeración de pantallas disponibles en la aplicación.
+     */
+    public enum PANTALLA {
+        INICIAR,
+        INICIO,
+        REGISTRAR_CAPTURA,
+        VER_REGISTRO,
+        VER_CAPTURA,
+        ESTADISTICAS,
+        INFO,
+        ESPECIE
+    }
 
-    public enum PANTALLA {INICIAR, INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, ESTADISTICAS, INFO, ESPECIE};
-
-
+    /** Pantalla actual mostrada. */
     public PANTALLA pantallaActual;
 
-    // Constructor de la GUI
+    /**
+     * Constructor principal de la GUI.
+     *
+     * Inicializa todos los componentes gráficos, carga datos desde la base de datos
+     * y configura las pantallas iniciales.
+     *
+     * @param p5 instancia de Processing
+     * @param db base de datos
+     * @param logo imagen del logo
+     * @param add icono añadir
+     * @param list icono lista
+     * @param stat icono estadísticas
+     * @param info icono información
+     * @param home icono home
+     * @param mes icono sumar
+     * @param menys icono restar
+     * @param background imagen de fondo
+     */
     public GUI(PApplet p5, DataBase db, PImage logo, PShape add, PShape list, PShape stat, PShape info, PImage home, PImage mes, PImage menys, PImage background){
         colors = new Colors(p5);
 
@@ -266,10 +319,15 @@ public class GUI {
         pantallaActual = PANTALLA.INICIAR;
         this.logo = logo;
 
-//
 
     }
 
+    /**
+     * Actualiza las capturas del usuario desde la base de datos
+     * y recalcula las estadísticas.
+     *
+     * @param p5 instancia de Processing
+     */
     public void updateCaptuarasUsuario (PApplet p5){
         registro = null;
         infoCapturas = dataBase.getCapturasUsuario(usuario.getText());
@@ -368,6 +426,11 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja los botones principales de la pantalla de inicio.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaBotonesInicio(PApplet p5){
         b1.display(p5);
         b2.display(p5);
@@ -375,6 +438,11 @@ public class GUI {
         b4.display(p5);
     }
 
+    /**
+     * Dibuja la barra superior de navegación.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaBotonesTopBar(PApplet p5){
 
         ib1.display(p5, pantallaActual==PANTALLA.REGISTRAR_CAPTURA);
@@ -385,6 +453,11 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja los campos de entrada para registrar una captura.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaTextFieldRegistrar(PApplet p5){
         tNotas.display(p5);
         tUbicacion.display(p5);
@@ -404,6 +477,11 @@ public class GUI {
         cp1.display(p5);
     }
 
+    /**
+     * Dibuja la pantalla de inicio de sesión.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaPantallaIniciar(PApplet p5){
         p5.imageMode(p5.CORNER);
         p5.image(background, 0, 0);
@@ -417,6 +495,11 @@ public class GUI {
 
 
 
+    /**
+     * Dibuja la pantalla principal tras iniciar sesión.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaPantallaInicio(PApplet p5){
 
         p5.background(255);
@@ -429,6 +512,11 @@ public class GUI {
 
     }
 
+    /**
+     * Muestra información del usuario activo.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaInfoUsuario(PApplet p5){
         p5.pushStyle();
         p5.fill(colors.getAzure());
@@ -440,6 +528,11 @@ public class GUI {
         p5.popStyle();
     }
 
+    /**
+     * Dibuja la pantalla de registro de capturas.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaPantallaRegistrarCaptura(PApplet p5){
         p5.background(255);
         p5.imageMode(p5.CORNER);
@@ -459,6 +552,11 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja la pantalla de listado de capturas.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaPantallaVerRegistro(PApplet p5){
         p5.background(255);
         p5.imageMode(p5.CORNER);
@@ -478,6 +576,11 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja la pantalla de visualización/edición de una captura.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaPantallaVerCaptura(PApplet p5){
         p5.background(255);
         p5.imageMode(p5.CORNER);
@@ -502,6 +605,12 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja la pantalla de estadísticas.
+     *
+     * @param p5 instancia de Processing
+     */
+
     public void dibujaPantallaEstadisticas(PApplet p5){
 
         p5.background(255);
@@ -524,6 +633,11 @@ public class GUI {
 
     }
 
+    /**
+     * Dibuja la pantalla de información de especies.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaPantallaInformacion(PApplet p5){
         p5.background(255);
         p5.imageMode(p5.CORNER);
@@ -538,6 +652,12 @@ public class GUI {
         previousPage2.display(p5);
     }
 
+    /**
+     * Dibuja la pantalla detallada de una especie.
+     *
+     * @param p5 instancia de Processing
+     * @param e especie a mostrar
+     */
     public void dibujaPantallaEspecie(PApplet p5, Especie e) {
         p5.background(255);
         p5.imageMode(p5.CORNER);
@@ -577,11 +697,25 @@ public class GUI {
     }
 
 
+    /**
+     * Dibuja el logo en pantalla.
+     *
+     * @param p5 instancia de Processing
+     */
     public void dibujaLogo(PApplet p5){
         p5.imageMode(p5.CENTER);
         p5.image(logo, p5.width/2, 250);
     }
 
+    /**
+     * Carga una captura en el modo de visualización/edición.
+     *
+     * Funcionamiento:
+     * - Copia los datos de la captura a los componentes gráficos.
+     * - Actualiza fecha, especie, notas, etc.
+     *
+     * @param c captura a cargar
+     */
     public void cargarCaptura(Catch c) {
         capturaActiva = c;
         enModoEdicion = false;
@@ -615,6 +749,13 @@ public class GUI {
         tlEspecie.getTextField().text = c.especie.nombreComun;
     }
 
+    /**
+     * Busca una especie por nombre.
+     *
+     * @param especies lista de especies
+     * @param name nombre a buscar
+     * @return especie encontrada o null
+     */
     public Especie searchSpecies(Especie[] especies, String name){
         for (int i=0; i<especies.length; i++){
             if(especies[i].nombreComun.equals(name)){
@@ -625,6 +766,12 @@ public class GUI {
         return null;
     }
 
+    /**
+     * Convierte las capturas en datos para tabla.
+     *
+     * @param capturas array de capturas
+     * @return matriz de Strings con los datos
+     */
     public String[][] catchesToTableData(Catch[] capturas) {
         String[][] data = new String[capturas.length][5];
 
