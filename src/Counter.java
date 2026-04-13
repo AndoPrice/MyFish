@@ -1,25 +1,46 @@
 import processing.core.*;
-
+/**
+ * Componente contador interactivo que permite incrementar o decrementar
+ * un valor dentro de un rango definido mediante botones.
+ */
 public class Counter {
 
+    /** Valor actual. */
     float value = 255;
+
+    /** Valores mínimo y máximo permitidos. */
     float minValue = 0, maxValue = 255;
+
+    /** Incremento/decremento aplicado. */
     float stepValue = 10;
 
-
+    /** Posición y dimensiones. */
     float x, y, w, h;
 
-
+    /** Colores del componente. */
     int fillColor, strokeColor;
 
-
+    /** Iconos de incremento y decremento. */
     PImage iconaMes, iconaMenys;
 
+    /** Fuente utilizada. */
     PFont bebasNeue;
 
+    /** Nombre del contador. */
     String name;
 
-
+    /**
+     * Constructor del contador.
+     *
+     * @param p5 instancia de Processing
+     * @param name nombre del contador
+     * @param iconaMes icono de incremento
+     * @param iconaMenys icono de decremento
+     * @param x posición horizontal
+     * @param y posición vertical
+     * @param w anchura
+     * @param h altura
+     */
     public Counter(PApplet p5, String name, PImage iconaMes, PImage iconaMenys, float x, float y, float w, float h){
         this.iconaMes = iconaMes;
         this.iconaMenys = iconaMenys;
@@ -35,33 +56,66 @@ public class Counter {
 
 
 
+    /**
+     * Obtiene el valor actual.
+     *
+     * @return valor
+     */
     public float getValue(){
         return  this.value;
     }
 
 
-
+    /**
+     * Reinicia el valor al mínimo.
+     */
     public void resetValue(){
         this.value = this.minValue;
     }
 
+    /**
+     * Establece el valor inicial.
+     *
+     * @param n valor inicial
+     */
     public void setInitialValue(float n){
         this.value = n;
     }
 
+    /**
+     * Establece el valor.
+     *
+     * @param n nuevo valor
+     */
     public void setValue(float n){
         this.value = n;
     }
 
+    /**
+     * Establece el incremento.
+     *
+     * @param n valor del paso
+     */
     public void setStepValue(float n){
         this.stepValue = n;
     }
 
+    /**
+     * Define los límites del contador.
+     *
+     * @param minValue mínimo
+     * @param maxValue máximo
+     */
     public void setValues(int minValue, int maxValue){
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
 
+    /**
+     * Dibuja el contador y sus botones.
+     *
+     * @param p5 instancia de Processing
+     */
     public void display(PApplet p5){
 
         p5.pushStyle();
@@ -86,20 +140,42 @@ public class Counter {
         p5.popStyle();
     }
 
+    /**
+     * Comprueba si el ratón está sobre alguno de los botones.
+     *
+     * @param p5 instancia de Processing
+     * @return true si está sobre un botón
+     */
     public boolean mouseOverButtons(PApplet p5){
         return mouseOverButtonMes(p5) || mouseOverButtonMenys(p5);
     }
+
+    /**
+     * Comprueba si el ratón está sobre el botón de incremento.
+     *
+     * @param p5 instancia de Processing
+     * @return true si está sobre "+"
+     */
 
     public boolean mouseOverButtonMes(PApplet p5){
         return p5.mouseX >= this.x + this.w && p5.mouseX <= this.x + this.w + this.h &&
                 p5.mouseY >= this.y && p5.mouseY <= this.y + this.h;
     }
 
+    /**
+     * Comprueba si el ratón está sobre el botón de decremento.
+     *
+     * @param p5 instancia de Processing
+     * @return true si está sobre "-"
+     */
     public boolean mouseOverButtonMenys(PApplet p5){
         return p5.mouseX >= this.x + this.w + this.h && p5.mouseX <= this.x + this.w + 2*this.h &&
                 p5.mouseY >= this.y && p5.mouseY <= this.y + this.h;
     }
 
+    /**
+     * Incrementa el valor respetando el máximo.
+     */
     public void increment(){
         this.value += stepValue;
         if(this.value>this.maxValue){
@@ -107,6 +183,9 @@ public class Counter {
         }
     }
 
+    /**
+     * Decrementa el valor respetando el mínimo.
+     */
     public void decrement(){
         this.value -= stepValue;
         if(this.value<this.minValue){
@@ -114,6 +193,15 @@ public class Counter {
         }
     }
 
+    /**
+     * Actualiza el valor según la interacción del ratón.
+     *
+     * Funcionamiento:
+     * - Si el ratón está sobre el botón de incremento, aumenta el valor.
+     * - Si está sobre el de decremento, lo reduce.
+     *
+     * @param p5 instancia de Processing
+     */
     public void update(PApplet p5){
         if(mouseOverButtonMes(p5)){
             increment();
