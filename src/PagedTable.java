@@ -4,13 +4,12 @@ public class PagedTable {
     enum TableMode {GRID, LIST}
     TableMode mode = TableMode.GRID;
 
-    String[] tableHeaders;   // Títols de les columnes
+    String[] tableHeaders;
     Object[] data;
     String[][] gridData;
-    // Dades de la taula
-    float[] columnWidths;    // Amplades de les columnes
+    float[] columnWidths;
 
-    int numCols, numRows;  // Número de files i columnes
+    int numCols, numRows;
 
     int numPage;
     int numTotalPages;
@@ -56,9 +55,6 @@ public class PagedTable {
         }
     }
 
-    /*public void setValueAt(String value, int nr, int nc){
-        this.tableData[nr][nc] = value;
-    }*/
 
     public void setColumnWidths(float[] w){
         this.columnWidths = w;
@@ -99,7 +95,6 @@ public class PagedTable {
 
         p5.pushStyle();
 
-        // Dibuixa files
         p5.stroke(100);
 
         for(int r = 1; r <numRows; r++){
@@ -110,14 +105,12 @@ public class PagedTable {
 
         p5.popStyle();
 
-        // Dibuixa Columnes
         float xCol = x;
         for(int c = 0; c<numCols; c++){
             xCol += w*columnWidths[c]/100.0;
             p5.line(xCol, y, xCol, y + h);
         }
 
-        // Dibuixa textos
         p5.fill(20, 93, 160); p5.textSize(24); p5.textAlign(p5.CENTER, p5.CENTER);
         for(int r = 0; r < numRows; r++){
             xCol = x;
@@ -156,14 +149,12 @@ public class PagedTable {
             }
         }
 
-        // Informació de la Pàgina
         p5.fill(20, 93, 160);
         p5.text("Pag: "+(this.numPage+1)+" / "+(this.numTotalPages+1), x+w/2, y + h + 90);
 
         p5.popStyle();
     }
 
-    // Dibuixa taula
     public void displayList(PApplet p5, float x, float y, float w, float h){
         p5.pushStyle();
 
@@ -205,7 +196,6 @@ public class PagedTable {
 
         Especie s = (Especie) obj;
 
-        //IMAGEN
         float imgSize = h - pad*2;
         if(s.getFoto()!=null){
             p5.imageMode(p5.CORNER);

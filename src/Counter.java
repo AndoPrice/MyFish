@@ -1,25 +1,25 @@
 import processing.core.*;
 
 public class Counter {
-    // Valor del comptador
+
     float value = 255;
     float minValue = 0, maxValue = 255;
     float stepValue = 10;
 
-    // Propietats d'un counter:
-    float x, y, w, h;  // Posició i dimensions
 
-    // Colors de farciment i contorn
+    float x, y, w, h;
+
+
     int fillColor, strokeColor;
 
-    // Icones del botó
+
     PImage iconaMes, iconaMenys;
 
     PFont bebasNeue;
 
     String name;
 
-    // Mètode Constructor
+
     public Counter(PApplet p5, String name, PImage iconaMes, PImage iconaMenys, float x, float y, float w, float h){
         this.iconaMes = iconaMes;
         this.iconaMenys = iconaMenys;
@@ -33,13 +33,13 @@ public class Counter {
         this.name = name;
     }
 
-    // Getters
+
 
     public float getValue(){
         return  this.value;
     }
 
-    // Setters
+
 
     public void resetValue(){
         this.value = this.minValue;
@@ -62,7 +62,6 @@ public class Counter {
         this.maxValue = maxValue;
     }
 
-    // Dibuixa el botó
     public void display(PApplet p5){
 
         p5.pushStyle();
@@ -77,7 +76,7 @@ public class Counter {
         p5.text(name, this.x, this.y+this.h/2-40);
 
 
-        // Icona del botó
+
         p5.fill(255); p5.stroke(0);
         p5.rect(this.x + this.w, this.y, this.h, this.h, 10);
         p5.imageMode(PConstants.CORNER);
@@ -91,13 +90,11 @@ public class Counter {
         return mouseOverButtonMes(p5) || mouseOverButtonMenys(p5);
     }
 
-    // Indica si el cursor està sobre el botó Més
     public boolean mouseOverButtonMes(PApplet p5){
         return p5.mouseX >= this.x + this.w && p5.mouseX <= this.x + this.w + this.h &&
                 p5.mouseY >= this.y && p5.mouseY <= this.y + this.h;
     }
 
-    // Indica si el cursor està sobre el botó Menys
     public boolean mouseOverButtonMenys(PApplet p5){
         return p5.mouseX >= this.x + this.w + this.h && p5.mouseX <= this.x + this.w + 2*this.h &&
                 p5.mouseY >= this.y && p5.mouseY <= this.y + this.h;

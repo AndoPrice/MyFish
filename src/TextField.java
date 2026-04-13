@@ -30,8 +30,6 @@ public class TextField {
         this.borderColor = p5.color(20, 93, 160);
         this.borderWeight = 1;
         this.bebasNeue = p5.createFont("data/Fonts/BebasNeue-Regular.ttf", 26);
-        //System.out.println(p5.width);
-        //System.out.println(p5.height);
         this.name = name;
         this.font = font;
     }
@@ -63,7 +61,7 @@ public class TextField {
             if (keyCode == (int)BACKSPACE) {
                 removeText();
             } else if (keyCode == 32) {
-                addText(' '); // SPACE
+                addText(' ');
             } else {
 
                 boolean isKeyCapitalLetter = (key >= 'A' && key <= 'Z');
@@ -85,11 +83,9 @@ public class TextField {
         }
     }
 
-    // Gestiona entrada de text real (inclou accents)
     public void keyTyped(char key) {
         if (!selected) return;
 
-        // Evita caracteres de control
         if (key == '\n' || key == '\r' || key == '\b') return;
 
         addText(key);

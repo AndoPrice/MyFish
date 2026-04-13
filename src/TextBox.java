@@ -18,7 +18,6 @@ public class TextBox {
     int textSize = 10;
     String name;
 
-    public boolean selected = false;
 
 
     public TextBox(PApplet p5, String name, int x, int y, int w, int h, PFont font) {
@@ -46,7 +45,7 @@ public class TextBox {
         p5.strokeWeight(borderWeight);
         p5.stroke(borderColor);
         p5.rectMode(CORNER);
-        //p5.rect(x, y, w, h, 5);
+
 
         p5.fill(fgColor);
         p5.textSize(textSize); p5.textAlign(p5.LEFT, p5.TOP);p5.textFont(font);

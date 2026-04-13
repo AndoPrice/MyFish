@@ -56,13 +56,13 @@ public class MyFish extends PApplet {
         fontsApp = new Fonts(this);
         noStroke();
         textAlign(CENTER); textSize(18);
-        gui = new GUI(this, db, logo, add, list, stat, info, home, mes, menys, background);//passar a array
+        gui = new GUI(this, db, logo, add, list, stat, info, home, mes, menys, background);
 
         setShapeColor(add, gui.colors.getAzure());
         setShapeColor(list, gui.colors.getAzure());
         setShapeColor(stat, gui.colors.getAzure());
         setShapeColor(info, gui.colors.getAzure());
-        //setShapeColor(logoI, gui.colors.getAzure());
+
 
         uploadB = new Button(this, "IMAGEN", 150, 800, 100, 50);
         uploadB.setBlues(gui.colors);
@@ -132,19 +132,6 @@ public class MyFish extends PApplet {
             }
         }
 
-    }
-
-    public void fileSelected(File selection) {
-        if (selection == null) {
-            println("No s'ha seleccionat cap fitxer.");
-        } else {
-
-            // Obtenim la ruta del fitxer seleccionat
-            String rutaImatge = selection.getAbsolutePath();
-
-            uploadImage = loadImage(rutaImatge);  // Actualitzam imatge
-            titol = rutaImatge;  // Actualitzam títol
-        }
     }
 
     public void keyPressed(){
@@ -261,8 +248,6 @@ public class MyFish extends PApplet {
             gui.tFecha.isPressed(this);
             gui.tSenuelo.isPressed(this);
 
-
-
             gui.tlEspecie.getTextField().isPressed(this);
             gui.tlEspecie.buttonPressed(this);
 
@@ -280,7 +265,6 @@ public class MyFish extends PApplet {
                 gui.peso.decrement();
             }
             if(uploadB.mouseOverButton(this)){
-                // Obrim el dialeg
                 selectInput("Selecciona una imatge ...", "fileSelected");
             }
 
@@ -295,22 +279,18 @@ public class MyFish extends PApplet {
 
                 gui.pantallaActual=GUI.PANTALLA.VER_REGISTRO;
             }
-            // Comprovar si clicam sobre botons del Calendari
+
             gui.cp1.checkButtons(this);
 
-            // Si pitja el botó, canvia la visibilitat del calendari.
             if(gui.bCal.mouseOverButton(this)&&gui.bCal.isEnabled()){
                 gui.cp1.toggleVisibility();
             }
-            // Si pitjam el botó de Next, canviarà al seguent mes
             if(gui.cp1.bNext.mouseOverButton(this)){
                 gui.cp1.nextMonth();
             }
-            // Si pitjam el botó de Prev, canviarà al mes anterior
             if(gui.cp1.bPrev.mouseOverButton(this)){
                 gui.cp1.prevMonth();
             }
-            // Si pitjam el botó de OK, confirmarà la data seleccionada i amagarà el calendari
             if(gui.cp1.bOK.mouseOverButton(this) && gui.cp1.isDateSelected()){
                 gui.dataCalendari = gui.cp1.getSelectedDate();
                 gui.cp1.setVisible(false);
@@ -344,7 +324,6 @@ public class MyFish extends PApplet {
                             uploadImage = loadImage("/Users/andoprice/Documents/MyFishImages/Capturas/" + imgName);
                             titol = imgName;
                         } else {
-                            // File not found explicitly, avoid attempting to load it
                             uploadImage = null;
                             titol = "";
                         }
@@ -424,14 +403,7 @@ public class MyFish extends PApplet {
                 if (uploadB.mouseOverButton(this)) {
                     selectInput("Selecciona una imatge ...", "fileSelected");
                 }
-
-//                int editIndex = gui.registro.handleEditGridClick(this);
-//                if (editIndex != -1 && editIndex < gui.capturas.length) {
-//                    gui.cargarCaptura(gui.capturas[editIndex]);
-//                    gui.pantallaActual = GUI.PANTALLA.VER_CAPTURA;
-//                }
             }
-
         }
 
 

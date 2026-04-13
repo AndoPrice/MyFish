@@ -3,13 +3,13 @@ import processing.core.PApplet;
 public class DayButton {
     float x, y, w, h;
 
-    // Data representativa
+
     int dia, mes, any;
 
-    // Estats del botó
+
     boolean selected, enabled;
 
-    // Constructor
+
     public DayButton(float x, float y, float w, float h, int d, int m, int a){
         this.x = x; this.y=y; this.w = w; this.h = h;
         this.dia = d; this.mes = m; this.any = a;
@@ -17,7 +17,7 @@ public class DayButton {
         this.enabled = true;
     }
 
-    // Setters
+
 
     public void setEnabled(boolean b){
         this.enabled = b;
@@ -28,7 +28,7 @@ public class DayButton {
     }
 
 
-    // Dibuixa el botó
+
     public void display(PApplet p5){
         p5.pushStyle();
         if(enabled){
@@ -48,7 +48,7 @@ public class DayButton {
         p5.popStyle();
     }
 
-    // Ratolí sobre el botó
+
     public boolean mouseOver(PApplet p5){
         return p5.mouseX>=this.x && p5.mouseX<=this.x+this.w &&
                 p5.mouseY>=this.y && p5.mouseY<=this.y+this.h;

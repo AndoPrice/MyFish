@@ -8,27 +8,25 @@ public class Colors {
         this.setColors(p5);
     }
 
-    // Estableix colors de l'App
     void setColors(PApplet p5){
-        this.colors = new int[5];
+        this.colors = new int[7];
         this.colors[0] = p5.color(20, 93, 160);
         this.colors[1] = p5.color(40, 112, 180);
         this.colors[2] = p5.color(171, 193, 213);
         this.colors[3] = p5.color(148, 148, 148);
         this.colors[4] = p5.color(181, 181, 181);
+        this.colors[5] = p5.color(204, 0, 0);
+        this.colors[6] = p5.color(255, 102, 102);
     }
 
-    // Getter del número de colors
     int getNumColors(){
         return this.colors.length;
     }
 
-    // Getter del color primari
     public int getAzure(){
         return  this.colors[0];
     }
 
-    // Getter del color secundari
     int getLightAzure(){
         return  this.colors[1];
     }
@@ -37,18 +35,14 @@ public class Colors {
         return  this.colors[2];
     }
 
-    // Getter del color terciari
     int getThirdColor(){
         return  this.colors[2];
     }
 
-    // Getter del color i-èssim
     int getColorAt(int i){
         return this.colors[i];
     }
 
-
-    // Dibuixa paleta de colors
     public void displayColors(PApplet p5, float x, float y, float w){
         p5.pushStyle();
         //Llegenda

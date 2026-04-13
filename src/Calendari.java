@@ -4,30 +4,22 @@ import java.util.Calendar;
 
 public class Calendari {
 
-    // Textos representatius dels mesos
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun",
             "Jul","Aug","Sep","Oct","Nov","Dec"};
 
-    // Informació del calendari
     int any, mes, dia;
     int numDaysMonth, numDaysPrevMonth;
     int dayOfWeek, firstDay;
 
-    // Data seleccionada
     boolean dateSelected = false;
     int selectedDay=0, selectedMonth=0, selectedYear=0;
 
-    // Calendari actual, i del mes anterior
     Calendar cal, cPrev;
 
-    // Botons del calendari
     DayButton[] buttons;
 
-    // Dimensions del calendari
     int x, y, w, h;
 
-
-    // Constructor
     public Calendari(int x, int y, int w, int h){
 
         this.buttons = new DayButton[42];
@@ -57,16 +49,12 @@ public class Calendari {
         createCalendar(x, y, w, h);
     }
 
-    // Getters
     public boolean isDateSelected(){
         return this.dateSelected;
     }
     public String getSelectedDate(){
         return this.selectedDay +"/"+ this.selectedMonth + "/"+ this.selectedYear;
     }
-
-
-    // Setters
 
     public void setCalendar(int d, int m, int y){
         cal.set(Calendar.YEAR, y);
@@ -86,7 +74,6 @@ public class Calendari {
         this.selectedYear = y;
     }
 
-    // Va un mes enrera en el Calendari
     public void prevMonth(){
 
         this.buttons = new DayButton[42];
@@ -147,7 +134,6 @@ public class Calendari {
         }
     }
 
-    // Va un mes endavant en el calendari
     public void nextMonth(){
 
         this.buttons = new DayButton[42];
@@ -177,7 +163,6 @@ public class Calendari {
 
 
 
-    // Dibuixa el Calendari
     public void display(PApplet p5){
         p5.pushStyle();
         p5.fill(0); p5.textSize(36); p5.textAlign(p5.LEFT);
@@ -196,8 +181,6 @@ public class Calendari {
         p5.popStyle();
     }
 
-
-    // Comprova si pitjam sobre els botons del Calendari
     public  void checkButtons(PApplet p5){
         for(DayButton b : buttons){
             if((b!=null)&&(b.enabled)&&(b.mouseOver(p5))){
@@ -215,7 +198,6 @@ public class Calendari {
         }
     }
 
-    // Deselecciona tots els botons del Calendari
     public void deselectAll(){
         for(DayButton b : buttons){
             if(b!=null){

@@ -3,12 +3,12 @@ import processing.core.PFont;
 
 public class Button {
     PFont bebasNeue;
-    float x, y, w, h;  // Posició (x, y) i dimensions (w, h)
-    int fillColor, strokeColor, textColor; // Colors del boto (fill / stroke).
-    int fillColorOver, fillColorDisabled;// Colors del boto (actiu / inactiu).
+    float x, y, w, h;
+    int fillColor, strokeColor, textColor;
+    int fillColorOver, fillColorDisabled;
     int strokeWeight;
-    String textBoto;  // Text
-    boolean enabled;  // Estat del botó (actiu / inactiu).
+    String textBoto;
+    boolean enabled;
 
 
     public Button(PApplet p5, String text, float x, float y, float w, float h){
@@ -37,6 +37,11 @@ public class Button {
         this.fillColorOver = c.getColorAt(4);
     }
 
+    public void setReds(Colors c){
+        this.fillColor = c.getColorAt(5);
+        this.fillColorOver = c.getColorAt(6);
+    }
+
     public void setDateButtonColors(PApplet p5, Colors c){
         this.fillColor = p5.color(255);
         this.fillColorOver = p5.color(230);
@@ -45,16 +50,11 @@ public class Button {
         this.strokeWeight = 1;
     }
 
-
-
-
-
     public void setEnabled(boolean b){
         this.enabled = b;
     }
 
     public void setTextBoto(String t){ this.textBoto = t; }
-
 
     public boolean isEnabled(){
         return  this.enabled;
@@ -86,7 +86,4 @@ public class Button {
                 (p5.mouseY >= this.y) && (p5.mouseY <= this.y + this.h);
     }
 
-    public boolean updateHandCursor(PApplet p5){
-        return mouseOverButton(p5) && enabled;
-    }
 }

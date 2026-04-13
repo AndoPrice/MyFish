@@ -20,7 +20,6 @@ public class GUI {
     public Catch capturaActiva = null;
     public Button editCapturaBtn, deleteCapturaBtn, volverVerCapturaBtn;
 
-    DayButton db1;
 
     Card longCard, heavyCard, mostCommonCard, avgWeightCard, avgLengthCard;
 
@@ -38,14 +37,13 @@ public class GUI {
     float[] colWidths = {22, 22, 22, 22, 12};
     Especie[] especies;
     Catch[] capturas;
-    Card c1;
     CalendariPlus cp1;
     String dataCalendari = "";
 
     String[][] infoCapturas;
 
 
-    public enum PANTALLA {INICIAR, INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, DETALLES, ESTADISTICAS, INFO, ESPECIE};
+    public enum PANTALLA {INICIAR, INICIO, REGISTRAR_CAPTURA, VER_REGISTRO, VER_CAPTURA, ESTADISTICAS, INFO, ESPECIE};
 
 
     public PANTALLA pantallaActual;
@@ -66,7 +64,7 @@ public class GUI {
         registrarUsuario = new Button(p5, "REGISTRAR", p5.width/2+10, 700, 200, 80);
         registrarUsuario.setBlues(colors);
         usuario = new TextField(p5, "Usuario", p5.width/2-150, 450, 300, 50, fonts.getFontAt(2));
-        contrasena = new TextField(p5, "Contrasena", p5.width/2-150, 575, 300, 50, fonts.getFontAt(2));
+        contrasena = new TextField(p5, "Contraseña", p5.width/2-150, 575, 300, 50, fonts.getFontAt(2));
 
         String[][] infoEspecies = dataBase.getInfoTodasEspecies();
         especies = new Especie[infoEspecies.length];
@@ -104,7 +102,7 @@ public class GUI {
         editCapturaBtn.setBlues(colors);
 
         deleteCapturaBtn = new Button(p5, "ELIMINAR", p5.width/2+450, 800, 100, 50);
-        deleteCapturaBtn.setGreys(colors);
+        deleteCapturaBtn.setReds(colors);
 
         volverVerCapturaBtn = new Button(p5, "VOLVER", p5.width/2+210, 800, 100, 50);
         volverVerCapturaBtn.setGreys(colors);
@@ -379,15 +377,11 @@ public class GUI {
 
     public void dibujaBotonesTopBar(PApplet p5){
 
-
         ib1.display(p5, pantallaActual==PANTALLA.REGISTRAR_CAPTURA);
         ib2.display(p5, pantallaActual==PANTALLA.VER_REGISTRO);
         ib3.display(p5, pantallaActual==PANTALLA.ESTADISTICAS);
         ib4.display(p5, pantallaActual==PANTALLA.INFO||pantallaActual==PANTALLA.ESPECIE);
         homeB.display(p5, pantallaActual==PANTALLA.INICIO);
-
-
-
 
     }
 
@@ -395,13 +389,9 @@ public class GUI {
         tNotas.display(p5);
         tUbicacion.display(p5);
 
-
-        // Rectangle
         p5.fill(255); p5.rect(p5.width/2+350, 500, 200, 50, 5);
 
-        // Text amb data seleccionada
         p5.fill(0); p5.textAlign(p5.LEFT); p5.textSize(24);
-        //p5.text(dataCalendari, p5.width/2+350, 500);
 
         p5.pushStyle();
         p5.fill(colors.getAzure());
@@ -466,7 +456,6 @@ public class GUI {
         p5.text("REGISTRAR CAPTURA", p5.width/2, 225);
         registrar.display(p5);
         dibujaTextFieldRegistrar(p5);
-
 
     }
 
@@ -651,7 +640,4 @@ public class GUI {
 
         return data;
     }
-
-
-
 }

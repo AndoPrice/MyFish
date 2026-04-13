@@ -3,17 +3,15 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 public class TextList {
-    float x, y, w, h;          // Posició i dimensions
-    Especie[] especies;// Valors possibles
-    String name;
+    float x, y, w, h;
+    Especie[] especies;
 
-    TextField textField;       // Camp de text
+    TextField textField;
 
-    int selectedIndex;         // Fila seleccionada
-    String selectedId;         // Id Seleccionat
-    String selectedValue;      // Valor Seleccionat
+    String selectedId;
+    String selectedValue;
 
-    boolean enabled;           // Abilitat / desabilitat
+    boolean enabled;
 
     int numMatchs = 0;
     ArrayList<Button> buttons;

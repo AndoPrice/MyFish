@@ -3,10 +3,10 @@ import processing.core.PApplet;
 public class CalendariPlus extends Calendari {
     public Button bNext, bPrev, bOK;
 
-    // Visibilitat del calendari
+
     boolean visible = false;
 
-    // Constructor
+
     public CalendariPlus(PApplet p5, int x, int y, int w, int h) {
 
         super(x, y, w, h);
@@ -17,7 +17,6 @@ public class CalendariPlus extends Calendari {
     }
 
 
-    // Setters
 
     public void toggleVisibility(){
         this.visible = !this.visible;
@@ -27,7 +26,7 @@ public class CalendariPlus extends Calendari {
         this.visible = b;
     }
 
-    // Dibuixa el Calendari
+
     public void display(PApplet p5) {
         if (visible) {
             p5.pushStyle();
@@ -45,7 +44,7 @@ public class CalendariPlus extends Calendari {
                 p5.text(dateText, x+w, y - 30);
             }
 
-            // Dibuixa els botons
+
             bNext.display(p5);
             bPrev.display(p5);
             bOK.display(p5);

@@ -8,23 +8,19 @@ public class Card {
 
 
     enum CardType {
-        CATCH,      // más pesada, más larga
-        SPECIES,    // especie más común
-        AVERAGE     // peso medio, tamaño medio
+        CATCH,
+        SPECIES,
+        AVERAGE
     }
 
     CardType type;
 
-    // Propietats
     PImage img;
     String title, place, date;
     String species;
     String description;
 
-    // Dimensions
     float x, y, w, h, b;
-
-    // Constructors
 
     public Card(){
     }
@@ -45,8 +41,6 @@ public class Card {
         this.description = info[4];
     }
 
-    //Setters
-
     public void setDimensions(float x, float y, float w, float h, float b){
         this.x = x; this.y = y;
         this.w = w; this.h = h;
@@ -56,8 +50,6 @@ public class Card {
     public void setImage(PImage img){
         this.img = img;
     }
-
-    // Dibuixa la Card
 
     public void display(PApplet p5, boolean selectedCard){
 

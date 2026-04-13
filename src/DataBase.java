@@ -1,16 +1,12 @@
 import java.sql.*;
 
 public class DataBase {
-    // Variable de connexió a la BBDD
     Connection c;
 
-    // Variable de consulta
     Statement query;
 
-    // Dades de connexió (user, password, nom de la base de dades)
     String user, password, databaseName;
 
-    // Estat de la connexió
     boolean connectat = false;
 
     public DataBase(String user, String password, String databaseName){
@@ -21,7 +17,6 @@ public class DataBase {
 
     public void connect(){
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
             c = DriverManager.getConnection("jdbc:mysql://localhost:8889/"+databaseName, user, password);
             query = c.createStatement();
             System.out.println("Connectat a la BBDD! :) ");
@@ -31,8 +26,6 @@ public class DataBase {
             System.out.println(e);
         }
     }
-
-    // Retorna la informació d'una casella
 
     public String getInfo(String nomTaula, String nomColumna, String nomClau, String identificador){
         try{
@@ -50,8 +43,6 @@ public class DataBase {
         return "";
     }
 
-    // Retorna el número total de files d'una taula
-
     public int getNumFilesTaula(String nomTaula){
         String q = "SELECT COUNT(*) AS num FROM "+ nomTaula;
         try{
@@ -64,8 +55,6 @@ public class DataBase {
         }
         return 0;
     }
-
-    // Retorna totes les caselles d'una columna
 
     public String[] getInfoArray(String nomTaula, String nomColumna){
         int n = getNumFilesTaula(nomTaula);
@@ -88,33 +77,6 @@ public class DataBase {
         return info;
     }
 
-    // Retorna totes les caselles (files i columnes) d'una taula
-
-    public String[][] getInfoArray2DUnitat(){
-        int nf = getNumFilesTaula("unitat");
-        String[][] info = new String[nf][3];
-        String q = "SELECT numero, nom, curs FROM unitat ORDER BY numero ASC";
-        System.out.println(q);
-        try{
-            ResultSet rs = query.executeQuery(q);
-            int f=0;
-            while(rs.next()){
-                info[f][0] = String.valueOf( rs.getInt("numero"));
-                info[f][1] = rs.getString("nom");
-                info[f][2] = String.valueOf( rs.getInt("curs"));
-                f++;
-            }
-            return info;
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-
-        return info;
-    }
-
-    // Retorna el número total de files d'una taula
-
     public int getNumFilesMatchQuery(String q){
         try{
             ResultSet rs = query.executeQuery(q);
@@ -122,41 +84,6 @@ public class DataBase {
             return rs.getInt("n");
         }
         catch(Exception e){
-            System.out.println(e);
-        }
-        return 0;
-    }
-
-    // Retorna dades de dues taules relacionades
-
-
-
-
-
-
-    // Retorna el número de files d'una taula
-    public int getNumRowsTaula(String nomTaula){
-        try {
-            ResultSet rs = query.executeQuery( "SELECT COUNT(*) AS n FROM "+ nomTaula );
-            rs.next();
-            int numRows = rs.getInt("n");
-            return numRows;
-        }
-        catch(Exception e) {
-            System.out.println(e);
-            return 0;
-        }
-    }
-
-    // Retorna el número de files que retornaria una query SELECT qualsevol amb valor "n"
-    // Per exemple: SELECT COUNT(*) AS n FROM ...
-    public int getNumRowsQuery(String q){
-        try {
-            ResultSet rs = query.executeQuery( q);
-            rs.next();
-            return rs.getInt('n');
-        }
-        catch(Exception e) {
             System.out.println(e);
         }
         return 0;
@@ -270,37 +197,6 @@ public class DataBase {
         }
         return null;
     }
-
-    /*public String[][] getInfoTodasCapturas(){
-        String q = "SELECT c.peso, c.tamano, c.ubicacion, c.fecha, c.senuelo, c.notas, e.nombreComun " +
-                "FROM Captura c, Especie e " +
-                "WHERE " +
-                "ORDER BY nombreComun ASC";
-        System.out.println(q);
-        try{
-            int numFilas = getNumFilesTaula("Captura");
-            String[][] info = new String[numFilas][7];
-            ResultSet rs = query.executeQuery(q);
-            int f = 0;
-            while(rs.next()){
-                info[f][0] = rs.getString("nombreComun");
-                info[f][1] = rs.getString("nombreCientifico");
-                info[f][2] = rs.getString("descripcion");
-                info[f][3] = rs.getString("ubicacion");
-                info[f][4] = rs.getString("masInfo");
-                info[f][5] = rs.getString("comportamiento");
-                info[f][6] = rs.getString("tallaMin");
-
-                f++;
-            }
-            return info;
-
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return null;
-    }*/
 
     public String[][] getCapturasUsuario(String usuario){
         String qf = "SELECT COUNT(*) AS n " +
