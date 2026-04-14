@@ -12,7 +12,7 @@ public class Card {
      * Enumeración que define los tipos de tarjeta disponibles.
      */
     enum CardType {
-        /** Tarjeta de captura. */
+        /** Tarjeta de captura individual. */
         CATCH,
         /** Tarjeta de especie. */
         SPECIES,

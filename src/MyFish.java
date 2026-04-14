@@ -185,6 +185,18 @@ public class MyFish extends PApplet {
 
     }
 
+    public void fileSelected(File selection) {
+        if (selection == null) {
+            println("No se ha seleccionado ningun archivo");
+        } else {
+
+            String rutaImatge = selection.getAbsolutePath();
+
+            uploadImage = loadImage(rutaImatge);
+            titol = rutaImatge;
+        }
+    }
+
     /**
      * Gestiona eventos de tecla presionada.
      * Redirige la entrada a los campos de texto activos.
